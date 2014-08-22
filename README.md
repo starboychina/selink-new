@@ -18,10 +18,12 @@ SELink needs the support of these softwares below:
   
   * [DownLoad Node.js and install with default options](http://nodejs.org/download/)
   * install grunt-cli
+
     ```javascript
     npm install grunt-cli -g
     ```
   * install node-gyp
+
     ```javascript
     npm install node-gyp -g
     ```
@@ -51,6 +53,7 @@ SELink needs the support of these softwares below:
   * Download Solr and install by following the instruction
   * Solr should startup at port 8080
   * Create three cores:
+
     ```javascript
     selink_test  // index for test
     selink_dev   // index for development
@@ -63,6 +66,7 @@ SELink needs the support of these softwares below:
   
   * Swicth to the root of your SELink copy
   * Install by running command:
+
     ```javascript
     npm install
     ```
