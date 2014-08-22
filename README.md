@@ -31,6 +31,7 @@ SELink needs the support of these softwares below:
   
   * [Download MongoDB and install with default options](http://www.mongodb.org/downloads)
   * Create three database as below:
+
     ```javascript
     mongorestore path/to/dump/selink_test  // database for test
     mongorestore path/to/dump/selink_dev   // database for development
