@@ -10,8 +10,8 @@ module.exports = {
             env: 'test'
         },
         ssl: {
-            key: fs.readFileSync(rootPath + '/ssl/selink.pem'),
-            cert: fs.readFileSync(rootPath + '/ssl/selink.crt')
+            key: fs.readFileSync(rootPath + '/resource/ssl/test/selink.pem'),
+            cert: fs.readFileSync(rootPath + '/resource/ssl/test/selink.crt')
         },
         mongodb: {
             host: 'mongodb://localhost/selink_test',
@@ -40,8 +40,8 @@ module.exports = {
             env: 'development'
         },
         ssl: {
-            key: fs.readFileSync(rootPath + '/ssl/selink.pem'),
-            cert: fs.readFileSync(rootPath + '/ssl/selink.crt')
+            key: fs.readFileSync(rootPath + '/resource/ssl/development/selink.pem'),
+            cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
         mongodb: {
             host: 'mongodb://localhost/selink_dev'
@@ -70,8 +70,8 @@ module.exports = {
             env: 'production'
         },
         ssl: {
-            key: fs.readFileSync(rootPath + '/ssl/selink.pem'),
-            cert: fs.readFileSync(rootPath + '/ssl/selink.crt')
+            key: fs.readFileSync(rootPath + '/resource/ssl/development/selink.pem'),
+            cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
         mongodb: {
             host: 'mongodb://localhost/selink'
