@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema name="example" version="1.5">
+
+    <fields>
+
+        <field name="_version_" type="long" indexed="true" stored="true"/>
+        <field name="_root_" type="string" indexed="true" stored="false"/>
+        <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+
+        <!-- common -->
+        <field name="type" type="string" indexed="true" stored="true"/>
+        <field name="logicDelete" type="boolean" indexed="true" stored="true"/>
+
+        <!-- user & job -->
+        <field name="name" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+        <field name="address" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+        <field name="language" type="payloads" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="skill" type="payloads" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="weight" type="int" indexed="true" stored="true"/>
+
+        <!-- job -->
+        <field name="expiredDate" type="date" indexed="true" stored="true"/>
+        <field name="startDate" type="date" indexed="true" stored="true"/>
+        <field name="endDate" type="date" indexed="true" stored="true"/>
+        <field name="priceTop" type="float" indexed="true" stored="true"/>
+        <field name="priceBottom" type="float" indexed="true" stored="true"/>
+        <field name="foreignerAllowed" type="boolean" indexed="true" stored="true"/>
+        <field name="remark" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+
+        <!-- user & announcement -->
+        <field name="title" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+
+        <!-- user -->
+        <field name="email" type="text_general" indexed="true" stored="true"/>
+        <field name="birthDay" type="date" indexed="true" stored="true"/>
+        <field name="gender" type="text_general" indexed="true" stored="true"/>
+        <field name="nationality" type="text_general" indexed="true" stored="true"/>
+        <field name="marriage" type="text_general" indexed="true" stored="true"/>
+        <field name="telNo" type="text_general" indexed="true" stored="true"/>
+        <field name="webSite" type="text_general" indexed="true" stored="true"/>
+        <field name="zipCode" type="text_general" indexed="true" stored="true"/>
+        <field name="nearestSt" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+        <field name="bio" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+        <field name="education" type="text_ja" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="employment" type="text_ja" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="qualification" type="text_ja" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+
+        <!-- post, message, announcement -->
+        <field name="content" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+
+        <!-- group -->
+        <field name="description" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+
+        <!-- message -->
+        <field name="subject" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+
+        <!-- tag -->
+        <field name="wikis" type="text_ja" indexed="true" stored="true" termVectors="true"/>
+
+        <!-- catchall field, containing all other searchable text fields (implemented
+        via copyField further on in this schema  -->
+        <field name="text" type="text_ja" indexed="true" stored="false" multiValued="true" termVectors="true"/>
+
+        <!-- catchall text field that indexes tokens both normally and in reverse for efficient
+        leading wildcard queries. -->
+        <field name="text_rev" type="text_general_rev" indexed="true" stored="false" multiValued="true"/>
+
+        <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
+        <dynamicField name="*_is" type="int"    indexed="true"  stored="true"  multiValued="true"/>
+        <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" />
+        <dynamicField name="*_ss" type="string"  indexed="true"  stored="true" multiValued="true"/>
+        <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
+        <dynamicField name="*_ls" type="long"   indexed="true"  stored="true"  multiValued="true"/>
+        <dynamicField name="*_t"  type="text_general"    indexed="true"  stored="true"/>
+        <dynamicField name="*_txt" type="text_general"   indexed="true"  stored="true" multiValued="true"/>
+        <dynamicField name="*_en"  type="text_en"    indexed="true"  stored="true" multiValued="true"/>
+        <dynamicField name="*_b"  type="boolean" indexed="true" stored="true"/>
+        <dynamicField name="*_bs" type="boolean" indexed="true" stored="true"  multiValued="true"/>
+        <dynamicField name="*_f"  type="float"  indexed="true"  stored="true"/>
+        <dynamicField name="*_fs" type="float"  indexed="true"  stored="true"  multiValued="true"/>
+        <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
+        <dynamicField name="*_ds" type="double" indexed="true"  stored="true"  multiValued="true"/>
+
+        <!-- Type used to index the lat and lon components for the "location" FieldType -->
+        <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false" />
+
+        <dynamicField name="*_dt"  type="date"    indexed="true"  stored="true"/>
+        <dynamicField name="*_dts" type="date"    indexed="true"  stored="true" multiValued="true"/>
+
+        <!-- some trie-coded dynamic fields for faster range queries -->
+        <dynamicField name="*_ti" type="tint"    indexed="true"  stored="true"/>
+        <dynamicField name="*_tl" type="tlong"   indexed="true"  stored="true"/>
+        <dynamicField name="*_tf" type="tfloat"  indexed="true"  stored="true"/>
+        <dynamicField name="*_td" type="tdouble" indexed="true"  stored="true"/>
+        <dynamicField name="*_tdt" type="tdate"  indexed="true"  stored="true"/>
+
+        <dynamicField name="*_pi"  type="pint"    indexed="true"  stored="true"/>
+
+        <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
+        <dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true"/>
+
+        <dynamicField name="random_*" type="random" />
+
+    </fields>
+
+
+    <uniqueKey>id</uniqueKey>
+
+    <!-- job & user: name -->
+    <copyField source="name" dest="text"/>
+    <!-- job & user: address -->
+    <copyField source="address" dest="text"/>
+
+    <!-- user: title -->
+    <copyField source="title" dest="text"/>
+    <!-- user: nearestSt -->
+    <copyField source="nearestSt" dest="text"/>
+    <!-- user: bio -->
+    <copyField source="bio" dest="text"/>
+    <!-- user: education -->
+    <copyField source="education" dest="text"/>
+    <!-- user: employment -->
+    <copyField source="employment" dest="text"/>
+    <!-- user: qualification -->
+    <copyField source="qualification" dest="text"/>
+
+    <!-- job: remark -->
+    <copyField source="remark" dest="text"/>
+
+    <!-- group: description -->
+    <copyField source="description" dest="text"/>
+
+    <!-- message: subject -->
+    <copyField source="subject" dest="text"/>
+    <!-- message: content -->
+    <copyField source="content" dest="text"/>
+
+    <!-- tag: wikis -->
+    <copyField source="wikis" dest="text"/>
+
+    <types>
+
+        <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+
+        <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+
+        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+
+        <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
+        <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+
+        <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+
+        <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+
+        <fieldtype name="binary" class="solr.BinaryField"/>
+
+        <fieldType name="pint" class="solr.IntField"/>
+        <fieldType name="plong" class="solr.LongField"/>
+        <fieldType name="pfloat" class="solr.FloatField"/>
+        <fieldType name="pdouble" class="solr.DoubleField"/>
+        <fieldType name="pdate" class="solr.DateField" sortMissingLast="true"/>
+
+        <fieldType name="random" class="solr.RandomSortField" indexed="true" />
+
+        <!-- A text field that only splits on whitespace for exact matching of words -->
+        <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <!-- A general text field that has reasonable, generic
+            cross-language defaults: it tokenizes with StandardTokenizer,
+            removes stop words from case-insensitive "stopwords.txt"
+            (empty by default), and down cases.  At query time only, it
+            also applies synonyms. -->
+        <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+                <!-- in this example, we will only use synonyms at query time
+                <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
+                -->
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <!-- A text field with defaults appropriate for English: it
+            tokenizes with StandardTokenizer, removes English stop words
+            (lang/stopwords_en.txt), down cases, protects words from protwords.txt, and
+            finally applies Porter's stemming.  The query time analyzer
+            also applies synonyms from synonyms.txt. -->
+        <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <!-- in this example, we will only use synonyms at query time
+                <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
+                -->
+                <!-- Case insensitive stop word removal.
+                -->
+                <filter class="solr.StopFilterFactory"
+                        ignoreCase="true"
+                        words="lang/stopwords_en.txt"
+                        />
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.EnglishPossessiveFilterFactory"/>
+                <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+                <!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
+                <filter class="solr.EnglishMinimalStemFilterFactory"/>
+                -->
+                <filter class="solr.PorterStemFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+                <filter class="solr.StopFilterFactory"
+                        ignoreCase="true"
+                        words="lang/stopwords_en.txt"
+                        />
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.EnglishPossessiveFilterFactory"/>
+                <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+                <!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
+                <filter class="solr.EnglishMinimalStemFilterFactory"/>
+                -->
+                <filter class="solr.PorterStemFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <!-- A text field with defaults appropriate for English, plus
+            aggressive word-splitting and autophrase features enabled.
+            This field is just like text_en, except it adds
+            WordDelimiterFilter to enable splitting and matching of
+            words on case-change, alpha numeric boundaries, and
+            non-alphanumeric chars.  This means certain compound word
+            cases will work, for example query "wi fi" will match
+            document "WiFi" or "wi-fi".
+            -->
+        <fieldType name="text_en_splitting" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="true">
+            <analyzer type="index">
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <!-- in this example, we will only use synonyms at query time
+                <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
+                -->
+                <!-- Case insensitive stop word removal.
+                -->
+                <filter class="solr.StopFilterFactory"
+                        ignoreCase="true"
+                        words="lang/stopwords_en.txt"
+                        />
+                <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+                <filter class="solr.PorterStemFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+                <filter class="solr.StopFilterFactory"
+                        ignoreCase="true"
+                        words="lang/stopwords_en.txt"
+                        />
+                <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+                <filter class="solr.PorterStemFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <!-- Less flexible matching, but less false matches.  Probably not ideal for product names,
+            but may be good for SKUs.  Can insert dashes in the wrong place and still match. -->
+        <fieldType name="text_en_splitting_tight" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="true">
+            <analyzer>
+                <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
+                <filter class="solr.WordDelimiterFilterFactory" generateWordParts="0" generateNumberParts="0" catenateWords="1" catenateNumbers="1" catenateAll="0"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+                <filter class="solr.EnglishMinimalStemFilterFactory"/>
+                <!-- this filter can remove any duplicate tokens that appear at the same position - sometimes
+                possible with WordDelimiterFilter in conjuncton with stemming. -->
+                <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <!-- Just like text_general except it reverses the characters of
+            each token, to enable more efficient leading wildcard queries. -->
+        <fieldType name="text_general_rev" class="solr.TextField" positionIncrementGap="100">
+            <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.ReversedWildcardFilterFactory" withOriginal="true"
+                maxPosAsterisk="3" maxPosQuestion="2" maxFractionAsterisk="0.33"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+
+        <!-- lowercases the entire field value, keeping it as a single token.  -->
+        <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.KeywordTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory" />
+            </analyzer>
+        </fieldType>
+
+        <!-- selink payloads -->
+        <fieldtype name="payloads" stored="false" indexed="true" class="solr.TextField" >
+            <analyzer>
+                <tokenizer class="solr.KeywordTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory" />
+                <filter class="solr.DelimitedPayloadTokenFilterFactory" encoder="float"/>
+            </analyzer>
+            <similarity class="jp.selink.similarities.PayloadSimilarity" />
+        </fieldtype>
+
+        <!-- since fields of this type are by default not stored or indexed,
+            any data added to them will be ignored outright.  -->
+        <fieldtype name="ignored" stored="false" indexed="false" multiValued="true" class="solr.StrField" />
+
+        <!-- CJK bigram (see text_ja for a Japanese configuration using morphological analysis) -->
+        <fieldType name="text_cjk" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <!-- normalize width before bigram, as e.g. half-width dakuten combine  -->
+                <filter class="solr.CJKWidthFilterFactory"/>
+                <!-- for any non-CJK -->
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.CJKBigramFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <!-- Japanese using morphological analysis (see text_cjk for a configuration using bigramming)
+
+            NOTE: If you want to optimize search for precision, use default operator AND in your query
+            parser config with <solrQueryParser defaultOperator="AND"/> further down in this file.  Use
+            OR if you would like to optimize for recall (default).
+            -->
+        <fieldType name="text_ja" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+            <analyzer>
+                <!-- Kuromoji Japanese morphological analyzer/tokenizer (JapaneseTokenizer)
+
+                    Kuromoji has a search mode (default) that does segmentation useful for search.  A heuristic
+                    is used to segment compounds into its parts and the compound itself is kept as synonym.
+
+                    Valid values for attribute mode are:
+                    normal: regular segmentation
+                    search: segmentation useful for search with synonyms compounds (default)
+                    extended: same as search mode, but unigrams unknown words (experimental)
+
+                    For some applications it might be good to use search mode for indexing and normal mode for
+                    queries to reduce recall and prevent parts of compounds from being matched and highlighted.
+                    Use <analyzer type="index"> and <analyzer type="query"> for this and mode normal in query.
+
+                    Kuromoji also has a convenient user dictionary feature that allows overriding the statistical
+                    model with your own entries for segmentation, part-of-speech tags and readings without a need
+                    to specify weights.  Notice that user dictionaries have not been subject to extensive testing.
+
+                    User dictionary attributes are:
+                    userDictionary: user dictionary filename
+                    userDictionaryEncoding: user dictionary encoding (default is UTF-8)
+
+                    See lang/userdict_ja.txt for a sample user dictionary file.
+
+                    Punctuation characters are discarded by default.  Use discardPunctuation="false" to keep them.
+
+                    See http://wiki.apache.org/solr/JapaneseLanguageSupport for more on Japanese language support.
+                    -->
+                <tokenizer class="solr.JapaneseTokenizerFactory" mode="search"/>
+                <!--<tokenizer class="solr.JapaneseTokenizerFactory" mode="search" userDictionary="lang/userdict_ja.txt"/>-->
+                <!-- Reduces inflected verbs and adjectives to their base/dictionary forms (辞書形) -->
+                <filter class="solr.JapaneseBaseFormFilterFactory"/>
+                <!-- Removes tokens with certain part-of-speech tags -->
+                <filter class="solr.JapanesePartOfSpeechStopFilterFactory" tags="lang/stoptags_ja.txt" />
+                <!-- Normalizes full-width romaji to half-width and half-width kana to full-width (Unicode NFKC subset) -->
+                <filter class="solr.CJKWidthFilterFactory"/>
+                <!-- Removes common tokens typically not useful for search, but have a negative effect on ranking -->
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ja.txt" />
+                <!-- Normalizes common katakana spelling variations by removing any last long sound character (U+30FC) -->
+                <filter class="solr.JapaneseKatakanaStemFilterFactory" minimumLength="4"/>
+                <!-- Lower-cases romaji characters -->
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+    </types>
+
+    <!-- Similarity is the scoring routine for each document vs. a query.
+         A custom Similarity or SimilarityFactory may be specified here, but
+         the default is fine for most applications.
+         For more info: http://wiki.apache.org/solr/SchemaXml#Similarity
+      -->
+
+    <similarity class="solr.SchemaSimilarityFactory"/>
+
+</schema>

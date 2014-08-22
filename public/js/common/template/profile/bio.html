@@ -1,0 +1,21 @@
+<div class="widget-header">
+    <h4 class="widget-title">
+        <i class="ace-icon fa fa-quote-left sl-icon"></i>&nbsp;自己紹介
+    </h4>
+</div>
+<div class="widget-body">
+    <div class="sl-editable widget-main padding-6">
+        <div class="sl-value">
+            <%
+                if (obj.bio) print(obj.bio)
+                else print('<div class="empty-view text-muted bigger-125 center">自己紹介はまだ登録していません<br/>ここをクリックして編集できます</div>');
+            %>
+        </div>
+        <div class="sl-editor">
+            <div class="wysiwyg-editor">
+                <%= obj.bio %>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

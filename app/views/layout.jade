@@ -1,0 +1,16 @@
+doctype html
+html(lang="en", xmlns="http://www.w3.org/1999/xhtml")
+  head(prefix="og: http://ogp.me/ns#")
+    title
+        | #{product.title}
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="description", content="#{product.description}")
+    meta(name="keywords", content="")
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css', media="screen")
+    link(rel='stylesheet', href='/stylesheets/theme-light.css')
+    link(rel='stylesheet', href='/stylesheets/theme-alizarin.css')
+  body
+    block content
+    script(type="text/javascript", src="/javascripts/lib/jquery.min.js")
+    script(type="text/javascript", src="/javascripts/lib/bootstrap.min.js")

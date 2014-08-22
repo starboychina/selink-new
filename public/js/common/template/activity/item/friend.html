@@ -1,0 +1,49 @@
+<%
+    var title = "",
+        content = "";
+
+    if (obj.type == "friend-invited") {
+        title = "お友達になる要請を送信しました";
+        content = "にお友達になる要請を送信しました。";
+    }
+    else if (obj.type == "friend-approved") {
+        title = "お友達作りました";
+        content = "と友達になりました。";
+    }
+
+%>
+
+<div class="timeline-info">
+    <a href="#profile/<%= obj._owner._id %>">
+        <img src="<%= obj._owner.photo %>" />
+    </a>
+</div>
+
+<div class="widget-box widget-color-blue2">
+    <div class="widget-header widget-header-small">
+        <h5 class="widget-title smaller">
+            <i class="ace-icon fa fa-group bigger-110"></i>&nbsp;
+            <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+            <%= title %>
+        </h5>
+        <span class="widget-toolbar no-border">
+            <i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <a href="#profile/<%= obj._owner._id %>">
+                <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+            </a>
+            は
+            <a href="#profile/<%= obj.targetUser[0]._id %>">
+                <strong><%= obj.targetUser[0].firstName %>&nbsp;<%= obj.targetUser[0].lastName %></strong>
+            </a>
+            <%= content %>
+            <a class="pull-right" href="#profile/<%= obj.targetUser[0]._id %>">
+                <img src="<%= obj.targetUser[0].photo %>" style="max-width: 50px;" />
+            </a>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>

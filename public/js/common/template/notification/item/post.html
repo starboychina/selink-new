@@ -1,0 +1,77 @@
+<%
+    var title,
+        icon,
+        comment,
+        reference,
+        content = _.str.stripTags(obj.targetPost.content),
+        summary = _.str.truncate(content, 200);
+
+    if (obj.type == "post-new") {
+        if (obj.targetGroup)
+            title = '「<a class="group-link" href="#group/' + obj.targetGroup._id + '">' + obj.targetGroup.name + '</a>」に新しい記事を投稿しました';
+        else
+            title = "新しい記事を投稿しました";
+
+        icon = "fa-edit green bigger-110";
+    }
+    else if (obj.type == "post-liked") {
+        title = "あなたの投稿に「いいね！」しました";
+        icon = "fa-heart red bigger-110";
+    }
+    else if (obj.type == "post-bookmarked") {
+        title = "あなたの投稿にブックマークを付けました";
+        icon = "fa-star orange2 bigger-110";
+    }
+    else if (obj.type == "post-commented") {
+        title = "あなたの投稿にコメントしました";
+        icon = "fa-comment blue bigger-110";
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+    }
+    else if (obj.type == "comment-replied") {
+        title = "あなたのコメントを返信しました";
+        icon = "fa-reply blue bigger-110";
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+        summary = _.findWhere(obj.targetPost.comments, {_id: obj.targetReplyTo}).content;
+    }
+    else if (obj.type == "comment-liked") {
+        title = "あなたのコメントに「いいね！」しました";
+        icon = "fa-heart red bigger-110";
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+    }
+%>
+
+<div class="profile-activity clearfix isotope-item">
+
+    <a href="#profile/<%= obj._from._id %>">
+        <img class="avatar" src="<%= obj._from.photo %>">
+    </a>
+
+    <a class="user" href="#profile/<%= obj._from._id %>">
+        <%= obj._from.firstName %>&nbsp;<%= obj._from.lastName %>
+    </a>
+    <%= title %>
+
+    <div style="margin-top: 10px;">
+        <i class="ace-icon fa <%= icon %>"></i>
+        <% if (comment) { %>
+            <%= comment.content%>
+            <div class="space-4"></div>
+            <div style="text-indent: 20px;">
+                <i class="ace-icon fa fa-chevron-right blue"></i>
+                <%= summary %>
+            </div>
+        <% } else { %>
+            <%= summary %>
+        <% } %>
+    </div>
+
+    <div class="time"><i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %></div>
+
+    <% if (obj.result) { %>
+        <div class="text-muted pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;確認済み</div>
+    <% } else { %>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-info btn-acknowledge pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;了解</button>
+        </div>
+    <% } %>
+</div>

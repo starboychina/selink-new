@@ -1,0 +1,37 @@
+<%
+    var dispPhoto = obj.photo ? obj.photo : './asset/images/no_photo_male.jpg';
+
+    var progressClass = 'progress-bar';
+
+    if (obj.completeness == 100) {
+        progressClass += ' progress-bar-success';
+    } else if (obj.completeness > 85) {
+
+    } else if (obj.completeness > 70) {
+        progressClass += ' progress-bar-warning';
+    } else if (obj.completeness > 50) {
+        progressClass += ' progress-bar-pink';
+    } else if (obj.completeness > 30) {
+        progressClass += ' progress-bar-purple';
+    } else {
+        progressClass += ' progress-bar-danger';
+    }
+%>
+<span class="fileinput-button profile-picture ace-thumbnails">
+	<li class="sl-avatar">
+		<div>
+		    <img id="avatar" class="img-responsive" src="<%= dispPhoto %>">
+		    <div class="text">
+                <div class="inner">
+                    <i class="ace-icon fa fa-camera-retro fa-2x"></i>
+                    <br/>
+                    クリックして変更
+                </div>
+            </div>
+		    <input id="fileupload" type="file" name="photo" data-url="/users/<%= obj._id %>/photo">
+		</div>
+        <div class="progress" data-percent="<%= obj.completeness %>%">
+            <div class="<%= progressClass %>" style="width: <%= obj.completeness %>%;"></div>
+        </div>
+    </li>
+</span>

@@ -1,0 +1,69 @@
+<div class="widget-box" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+    <div class="widget-header widget-header-flat">
+        <a href="#profile/<%= obj._owner._id %>" title="<%- obj._owner.firstName %>">
+            <img class="avatar" src="<%= obj._owner.photo %>">
+        </a>
+
+        <% if (obj.isAdmin) { %>
+        <div class="widget-toolbar no-border hidden">
+            <a class="yellow dropdown-toggle" data-toggle="dropdown">
+                <i class="ace-icon fa fa-chevron-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-yellow pull-right dropdown-caret dropdown-close">
+                <li>
+                    <a href="#" class="btn-remove">
+                        <i class="ace-icon fa fa-trash-o red bigger-110"></i>&nbsp;&nbsp;削除
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <% } %>
+
+        <h5>
+            <i class="ace-icon fa fa-edit"></i>&nbsp;<%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %>
+        </h5>
+        <h5 class="smaller">
+            <i class="ace-icon fa fa-clock-o"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </h5>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main">
+
+            <% if (obj.isAdmin) { %>
+            <div class="alert alert-danger clearfix" style="display: none;">
+                <strong><i class="ace-icon fa fa-warning bigger-125"></i></strong>&nbsp;
+                この公告を削除します、よろしいですか？
+                <br />
+                <br />
+                <p class="pull-right">
+                    <button class="btn btn-sm btn-warning btn-remove-cancel">取消</button>
+                    <button class="btn btn-sm btn-danger btn-remove-comfirm">削除</button>
+                </p>
+            </div>
+            <% } %>
+
+            <div class="content">
+                <%= obj.content %>
+            </div>
+
+            <br/>
+            <br/>
+
+            <div class="inline btn btn-xs btn-link btn-detail">
+                <% if (obj.isAdmin) { %>
+                    <i class="ace-icon fa fa-pencil bigger-110"></i>&nbsp;
+                    <span>編集</span>
+                <% } else { %>
+                    <i class="ace-icon fa fa-desktop bigger-110"></i>&nbsp;
+                    <span>詳しく読む</span>
+                <% } %>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+</div>

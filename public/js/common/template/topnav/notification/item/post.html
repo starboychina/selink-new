@@ -1,0 +1,66 @@
+<%
+    var title,
+        icon,
+        comment,
+        content = _.str.stripTags(obj.targetPost.content),
+        summary = _.str.truncate(content, 50);
+
+    if (obj.type == "post-new") {
+        if (obj.targetGroup)
+            title = "「" + obj.targetGroup.name + "」に新しい記事を投稿しました";
+        else
+            title = "新しい記事を投稿しました";
+
+        icon = "fa-edit green bigger-110";
+    }
+    else if (obj.type == "post-liked") {
+        title = "あなたの投稿に「いいね！」しました";
+        icon = "fa-heart red bigger-110";
+    }
+    else if (obj.type == "post-bookmarked") {
+        title = "あなたの投稿にブックマークを付けました";
+        icon = "fa-star orange2 bigger-110";
+    }
+    else if (obj.type == "post-commented") {
+        title = "あなたの投稿にコメントしました";
+        icon = "fa-comment blue bigger-110";
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+        summary = _.str.truncate(comment.content, 50);
+    }
+    else if (obj.type == "comment-replied") {
+        title = "あなたのコメントを返信しました";
+        icon = "fa-reply blue bigger-110";
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+        summary = _.str.truncate(comment.content, 50);
+    }
+    else if (obj.type == "comment-liked") {
+        title = "あなたのコメントに「いいね！」しました";
+        icon = "fa-heart red bigger-110";
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+        summary = _.str.truncate(comment.content, 50);
+    }
+%>
+
+<a href="#post/<%= obj.targetPost._id %>">
+    <img src="<%= obj._from.photo %>" class="msg-photo">
+    <span class="msg-body">
+        <span class="msg-title">
+            <span class="msg-time pull-right">
+                <i class="ace-icon fa fa-clock-o"></i>&nbsp;<span><% print(moment(obj.createDate).fromNow()) %></span>
+            </span>
+            <strong>
+                <span class="blue">
+                    <%= obj._from.firstName %>&nbsp;
+                    <%= obj._from.lastName %>&nbsp;
+                </span>
+                <%= title %>
+            </strong>
+            <div class="space-2"></div>
+            <i class="ace-icon fa <%= icon %>"></i>
+            <%= summary %>
+        </span>
+        <span class="msg-time">
+            <button class="btn btn-minier btn-info btn-acknowledge pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;了解</button>
+        </span>
+    </span>
+</a>

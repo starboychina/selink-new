@@ -1,0 +1,21 @@
+<a class="dropdown-toggle" href="/#" data-toggle="dropdown">
+    <span class="ace-icon fa fa-envelope"></span>
+    <% if (obj.messagesNum > 0) { %>
+        <span class="badge badge-success"><%= obj.messagesNum %></span>
+    <% } %>
+</a>
+<ul class="dropdown-navbar dropdown-menu dropdown-menu-right dropdown-caret navbar-green">
+    <li class="dropdown-header">
+        <i class="ace-icon fa fa-envelope-o"></i>&nbsp;メッセージ（未読<span class="title-num"><%= obj.messagesNum %></span>件）
+    </li>
+    <div class="dropdown-body navbar-green"></div>
+    <li class="dropdown-footer">
+        <a href="#mailbox" class="blue">
+            受信トレイへ
+            <i class="ace-icon fa fa-arrow-right"></i>
+        </a>
+    </li>
+</ul>
+<nav id="message_page_nav">
+  <a href="/messages/unread"></a>
+</nav>

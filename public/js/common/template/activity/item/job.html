@@ -1,0 +1,34 @@
+<%
+    var title = "";
+
+    if (obj.type == "job-new") {
+        title = "新しい仕事情報を公開しました";
+    }
+    else if (obj.type == "job-bookmarked") {
+        title = "下記仕事情報にブックマークを付けました";
+    }
+%>
+
+<div class="timeline-info">
+    <a href="#<%= obj.link %>">
+        <img src="<%= obj._owner.photo %>" />
+    </a>
+</div>
+
+<div class="widget-box widget-color-red">
+    <div class="widget-header widget-header-small">
+        <h5 class="widget-title smaller">
+            <i class="ace-icon fa fa-briefcase bigger-110"></i>&nbsp;
+            <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+            <%= title %>
+        </h5>
+        <span class="widget-toolbar no-border">
+            <i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <strong><a href="#job/<%= obj.targetJob._id %>"><%= obj.targetJob.name %></a></strong>
+        </div>
+    </div>
+</div>

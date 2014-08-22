@@ -1,0 +1,21 @@
+<a class="dropdown-toggle" href="/#" data-toggle="dropdown">
+    <span class="ace-icon fa fa-bell"></span>
+    <% if (obj.notificationsNum > 0) { %>
+        <span class="badge badge-danger"><%= obj.notificationsNum %></span>
+    <% } %>
+</a>
+<ul class="dropdown-navbar dropdown-menu dropdown-menu-right dropdown-caret navbar-pink">
+    <li class="dropdown-header">
+        <i class="ace-icon fa fa-bell-o"></i>&nbsp;通知（<span class="title-num"><%= obj.notificationsNum %></span>件）
+    </li>
+    <div class="dropdown-body navbar-pink"></div>
+    <li class="dropdown-footer">
+        <a href="#notification" class="blue">
+            全通知へ
+            <i class="ace-icon fa fa-arrow-right"></i>
+        </a>
+    </li>
+</ul>
+<nav id="notification_page_nav">
+  <a href="/notifications/unconfirmed"></a>
+</nav>

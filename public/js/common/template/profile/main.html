@@ -1,0 +1,56 @@
+<div id="sl-basic-info" class="row">
+    <div class="col-xs-12 col-md-6 no-padding" style="border: 1px solid #CCC;">
+
+        <div id="cover"></div>
+
+        <div class="col-xs-4 center" style="margin-top: -60px;">
+
+            <div id="photo"></div>
+
+            <div class="space-12"></div>
+
+            <div class="infobox infobox-blue infobox-small infobox-dark">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-edit"></i>
+                </div>
+                <div class="infobox-data">
+                    <div class="infobox-content"><%= selink.user.get('posts').length %>件</div>
+                    <div class="infobox-content">投稿</div>
+                </div>
+            </div>
+
+            <div class="infobox infobox-green infobox-small infobox-dark">
+                <div class="infobox-icon">
+                    <i class="ace-icon fa fa-group"></i>
+                </div>
+                <div class="infobox-data">
+                    <div class="infobox-content"><%= selink.user.get('friends').length %>人</div>
+                    <div class="infobox-content">友達</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-8" style="margin-top: 10px;">
+            <div id="name" class="sl-editable"></div>
+            <div id="telno" class="sl-editable"></div>
+            <div id="website" class="sl-editable"></div>
+            <div id="address" class="sl-editable"></div>
+            <div id="nearestst" class="sl-editable"></div>
+            <div id="nationality" class="sl-editable"></div>
+            <div id="birthday" class="sl-editable"></div>
+            <div id="gender" class="sl-editable"></div>
+            <div id="marriage" class="sl-editable"></div>
+        </div>
+
+        <div id="bio" class="col-xs-12 padding-6"></div>
+
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div id="languages"></div>
+        <div id="skills"></div>
+        <div id="qualifications"></div>
+        <div id="educations"></div>
+        <div id="employments"></div>
+    </div>
+</div>

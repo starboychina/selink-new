@@ -1,0 +1,16 @@
+<div class="sl-value bigger-180">
+    <%
+        if (obj.firstName || obj.lastName)
+            print(obj.firstName + " " + obj.lastName);
+        else
+            print('<span class="text-muted">氏名</span>');
+    %>
+</div>
+<div class="sl-editor row">
+    <div class="col-xs-6 col-md-6 form-group">
+        <input type="text" class="col-xs-12 text-center" placeholder="姓" name="firstName" value="<%- obj.firstName %>">
+    </div>
+    <div class="col-xs-6 col-md-6 form-group">
+        <input type="text" class="col-xs-12 text-center" placeholder="名" name="lastName" value="<%- obj.lastName %>">
+    </div>
+</div>

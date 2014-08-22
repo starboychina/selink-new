@@ -1,0 +1,13 @@
+<blockquote>
+    <p>
+        <i class="ace-icon fa fa-certificate sl-icon bigger-110 orange2"></i>&nbsp;
+        <span class="name-value">
+            <%= obj.name %>
+        </span>
+    </p>
+    <% if (obj.acquireDate) { %>
+        <small>
+            取得日： <%= moment(obj.acquireDate).format('YYYY年M月') %>
+        </small>
+    <% } %>
+</blockquote>

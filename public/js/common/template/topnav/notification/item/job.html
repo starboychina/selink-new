@@ -1,0 +1,40 @@
+<%
+    var title,
+        icon,
+        content;
+
+    if (obj.type == "job-new") {
+        title = "新しい仕事情報を投稿しました";
+        icon = "fa-briefcase blue bigger-110";
+        content = obj.targetJob.name;
+    }
+    else if (obj.type == "job-bookmarked") {
+        title = "あなたの仕事情報にブックマークを付けました";
+        icon = "fa-star orange2 bigger-110";
+        content = obj.targetJob.name;
+    }
+%>
+
+<a href="#<%= obj.link %>">
+    <img src="<%= obj._from.photo %>" class="msg-photo">
+    <span class="msg-body">
+        <span class="msg-title">
+            <span class="msg-time pull-right">
+                <i class="ace-icon fa fa-clock-o"></i>&nbsp;<span><% print(moment(obj.createDate).fromNow()) %></span>
+            </span>
+            <strong>
+                <span class="blue">
+                    <%= obj._from.firstName %>&nbsp;
+                    <%= obj._from.lastName %>&nbsp;
+                </span>
+                <%= title %>
+            </strong>
+            <div class="space-2"></div>
+            <i class="ace-icon fa <%= icon %>"></i>
+            <%= content %>
+        </span>
+        <span class="msg-time">
+            <button class="btn btn-minier btn-info btn-acknowledge pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;了解</button>
+        </span>
+    </span>
+</a>

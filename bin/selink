@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+// var debug = require('debug')('selink');
+var app = require('../app');
+
+function startSELink() {
+
+    var server = app.listen(process.env.PORT || 8081, function() {
+      console.log('Express server listening on port ' + server.address().port);
+    });
+}
+
+if(require.main === module){
+    // application run directly; start app server
+    startSELink();
+} else {
+    // application imported as a module via "require": export function
+    // to create server
+    module.exports = startSELink;
+}

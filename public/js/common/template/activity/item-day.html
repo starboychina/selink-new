@@ -1,0 +1,23 @@
+<%
+    var labelColor = '',
+        labelText = '';
+
+    if (moment().isSame(moment(obj.date, 'YYYY/MM/DD'), 'day')) {
+        labelColor = 'label-success';
+        labelText = '本日';
+    } else if (moment().subtract('days', 1).isSame(moment(obj.date, 'YYYY/MM/DD'), 'day')) {
+        labelColor = 'label-primary';
+        labelText = '昨日';
+    } else {
+        labelColor = 'label-grey';
+        labelText = moment(obj.date, 'YYYY/MM/DD').format('LL');
+    }
+
+%>
+
+<div class="timeline-label">
+    <span class="label <%= labelColor %> arrowed-in-right label-lg">
+        <b><%= labelText %></b>
+    </span>
+</div>
+<div class="timeline-items"></div>

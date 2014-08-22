@@ -1,0 +1,244 @@
+<div class="modal-content">
+
+    <!-- modal body -->
+    <div class="modal-header" id="group-create-wizard" data-target="#step-container">
+
+        <!-- modal close button -->
+        <button class="close" data-dismiss="modal" aria-hidden="true">x</button>
+
+        <!-- step indicator -->
+        <ul class="wizard-steps">
+            <li data-target="#step1" class="active">
+                <span class="step">1</span>
+                <span class="title">種別選択</span>
+            </li>
+
+            <li data-target="#step2">
+                <span class="step">2</span>
+                <span class="title">グループ名</span>
+            </li>
+
+            <li data-target="#step3">
+                <span class="step">3</span>
+                <span class="title">説明文</span>
+            </li>
+
+            <li data-target="#step4">
+                <span class="step">4</span>
+                <span class="title">友達招待</span>
+            </li>
+
+            <li data-target="#step5">
+                <span class="step">5</span>
+                <span class="title">他の人を招待</span>
+            </li>
+
+            <li data-target="#step6">
+                <span class="step">6</span>
+                <span class="title">作成</span>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- modal body -->
+    <div class="modal-body step-content pos-rel" id="step-container">
+
+        <!-- step 1, group type selection -->
+        <div class="step-pane active" id="step1">
+
+            <h4 class="green"><strong>グループ種別を選択してください</strong></h4>
+            <div class="space-8"></div>
+
+            <div class="col-xs-12 col-md-4" style="padding: 12px;">
+                <div id="public-area" class="alert alert-success">
+                    <div class="col-xs-6 col-md-12 center">
+                        <button class="btn btn-app btn-success no-radius">
+                            <i class="ace-icon fa fa-globe"></i>
+                            公開
+                        </button>
+                    </div>
+
+                    <div class="col-xs-6 col-md-12">
+                        <ul class="list-unstyled spaced2">
+                            <li>
+                                <i class="ace-icon fa fa-check green"></i>
+                                グループ情報はSELinkで掲載
+                            </li>
+                            <li>
+                                <i class="ace-icon fa fa-check green"></i>
+                                誰でも参加可能
+                            </li>
+                            <li>
+                                <i class="ace-icon fa fa-check green"></i>
+                                イベント開催可能
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4" style="padding: 12px;">
+                <div id="protected-area" class="alert">
+                    <div class="col-xs-6 col-md-12 center">
+                        <button class="btn btn-app btn-info no-radius">
+                            <i class="ace-icon fa fa-envelope"></i>
+                            申請要
+                        </button>
+                    </div>
+
+                    <div class="col-xs-6 col-md-12">
+                        <ul class="list-unstyled spaced2">
+                            <li>
+                                <i class="ace-icon fa fa-check green"></i>
+                                グループ情報はSELinkで掲載
+                            </li>
+                            <li>
+                                <i class="ace-icon fa fa-warning orange"></i>
+                                参加するには、申請・承認が必要
+                            </li>
+                            <li>
+                                <i class="ace-icon fa fa-check green"></i>
+                                イベント開催可能
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4" style="padding: 12px;">
+                <div id="private-area" class="alert">
+                    <div class="col-xs-6 col-md-12 center">
+                        <button class="btn btn-app btn-warning no-radius">
+                            <i class="ace-icon fa fa-lock"></i>
+                            非公開
+                        </button>
+                    </div>
+
+                    <div class="col-xs-6 col-md-12">
+                        <ul class="list-unstyled spaced2">
+                            <li>
+                                <i class="ace-icon fa fa-warning orange"></i>
+                                グループ情報はSELinkで掲載しません
+                            </li>
+                            <li>
+                                <i class="ace-icon fa fa-warning orange"></i>
+                                招待されないと参加できません
+                            </li>
+                            <li>
+                                <i class="ace-icon fa fa-check green"></i>
+                                イベント開催可能
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- step 2. group name input -->
+        <div class="step-pane" id="step2">
+
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+                <h4 class="green"><strong>グループ名を決めてください</strong></h4>
+                <div class="space-8"></div>
+                <ul class="text-primary spaced2">
+                    <li>
+                        グループ立ち上げるため、グループ名称は必須です
+                    </li>
+                    <li>
+                        グループ情報がSELinkで掲載されるとき、グループ名は表示します
+                    </li>
+                    <li>
+                        グループ名称はグループの目的、参加者の特徴、組織または地域の名前など情報を含めることお勧めです
+                    </li>
+                    <li>
+                        グループ名称はグループ立ち上げた後も編集可能です
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-16"></div>
+
+            <div class="form-group col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="ace-icon fa fa-group"></i>
+                    </span>
+                    <input class="form-control group-name" type="text" placeholder="グループ名称">
+                </div>
+            </div>
+        </div>
+
+        <!-- step 3, group description input -->
+        <div class="step-pane" id="step3">
+
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+                <h4 class="green"><strong>説明文を入力しましょう</strong></h4>
+                <div class="space-8"></div>
+                <ul class="text-primary spaced2">
+                    <li>
+                        グループ説明文は、グループの内容、目的などを参加者たちへ説明する紹介文です
+                    </li>
+                    <li>
+                        グループ立ち上げるには、説明文は必須ではないですが、良い印象を残すために、入力する方がお勧めです
+                    </li>
+                    <li>
+                        説明文はグループ立ち上げた後も編集可能です
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-16"></div>
+
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+                <textarea style="width: 100%; height: 150px;"></textarea>
+            </div>
+
+        </div>
+
+        <!-- step 4, invite friends -->
+        <div class="step-pane" id="step4"></div>
+
+        <!-- step 5, invite other people -->
+        <div class="step-pane" id="step5"></div>
+
+        <!-- step 6, confirm -->
+        <div class="step-pane" id="step6">
+
+            <div class="input-group col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+                <h4 class="green"><strong>下記内容でよろしければ、「作成」ボタンをクリックしてください</strong></h4>
+            </div>
+
+            <div class="space-8"></div>
+
+            <div id="confirm"></div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+
+    <!-- modal footer -->
+    <div class="modal-footer wizard-actions">
+
+        <button type="button" class="btn-prev btn">
+            <i class="ace-icon fa fa-arrow-left"></i>
+            前へ
+        </button>
+
+        <button type="button" class="btn-next btn btn-success" data-last="作成">
+            次へ
+            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+        </button>
+
+    </div>
+
+</div>

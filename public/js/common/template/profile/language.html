@@ -1,0 +1,29 @@
+<%
+    var weightVal = 0;
+    if (obj.weight && obj.weight > 0)
+        weightVal = obj.weight;
+%>
+
+<div class="knob-container inline">
+    <input type="text" class="input-small knob" value="<%= weightVal %>" data-width="110" data-height="90" data-angleOffset="-125" data-angleArc="250" data-thickness=".2" />
+</div>
+<div class="sl-value">
+    <%
+        if (obj.language) print(obj.language)
+        else print('<span class="text-muted">未選択</span>');
+    %>
+</div>
+<div class="sl-editor">
+    <div class="col-sm-12 input-group">
+        <select name="language">
+            <option value=""> -- </option>
+            <% _.each(obj.languageList, function(option) {
+                var selected = (option == obj.language) ? 'selected' : '';
+                print('<option value="' + option + '" ' + selected + '>' + option + '</option>' );
+            }); %>
+        </select>
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-danger btn-remove btn-xs"><i class="ace-icon fa fa-trash-o bigger-150"></i></button>
+        </span>
+    </div>
+</div>

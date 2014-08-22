@@ -1,0 +1,16 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-car sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.nearestSt)
+                print(obj.nearestSt);
+            else
+                print('<span class="text-muted">最寄駅</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <input type="text" class="col-xs-12" placeholder="最寄駅" name="nearestSt" value="<%= obj.nearestSt %>">
+    </div>
+</div>

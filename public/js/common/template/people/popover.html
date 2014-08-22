@@ -1,0 +1,15 @@
+<div class="row no-margin">
+    <div class="col-xs-5 profile-picture">
+        <img src="<%= obj.photo %>"/>
+    </div>
+    <div class="col-xs-7" style="margin-top: 40px;">
+        <strong><%= obj.firstName %>&nbsp;<%= lastName %></strong>
+
+        <% if (obj.type == "employer") { %>
+            <br/><span class="label label-success">営業担当</span>
+        <% } else if (obj.type == "admin") { %>
+            <br/><span class="label label-warning">管理者</span>
+        <% } %>
+
+    </div>
+</div>

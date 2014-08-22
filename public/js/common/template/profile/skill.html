@@ -1,0 +1,66 @@
+<%
+    var length = obj.weight ? obj.weight : 20,
+        progressClass = 'progress-bar-purple',
+        sliderClass = 'ui-slider-purple',
+        indecatorClass = 'purple',
+        humanize = '（知識あり）';
+
+
+    if (obj.weight > 85) {
+        progressClass = 'progress-bar-success';
+        sliderClass = 'ui-slider-green';
+        indecatorClass = 'green';
+        humanize = '（マスタ）';
+
+    } else if (obj.weight > 70) {
+        progressClass = 'progress-bar';
+        sliderClass = 'ui-slider';
+        indecatorClass = 'blue';
+        humanize = '（シニア）';
+
+    } else if (obj.weight > 50) {
+        progressClass = 'progress-bar-warning';
+        sliderClass = 'ui-slider-orange';
+        indecatorClass = 'orange';
+        humanize = '（ジュニア）';
+
+    } else if (obj.weight > 30) {
+        progressClass = 'progress-bar-danger';
+        sliderClass = 'ui-slider-red';
+        indecatorClass = 'red';
+        humanize = '（経験あり）';
+    }
+
+%>
+
+<div class="sl-value progress">
+    <div class="progress-bar <%= progressClass %>" style="width:<%= length %>%">
+        <span class="pull-left">
+            <%
+                if (obj.skill) print('<i class="ace-icon fa fa-gear sl-icon"></i>&nbsp;' + obj.skill)
+                else print('<span class="light-grey">未選択</span>');
+            %>
+        </span>
+        <span class="pull-right">
+            <%
+                print(length + "pt")
+            %>
+        </span>
+    </div>
+</div>
+<div class="sl-editor">
+    <div class="input-icon input-icon-right form-group">
+        <input type="text" name="skill" placeholder="スキル名" value="<%- obj.skill %>">
+        <i class="ace-icon fa fa-nothing <%= indecatorClass %>"><%= length %>pt<%= humanize %></i>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12 input-group">
+            <span class="input-group-addon">
+                <div class="ui-slider <%= sliderClass %> sl-slider"></div>
+            </span>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-danger btn-remove btn-xs"><i class="ace-icon fa fa-trash-o bigger-150"></i></button>
+            </span>
+        </div>
+    </div>
+</div>

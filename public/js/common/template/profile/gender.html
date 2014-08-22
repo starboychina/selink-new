@@ -1,0 +1,25 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-leaf sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.gender)
+                print(obj.gender);
+            else
+                print('<span class="text-muted">性別</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-sm btn-primary <% if (obj.gender === '男') print('active') %>">
+                <i class="ace-icon fa fa-male bigger-110"></i>&nbsp;&nbsp;男
+                <input type="radio" name="gender" value="男" />
+            </label>
+            <label class="btn btn-sm btn-pink <% if (obj.gender === '女') print('active') %>">
+                <i class="ace-icon fa fa-female bigger-110"></i>&nbsp;&nbsp;女
+                <input type="radio" name="gender" value="女" />
+            </label>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<%
+    var icon,
+        content,
+        groupName = obj.targetGroup.name,
+        resultStr = "確認済み";
+
+    if (obj.type == "group-new") {
+        icon = "fa-group blue bigger-110";
+        content = "グループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>を立ち上げました";
+    }
+    else if (obj.type == "group-invited") {
+        icon = "fa-ticket red bigger-110";
+        content = "あなたをグループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>に招待しました";
+
+        if (obj.result == "accepted")
+            resultStr = "参加済み";
+        else if (obj.result == "refused")
+            resultStr = "拒否済み";
+    }
+    else if (obj.type == "group-joined") {
+        icon = "fa-sign-in green bigger-110";
+        content = "グループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>に参加しました";
+    }
+    else if (obj.type == "group-refused") {
+        icon = "fa-sign-out purple bigger-110";
+        content = "グループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>の招待を拒否しました";
+    }
+    else if (obj.type == "group-applied") {
+        icon = "fa-calendar-o blue bigger-110";
+        content = "グループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>を参加申請しました";
+    }
+    else if (obj.type == "group-approved") {
+        icon = "fa-smile-o green bigger-110";
+        content = "グループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>の参加申請を承認しました";
+    }
+    else if (obj.type == "group-declined") {
+        icon = "fa-frown-o purple bigger-110";
+        content = "グループ<a class='group-link' href='#group/" + obj.targetGroup._id + "'><strong>「" + groupName + "」</strong></a>の参加申請を拒否しました";
+    }
+%>
+
+<div class="profile-activity clearfix isotope-item">
+    <div>
+        <a href="#profile/<%= obj._from._id %>">
+            <img class="avatar pull-left" src="<%= obj._from.photo %>">
+        </a>
+
+        <a class="user" href="#profile/<%= obj._from._id %>">
+            <%= obj._from.firstName %>&nbsp;<%= obj._from.lastName %>
+        </a>
+
+        <p>
+            <i class="ace-icon fa <%= icon %>"></i>
+            <%= content %>
+        </p>
+
+        <div class="time"><i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %></div>
+    </div>
+    <% if (obj.result) { %>
+        <div class="text-muted pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;<%= resultStr %></div>
+    <% } else if (obj.type == "group-invited") { %>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-pink btn-refuse"><i class="ace-icon fa fa-times"></i>&nbsp;拒否</button>
+            <button class="btn btn-sm btn-success btn-join"><i class="ace-icon fa fa-check"></i>&nbsp;参加</button>
+        </div>
+    <% } else { %>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-info btn-acknowledge pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;了解</button>
+        </div>
+    <% } %>
+</div>

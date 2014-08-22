@@ -1,0 +1,182 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="blue">
+            <i class="ace-icon fa fa-gears bigger-110"></i>&nbsp;&nbsp;
+            <strong>メール通知設定</strong>
+        </h4>
+    </div>
+
+    <div class="modal-body overflow-visible blue">
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-rss bigger-110 red"></i>&nbsp;&nbsp;システム通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="systemNotification" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.systemNotification) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-user bigger-110 purple"></i>&nbsp;&nbsp;友達招待通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="friendInvitation" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.friendInvitation) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-star bigger-110 orange"></i>&nbsp;&nbsp;友達招待承認通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="invitationAccpected" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.invitationAccpected) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-user bigger-110 purple"></i>&nbsp;&nbsp;グループ招待通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="groupInvitation" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.groupInvitation) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-user bigger-110 purple"></i>&nbsp;&nbsp;グループ参加通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="groupJoined" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.groupJoined) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-user bigger-110 purple"></i>&nbsp;&nbsp;グループ参加申請通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="groupApplied" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.groupApplied) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-user bigger-110 purple"></i>&nbsp;&nbsp;グループ参加申請承認通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="groupApplied" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.groupApplied) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-edit bigger-110 pink"></i>&nbsp;&nbsp;友達新規投稿通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="newPost" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.newPost) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-briefcase bigger-110 pink"></i>&nbsp;&nbsp;仕事情報通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="newJob" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.newJob) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-heart bigger-110 red"></i>&nbsp;&nbsp;いいね！された通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="postLiked" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.postLiked) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-heart bigger-110 red"></i>&nbsp;&nbsp;ブックマークされた通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="postBookmarked" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.postBookmarked) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-comments bigger-110 green"></i>&nbsp;&nbsp;コメントされた通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="postCommented" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.postCommented) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-comments bigger-110 green"></i>&nbsp;&nbsp;返信された通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="commentReplied" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.commentReplied) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-7 align-right">
+                <i class="ace-icon fa fa-comments bigger-110 green"></i>&nbsp;&nbsp;コメント「いいね！」された通知メール
+            </div>
+            <div class="col-xs-5">
+                <label>
+                    <input name="commentLiked" class="ace ace-switch ace-switch-4" type="checkbox" <% if (obj.mailSetting.commentLiked) print("checked"); %> />
+                    <span class="lbl"></span>
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+</div>

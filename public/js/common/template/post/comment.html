@@ -1,0 +1,88 @@
+<%
+    var isMine = (obj._owner._id === selink.user.id) ? true : false,
+        isLike = (_.indexOf(obj.like, selink.user.id) >= 0) ? true : false;
+%>
+
+<!-- user avatar -->
+<div class="user">
+    <img src="<%= obj._owner.photo%>" />
+</div>
+
+<div class="body">
+
+    <!-- comment time -->
+    <div class="time">
+        <i class="ace-icon fa fa-clock-o"></i>
+        <span class="blue"><%= moment(obj.createDate).fromNow() %></span>
+    </div>
+
+    <!-- author name -->
+    <div class="name">
+        <a href="#profile/<%= obj._owner._id %>">
+            <%= obj._owner.firstName %>
+            <%= obj._owner.lastName %>
+        </a>
+    </div>
+
+    <!-- comment content -->
+    <div class="text">
+        <% if (obj.replyTo) { %>
+        <a href="#profile/<%= obj.replyTo._id %>">
+            <span class="label label-sm label-info arrowed-right">@
+                <%= obj.replyTo.firstName %>
+                <%= obj.replyTo.lastName %>
+            </span>
+        </a>
+        <% } %>
+        <span class="comment-text"><%= obj.content %></span>
+    </div>
+
+    <div class="editor" style="display: none;">
+        <textarea name="edit" style="width: 100%;"><%= obj.content.replace(/<br\s*[\/]?>/gi, '\n') %></textarea>
+        <button class="btn btn-xs btn-success btn-comment-edit-comfirm">確定</button>
+        <button class="btn btn-xs btn-warning btn-comment-edit-cancel">取消</button>
+    </div>
+
+    <!-- if this comment is mine -->
+    <% if (isMine) { %>
+        <!-- remove confirm dialog -->
+        <div class="alert alert-danger clearfix" style="display: none; margin: 0px;">
+            <i class="ace-icon fa fa-warning"></i>
+            <strong>このコメントを削除します、よろしいですか？</strong>
+            <div class="space-10"></div>
+            <p class="pull-right">
+                <button class="btn btn-sm btn-warning btn-comment-remove-cancel">取消</button>
+                <button class="btn btn-sm btn-danger btn-comment-remove-comfirm">削除</button>
+            </p>
+        </div>
+    <% } %>
+
+    <!-- action buttons -->
+    <div class="action">
+
+        <!-- if the comment is mine -->
+        <% if (isMine) { %>
+            <!-- edit button -->
+            <i class="btn-edit icon-only ace-icon fa fa-pencil green blink"></i>
+            <!-- remove button -->
+            <i class="btn-comment-remove icon-only ace-icon fa fa-trash-o red blink"></i>
+
+        <!-- someone's comment -->
+        <% } else { %>
+            <!-- reply button -->
+            <i class="btn-reply icon-only ace-icon fa fa-reply blue blink"></i>
+        <% } %>
+
+        <!-- like button -->
+        <i class="btn-comment-like icon-only ace-icon fa <% if (isLike) print('fa-heart'); else print('fa-heart-o'); %> red <% if (obj.like.length == 0) print('blink'); %>">
+        </i>
+
+        <span class="like-num red">
+            <% if (obj.like.length > 0 ) { %>
+                <%= obj.like.length %>
+            <% } %>
+        </span>
+
+    </div>
+
+</div>

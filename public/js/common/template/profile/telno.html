@@ -1,0 +1,16 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-mobile-phone bigger-140 sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.telNo)
+                print(obj.telNo);
+            else
+                print('<span class="text-muted">Tel.</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <input type="text" class="input-medium" placeholder="電話番号" name="telNo" value="<%= obj.telNo %>">
+    </div>
+</div>

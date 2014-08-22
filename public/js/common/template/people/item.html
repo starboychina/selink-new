@@ -1,0 +1,76 @@
+<%
+    var isFriend = (_.indexOf(selink.user.get('friends'), obj._id) >= 0) ? true : false,
+        isInvited = (_.indexOf(selink.user.get('invited'), obj._id) >= 0) ? true : false,
+        bioSummary = obj.bio ? _.str.truncate(bio, 100, '...') : "";
+%>
+
+<!-- people item -->
+<div style="border: 1px solid #CCC; margin-top: 3px; margin-bottom: 3px;" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+
+    <!-- header -->
+    <div style="position: relative;">
+
+        <!-- cover -->
+        <div style="max-height: 100px; overflow: hidden;">
+            <a href="#profile/<%= obj._id %>" style="">
+                <img src="<%= obj.cover %>" style="width: 100%;"/>
+            </a>
+        </div>
+
+        <!-- avatar -->
+        <a href="#profile/<%= obj._id %>" style="position: absolute; top: 20%; right: 5px;">
+            <img class="avatar" src="<%= obj.photo %>" style="border-radius: 100%; border: 2px solid white;">
+        </a>
+
+        <!-- title -->
+        <span class="label label-xlg label-primary arrowed-in-right" style="position: absolute; top: 0px;"><%= obj.title %></span>
+
+    </div>
+
+    <!-- body -->
+    <blockquote style="margin-bottom: 0px;">
+
+        <!-- name -->
+        <p>
+            <%= obj.firstName %>
+            <%= obj.lastName %>
+        </p>
+
+        <!-- bio -->
+        <% if (obj.bio) { %>
+            <small><%= bioSummary %></small>
+        <% } %>
+
+        <!-- final employment -->
+        <% if (obj.employments.length) { %>
+            <h5 class="blue">
+                <i class="ace-icon fa fa-briefcase"></i>
+                <%= _.last(obj.employments).company %>
+            </h5>
+        <% } %>
+
+        <!-- final education -->
+        <% if (obj.educations.length) { %>
+            <h5 class="green">
+                <i class="ace-icon fa fa-university"></i>
+                <%= _.last(obj.educations).school %>
+            </h5>
+        <% } %>
+
+    </blockquote>
+
+    <% if (!isFriend && !isInvited) { %>
+        <!-- footer -->
+        <div class="clearfix" style="padding: 12px;">
+
+            <!-- operation buttons -->
+            <button class="btn btn-info btn-block btn-friend"
+                    data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;リクエストを送信しています・・・">
+                <i class="ace-icon fa fa-plus light-blue"></i>
+                友達
+            </button>
+
+        </div>
+    <% } %>
+
+</div>

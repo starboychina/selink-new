@@ -1,0 +1,90 @@
+<%
+    var progressClass = 'progress-bar';
+
+    if (obj.completeness == 100) {
+        progressClass += ' progress-bar-success';
+    } else if (obj.completeness > 85) {
+
+    } else if (obj.completeness > 70) {
+        progressClass += ' progress-bar-warning';
+    } else if (obj.completeness > 50) {
+        progressClass += ' progress-bar-pink';
+    } else if (obj.completeness > 30) {
+        progressClass += ' progress-bar-purple';
+    } else {
+        progressClass += ' progress-bar-danger';
+    }
+%>
+
+<div class="navbar-header pull-left">
+
+    <a href="#" class="navbar-brand">
+        <small>SELink</small>
+    </a>
+
+    <button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons">
+        <span class="sr-only">Toggle user menu</span>
+        <img src="<%= obj.photo %>"/>
+    </button>
+
+    <button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".sidebar">
+        <span class="sr-only">Toggle sidebar</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+
+</div>
+
+<div class="navbar-buttons navbar-header pull-right navbar-collapse collapse">
+    <ul class="nav ace-nav">
+
+        <li id="event-nav"></li>
+
+        <li id="notification-nav"></li>
+
+        <li id="message-nav"></li>
+
+        <li class="light-blue">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                <img class="nav-user-photo" src="<%= obj.photo %>">
+                <span class="user-info"><small>こんにちは,</small><%= obj.firstName %>さん</span>
+            </a>
+            <ul class="dropdown-navbar dropdown-menu dropdown-menu-right dropdown-caret" style="width: 240px;">
+                <li class="dropdown-header">
+                    <i class="ace-icon fa fa-user"></i>&nbsp;アカウント
+                </li>
+                <li>
+                    <a href="#profile">
+                        <div class="clearfix">
+                            <span class="pull-left">プロフィール完成度</span>
+                            <span class="pull-right completeness-value"><%= obj.completeness %>%</span>
+                        </div>
+                        <div class="progress progress-mini progress-striped active">
+                            <div style="width:<%= obj.completeness %>%" class="<%= progressClass %>"></div>
+                        </div>
+                    </a>
+                </li>
+                <li><a href="#activity" id="activity"><i class="btn btn-xs btn-warning ace-icon fa fa-rss"></i>&nbsp;友達アクティビティ</a></li>
+                <li><a href="#" id="setting"><i class="btn btn-xs btn-primary ace-icon fa fa-cogs"></i>&nbsp;各種設定</a></li>
+                <li><a href="#" id="password"><i class="btn btn-xs btn-success ace-icon fa fa-key"></i>&nbsp;パスワード変更</a></li>
+                <li class="dropdown-footer">
+                    <a href="/logout">ログアウト&nbsp;<i class="ace-icon fa fa-sign-out"></i></a>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+</div>
+
+<nav role="navigation" class="navbar-menu pull-left navbar-collapse collapse">
+    <!-- you can also have a menu here -->
+    <form class="navbar-form navbar-left form-search" role="search">
+        <div class="form-group">
+            <input type="text" placeholder="検索" style="font-size: 12px;" />
+        </div>
+        <button type="button" class="btn btn-xs btn-info2 btn-search">
+            <i class="ace-icon fa fa-search icon-only"></i>
+        </button>
+    </form>
+</nav>

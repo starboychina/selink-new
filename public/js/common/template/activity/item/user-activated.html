@@ -1,0 +1,24 @@
+<div class="timeline-info">
+    <a href="#profile/<%= obj._owner._id %>">
+        <img src="<%= obj._owner.photo %>" />
+    </a>
+</div>
+
+<div class="widget-box widget-color-green3">
+    <div class="widget-header widget-header-small">
+        <h5 class="widget-title smaller">
+            <i class="ace-icon fa fa-star bigger-110 light-orange"></i>&nbsp;SELinkへようこそ！
+        </h5>
+        <span class="widget-toolbar no-border">
+            <i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <a href="#profile/<%= obj._owner._id %>">
+                <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+            </a>
+            はSELinkを参加しました！
+        </div>
+    </div>
+</div>

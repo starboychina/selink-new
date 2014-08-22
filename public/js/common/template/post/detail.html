@@ -1,0 +1,130 @@
+<div class="modal-content">
+
+    <!-- modal body -->
+    <div class="row modal-body overflow-visible">
+
+        <!-- post content -->
+        <div class="col-sm-12 col-md-8 post-content">
+
+            <!-- if this post is mine -->
+            <% if (obj.isMine) { %>
+                <!-- warp the content with wysiwyg editor -->
+                <div class="wysiwyg-editor">
+                    <%= obj.content %>
+                </div>
+            <% } else { %>
+                <!-- or just display plain content -->
+                <%= obj.content %>
+            <% } %>
+        </div>
+
+        <!-- post relate info -->
+        <div class="col-sm-12 col-md-4 post-comment">
+
+            <div class="widget-box transparent">
+
+                <div class="widget-header">
+
+                    <!-- author photo -->
+                    <a href="#profile/<%= obj._owner._id %>">
+                        <img class="avatar" src="<%= obj._owner.photo %>">
+                    </a>
+
+                    <!-- author name -->
+                    <h5>
+                        <i class="ace-icon fa fa-edit"></i>&nbsp;
+                        <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+                    </h5>
+
+                    <!-- post time -->
+                    <h6>
+                        <i class="ace-icon fa fa-clock-o"></i>&nbsp;
+                        <%= moment(obj.createDate).calendar() %>
+                    </h6>
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="widget-body">
+
+                    <!-- post comments -->
+                    <div class="widget-main dialogs"></div>
+
+                    <!-- comment area -->
+                    <div class="widget-toolbox padding-4 clearfix <% if (!obj.setting.commentable) print('hidden') %>">
+
+                        <!-- user photo -->
+                        <img class="photo-area pull-left" src="<%= selink.user.get('photo') %>" style="max-width: 55px; display: none;">
+
+                        <!-- comment text area -->
+                        <div class="comment-area">
+                            <textarea name="comment" placeholder="コメントを書く" style="width: 100%"/></textarea>
+                        </div>
+
+                        <div class="btn-area pull-right" style="margin-top: 4px; display: none;">
+                            <!-- post button -->
+                            <button class="btn btn-sm btn-success btn-comment disabled">
+                                <i class="ace-icon fa fa-comment bigger-125"></i>&nbsp;コメントする
+                            </button>
+                            <!-- cancel button -->
+                            <button class="btn btn-sm btn-yellow btn-cancel">
+                                <i class="ace-icon fa fa-power-off bigger-125"></i>&nbsp;取消
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- modal footer -->
+    <div class="modal-footer">
+
+        <!-- action buttons -->
+        <div class="pull-left" style="margin-top: 10px;">
+
+            <!-- like button -->
+            <div class="inline red tooltip-error <% if (!obj.isLiked) print("btn-like"); %>">
+                <i class="ace-icon fa <% if (obj.isLiked) print("fa-heart"); else print("fa-heart-o"); %> bigger-130"></i>
+                <span><%= obj.liked.length %></span>
+            </div>
+
+            <!-- bookmark button -->
+            <div class="inline orange tooltip-warning <% if (!obj.isMarked) print("btn-bookmark"); %>">
+                <i class="ace-icon fa <% if (obj.isMarked) print("fa-star"); else print("fa-star-o"); %> bigger-130"></i>
+                <span><%= obj.bookmarked.length %></span>
+            </div>
+
+        </div>
+
+        <!-- modal close botton -->
+        <button class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> 閉じる</button>
+
+        <!-- if this post is mine -->
+        <% if (obj.isMine) { %>
+
+            <!-- remove button -->
+            <button class="btn btn-sm btn-danger btn-remove"><i class="ace-icon fa fa-trash-o"></i> 削除</button>
+
+            <!-- save button -->
+            <button class="btn btn-sm btn-success btn-save"><i class="ace-icon fa fa-save"></i> 保存</button>
+
+            <!-- remove confirm dialog -->
+            <div class="alert alert-danger clearfix" style="display: none;">
+                <i class="ace-icon fa fa-warning bigger-125"></i>&nbsp;
+                <strong>この投稿を削除します、よろしいですか？</strong>
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-warning btn-remove-cancel">取消</button>
+                    <button class="btn btn-sm btn-danger btn-remove-confirm">削除</button>
+                </div>
+            </div>
+        <% } %>
+
+    </div>
+
+</div>

@@ -1,0 +1,28 @@
+<%
+    var content = _.str.stripTags(obj.memo),
+        summary = _.str.truncate(content, 50),
+        labelClass = obj.className ? obj.className : 'label-primary';
+%>
+
+<a href="#">
+    <span class="msg-photo"><i class="ace-icon fa fa-tags blue"></i></span>
+    <span class="msg-body" style="max-width: 92%;">
+        <span class="msg-title">
+            <span class="pull-right label <%= labelClass %>" style="margin-left: 10px; margin-bottom: 10px;">
+                <% print(moment(obj.start).fromNow()) %>
+            </span>
+            <strong>
+                <% if (obj.group) { %>
+                <span class="blue">
+                    <%= obj.group.name %>
+                </span>
+                ―
+                <% } %>
+                <span>
+                    <%= obj.title %>
+                </span>
+            </strong>
+            <p><%= summary %></p>
+        </span>
+    </span>
+</a>

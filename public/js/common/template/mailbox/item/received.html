@@ -1,0 +1,65 @@
+<label class="inline">
+    <input type="checkbox" class="ace" />
+    <span class="lbl"></span>
+</label>
+
+<% if (obj.isMarked) { %>
+    <i class="message-star ace-icon fa fa-star orange"></i>
+<% } else { %>
+    <i class="message-star ace-icon fa fa-star-o light-grey"></i>
+<% } %>
+
+<span class="sender">
+    <a href="#profile/<%= obj._from._id %>"><%= obj._from.firstName %>&nbsp;<%= obj._from.lastName %></a>
+</span>
+
+<span class="time" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+    <%= moment(obj.createDate).calendar() %>
+</span>
+
+<span class="clearfix"></span>
+
+<span class="summary">
+    <span class="badge badge-green mail-tag"></span>
+    <span class="text">
+        <%= obj.subject %>
+    </span>
+</span>
+
+<div class="message-content" style="display: none;">
+    <div class="message-header clearfix">
+        <div class="pull-left">
+
+            <a href="#profile/<%= obj._from._id %>">
+                <img class="pull-left" src="<%= obj._from.photo %>" style="max-width: 50px; max-height: 50px; margin-right: 10px;" />
+            </a>
+
+            <span class="blue bigger-125">
+                <%= obj.subject %>
+            </span>
+
+            <div class="space-4"></div>
+
+            <div>
+                <a href="#profile/<%= obj._from._id %>"><%= obj._from.firstName %>&nbsp;<%= obj._from.lastName %></a>
+            </div>
+
+        </div>
+
+        <div class="action-buttons pull-right">
+            <a href="#" class="btn-reply tooltip-success">
+                <i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+            </a>
+            <a href="#" class="btn-remove tooltip-error">
+                <i class="ace-icon fa fa-trash-o red icon-only bigger-130"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="hr hr-double"></div>
+
+    <div class="message-body">
+        <%= obj.content %>
+    </div>
+
+</div>

@@ -1,0 +1,25 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-heart sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.marriage)
+                print(obj.marriage);
+            else
+                print('<span class="text-muted">婚姻状況</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-sm btn-info <% if (obj.marriage === '既婚') print('active') %>">
+                <i class="ace-icon fa fa-heart bigger-110"></i>&nbsp;&nbsp;既婚
+                <input type="radio" name="marriage" value="既婚" />
+            </label>
+            <label class="btn btn-sm btn-success <% if (obj.marriage === '未婚') print('active') %>">
+                <i class="ace-icon fa fa-heart-o bigger-110"></i>&nbsp;&nbsp;未婚
+                <input type="radio" name="marriage" value="未婚" />
+            </label>
+        </div>
+    </div>
+</div>

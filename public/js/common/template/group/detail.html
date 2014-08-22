@@ -1,0 +1,103 @@
+<%
+    var isMine = (obj._owner._id == selink.user.id) ? true : false,
+        isJoined = (_.indexOf(obj.participants, selink.user.id) >= 0) ? true : false,
+        needApply = (obj.type == 'protected') ? true : false;
+%>
+
+<div class="isotope">
+
+    <div class="stamp col-xs-12 col-md-4">
+
+        <div style="border: 1px solid #CCC;">
+
+            <div style="position: relative;">
+
+                <% if (isMine) { %>
+                    <div id="cover"></div>
+                <% } else { %>
+                    <img src="<%= obj.cover %>">
+                <% } %>
+
+                <a href="#profile/<%= obj._owner._id %>" style="position: absolute; bottom: -20px; right: 10px;">
+                    <img class="avatar-owner" src="<%= obj._owner.photo %>" style="max-width: 50px; border-radius: 100%; border: 2px solid white;">
+                </a>
+
+            </div>
+
+            <blockquote>
+                <% if (isMine) { %>
+                    <p id="name" class="sl-editable" style="margin-bottom: 0px;"></p>
+                    <div id="description" class="sl-editable"></div>
+                <% } else { %>
+                    <p><%= obj.name %></p>
+                    <small><%= obj.description %></small>
+                <% } %>
+            </blockquote>
+
+            <div id="events" class="clearfix" style="padding: 12px;"></div>
+
+            <div id="members" class="clearfix" style="padding: 12px;"></div>
+
+            <div class="clearfix group-info" style="padding: 12px;">
+
+                <% if (isJoined) { %>
+                    <span class="text-success"><i class="ace-icon fa fa-check"></i>&nbsp;参加中</span>
+                <% } else { %>
+                    <button class="btn btn-sm btn-info btn-join"
+                            data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;リクエストを送信しています・・・">
+                        <i class="ace-icon fa fa-plus"></i>&nbsp;参加
+                    </button>
+                <% } %>
+
+                <% if (isMine) { %>
+                    <div class="pull-right green btn-member">
+                        <i class="ace-icon fa fa-group tooltip-success"></i>
+                        <span class="participantsNum"><%= obj.participants.length %></span>
+                    </div>
+
+                    <div class="pull-right red btn-invited" style="padding-right: 10px;">
+                        <i class="ace-icon fa fa-paper-plane tooltip-error"></i>
+                        <span class="invitationNum"><%= obj.invited.length %></span>
+                    </div>
+                <% } else { %>
+                    <div class="pull-right green">
+                        <i class="ace-icon fa fa-group tooltip-success"></i>
+                        <%= obj.participants.length %>
+                    </div>
+                <% } %>
+
+                <div class="pull-right orange" style="padding-right: 10px;">
+                    <i class="ace-icon fa fa-tasks tooltip-warning"></i>
+                    <%= obj.events.length %>
+                </div>
+
+                <div class="pull-right blue" style="padding-right: 10px;">
+                    <i class="ace-icon fa fa-edit tooltip-info"></i>
+                    <%= obj.posts.length %>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="new-post" class="stamp col-xs-12 col-md-8 post-area"
+        style="<% if (!isMine && !isJoined) print('display: none;') %>">
+    </div>
+
+    <div class="stamp col-xs-12 col-md-8 alert-area" style="<% if (isMine || isJoined) print('display: none;') %>">
+        <div class="alert alert-block alert-danger">
+            <p class="center">
+                <strong>
+                    <i class="ace-icon fa fa-comments bigger-150"></i>
+                    「<%= obj.name %>」に参加していません。グループに投稿するには、該当グループを参加することが必要です。
+                </strong>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<nav id="page_nav">
+  <a href="/groups/<%= obj._id %>/posts"></a>
+</nav>

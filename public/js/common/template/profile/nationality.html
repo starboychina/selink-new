@@ -1,0 +1,30 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-flag sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.nationality)
+                print(obj.nationality);
+            else
+                print('<span class="text-muted">国籍</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <select placeholder="国籍を選択して下さい" name="nationality">
+            <%
+                for(var key in obj.countryList){
+
+                    print('<optgroup label="' + key + '">');
+
+                    _.each(obj.countryList[key], function(option) {
+                        var selected = (option == obj.nationality) ? 'selected' : '';
+                        print('<option value="' + option + '" ' + selected + '>' + option + '</option>' );
+                    });
+
+                    print('</optgroup>');
+                }
+            %>
+        </select>
+    </div>
+</div>

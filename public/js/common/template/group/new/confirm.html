@@ -1,0 +1,53 @@
+<dt>クループ種別</dt>
+<dd>
+    <% if (obj.type == 'public') { %>
+        <span class="text-success">公開グループ</span>
+    <% } else if (obj.type == 'protected') { %>
+        <span class="text-primary">申請要グループ</span>
+    <% } else if (obj.type == 'private') { %>
+        <span class="text-danger">非公開グループ</span>
+    <% } %>
+</dd>
+
+<div class="space-8"></div>
+
+<dt>グループ名称</dt>
+<dd><%= obj.name %></dd>
+
+<div class="space-8"></div>
+
+<dt>説明文</dt>
+<dd>
+    <% if (obj.description) { %>
+        <%= obj.description %>
+    <% } else { %>
+        <span class="text-muted">未入力</span>
+    <% } %>
+</dd>
+
+<div class="space-8"></div>
+
+<dt>招待するメンバー</dt>
+<dd>
+    <% if (obj.invited.length) { %>
+        <ul class="ace-thumbnails">
+            <% _.each(obj.invited, function(people) { %>
+                <li class="thumbnail-item col-xs-2">
+
+                    <img src="<%= people.get('photo') %>" />
+
+                    <div class="tags">
+                        <span class="label-holder hidden check-mark">
+                            <span class="badge badge-success"><i class="ace-icon fa fa-check"></i></span>
+                        </span>
+                        <span class="label-holder">
+                            <span class="label label-info"><%= people.get('firstName') %>&nbsp;<%= people.get('lastName') %></span>
+                        </span>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <span class="text-muted">いません</span>
+    <% } %>
+</dd>

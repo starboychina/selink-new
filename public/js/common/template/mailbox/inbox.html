@@ -1,0 +1,80 @@
+<div id="id-message-list-navbar" class="message-navbar align-center clearfix">
+
+    <div class="message-bar">
+
+        <div class="message-infobar">
+            <span class="blue bigger-150">受信トレイ</span>
+        </div>
+
+        <div class="message-toolbar hide">
+            <div class="inline position-relative align-left">
+                <a href="#" class="btn-message btn btn-xs dropdown-toggle" data-toggle="dropdown">
+                    <span class="bigger-110">操作</span>
+                    <i class="ace-icon fa fa-caret-down icon-on-right"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-lighter dropdown-caret dropdown-125">
+                    <li><a href="#" class="btn-unopen"><i class="ace-icon fa fa-eye-slash blue"></i>&nbsp;未読にする</a></li>
+                    <li><a href="#" class="btn-open"><i class="ace-icon fa fa-eye green"></i>&nbsp;既読にする</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#" class="btn-remove"><i class="ace-icon fa fa-trash-o red bigger-110"></i>&nbsp;削除</a></li>
+                </ul>
+            </div>
+
+            <a href="#" class="btn btn-xs btn-message btn-remove">
+                <i class="ace-icon fa fa-trash-o bigger-125"></i>
+                <span class="bigger-110">削除</span>
+            </a>
+        </div>
+
+    </div>
+
+
+    <div>
+        <div class="messagebar-item-left">
+            <label class="inline middle">
+                <input type="checkbox" class="ace toggle-all" />
+                <span class="lbl"></span>
+            </label>
+
+            &nbsp;
+
+            <div class="inline position-relative">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                    <i class="ace-icon fa fa-caret-down bigger-125 middle"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-lighter dropdown-100">
+                    <li><a class="select-all" href="#">すべて</a></li>
+                    <li><a class="select-none" href="#">選択解除</a></li>
+                    <li class="divider"></li>
+                    <li><a class="select-unread" href="#">未読</a></li>
+                    <li><a class="select-read" href="#">既読</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="messagebar-item-right">
+            <div class="inline position-relative">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                    並び替え &nbsp;<i class="ace-icon fa fa-caret-down bigger-125"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-lighter pull-right dropdown-100 sort-menu">
+                    <li><a href="#" class="sort-createDate"><i class="ace-icon fa fa-check green"></i>&nbsp;受信日時</a></li>
+                    <li><a href="#" class="sort-from"><i class="ace-icon fa fa-check green hide"></i>&nbsp;差出人</a></li>
+                    <li><a href="#" class="sort-subject"><i class="ace-icon fa fa-check green hide"></i>&nbsp;件名</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="message-container">
+    <nav id="inbox-page-nav">
+        <a href="/messages"></a>
+    </nav>
+</div>
+
+<div class="message-footer clearfix">
+</div>

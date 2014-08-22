@@ -1,0 +1,93 @@
+<%
+    var isMine = (obj._owner == selink.user.id) ? true : false,
+        isJoined = (_.indexOf(selink.user.get('groups'), obj._id) >= 0) ? true : false,
+        isApplied = (_.indexOf(selink.user.get('applying'), obj._id) >= 0) ? true : false,
+        needApply = (obj.type == 'protected') ? true : false,
+        description = obj.description ? _.str.truncate(description, 100, '...') : "";
+%>
+
+<!-- group item -->
+<div style="border: 1px solid #CCC; margin-top: 3px; margin-bottom: 3px;" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+
+    <!-- header -->
+    <div style="position: relative;">
+        <!-- cover -->
+        <a href="#group/<%= obj._id %>">
+            <img src="<%= obj.cover %>" style="width: 100%; overflow: hidden;"/>
+        </a>
+
+        <div style="position: absolute; top: 0px; left: 0px;">
+            <% if (obj.type == 'protected') { %>
+                <span class="label label-xlg label-success arrowed-right">参加申請要</span>
+            <% } %>
+            <% if (obj.type == 'private') { %>
+                <span class="label label-xlg label-danger arrowed-in-right">非公開</span>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- body -->
+    <blockquote style="margin-bottom: 0px;">
+
+        <!-- group name -->
+        <p><%= obj.name %></p>
+
+        <!-- description -->
+        <% if (obj.description) { %>
+            <small><%= description %></small>
+        <% } %>
+
+    </blockquote>
+
+    <div class="space-4"></div>
+
+    <div class="pull-right action-buttons" style="padding: 0px 12px;">
+
+        <!-- events number -->
+        <a class="orange tooltip-warning">
+            <i class="ace-icon fa fa-tasks"></i>
+            <%= obj.events.length %>
+        </a>
+
+        <!-- posts number -->
+        <a class="blue tooltip-info">
+            <i class="ace-icon fa fa-edit"></i>
+            <%= obj.posts.length %>
+        </a>
+
+        <!-- participants number -->
+        <a class="green tooltip-success">
+            <i class="ace-icon fa fa-group"></i>
+            <%= obj.participants.length %>
+        </a>
+
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!-- footer -->
+    <div class="clearfix group-info" style="padding: 12px;">
+        <% if (!isMine && !isJoined && !needApply) { %>
+
+            <!-- join button -->
+            <button class="btn btn-success btn-block btn-join"
+                    data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;送信中・・・">
+                <i class="ace-icon fa fa-plus"></i>&nbsp;参加
+            </button>
+
+        <% } else if (!isMine && !isJoined && needApply && !isApplied) { %>
+
+            <!-- apply button -->
+            <button class="btn btn-info btn-block btn-apply"
+                    data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;送信中・・・">
+                <i class="ace-icon fa fa-envelope"></i>&nbsp;参加申請
+            </button>
+
+        <% } else if (!isMine && !isJoined && needApply && isApplied) { %>
+
+            <span class="text-success"><i class="ace-icon fa fa-check"></i>&nbsp;参加申請中</span>
+
+        <% } %>
+    </div>
+
+</div>

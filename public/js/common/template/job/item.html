@@ -1,0 +1,175 @@
+<%
+    var widgetColor = "";
+
+    if (moment(obj.expiredDate).isBefore(moment()))
+        widgetColor = "widget-color-grey";
+    else
+        widgetColor = "widget-color-red";
+%>
+
+<div class="widget-box <%= widgetColor %>" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+
+    <!-- job header, expired jobs are grey -->
+    <div class="widget-header widget-header-flat">
+
+        <!-- job creator photo -->
+        <a href="#profile/<%= obj._owner._id %>">
+            <img class="avatar" src="<%= obj._owner.photo %>">
+        </a>
+
+        <!-- if the job is mine -->
+        <% if (obj.isMine) { %>
+
+            <!-- operation menu -->
+            <div class="widget-toolbar no-border hidden">
+
+                <!-- menu toggler -->
+                <a class="yellow dropdown-toggle" data-toggle="dropdown">
+                    <i class="ace-icon fa fa-chevron-down"></i>
+                </a>
+
+                <!-- menu -->
+                <ul class="dropdown-menu dropdown-yellow pull-right dropdown-caret dropdown-close">
+
+                    <!-- edit button -->
+                    <li>
+                        <a href="#" class="btn-edit">
+                            <i class="ace-icon fa fa-pencil green bigger-110"></i>&nbsp;&nbsp;編集
+                        </a>
+                    </li>
+
+                    <!-- remove button -->
+                    <li>
+                        <a href="#" class="btn-remove">
+                            <i class="ace-icon fa fa-trash-o red bigger-110"></i>&nbsp;&nbsp;削除
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        <% } %>
+
+        <!-- job name -->
+        <h5>
+            <i class="ace-icon fa fa-briefcase"></i>&nbsp;
+            <strong><span class="name-value"><%= obj.name %></span></strong>
+        </h5>
+
+        <!-- job creator name -->
+        <h6>
+            <i class="ace-icon fa fa-edit"></i>&nbsp;
+            <%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %>
+        </h6>
+
+        <!-- job create time -->
+        <h6>
+            <i class="ace-icon fa fa-clock-o"></i>&nbsp;
+            <%= moment(obj.createDate).calendar() %>
+        </h6>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- job body -->
+    <div class="widget-body">
+
+        <div class="widget-main">
+
+            <!-- if this job is mine -->
+            <% if (obj.isMine) { %>
+                <!-- remove confirm dialog -->
+                <div class="alert alert-danger clearfix" style="display: none;">
+                    <i class="ace-icon fa fa-warning"></i>&nbsp;
+                    <strong>この案件を削除します、よろしいですか？</strong>
+                    <div class="space-10"></div>
+                    <p class="pull-right">
+                        <button class="btn btn-sm btn-warning btn-remove-cancel">取消</button>
+                        <button class="btn btn-sm btn-danger btn-remove-confirm">削除</button>
+                    </p>
+                </div>
+            <% } %>
+
+            <!-- address -->
+            <h6 class="text-primary <%= obj.address ? '' : 'hide' %>">
+                <i class="ace-icon fa fa-map-marker bigger-120"></i>&nbsp;&nbsp;作業場所：
+                <span class="address-value"><%= obj.address %></span>
+            </h6>
+
+            <!-- duration -->
+            <h6 class="text-primary <%= (obj.startDate || obj.endDate) ? '' : 'hide' %>">
+                <i class="ace-icon fa fa-calendar bigger-120"></i>&nbsp;&nbsp;作業期間：
+                <span class="duration-value"><%= obj.startDateInput %>～<%= obj.endDateInput %></span>
+            </h6>
+
+            <!-- price -->
+            <h6 class="text-warning <%= (obj.priceBottom || obj.priceTop) ? '' : 'hide' %>">
+                <i class="ace-icon fa fa-jpy bigger-120"></i>&nbsp;&nbsp;単金：
+                <span class="price-value"><%= obj.priceBottom %>～<%= obj.priceTop %>万円</span>
+            </h6>
+
+            <h6 class="text-danger">
+                <i class="ace-icon fa fa-ban bigger-120"></i>&nbsp;&nbsp;応募締日：
+                <span class="expired-value"><%= moment(obj.expiredDate).calendar() %></span>
+            </h6>
+
+            <!-- remark -->
+            <div class="remark-value">
+                <%= obj.remark %>
+            </div>
+
+            <!-- recruitNum -->
+            <span class="recruit-value label label-lg label-purple arrowed arrowed-right <%= obj.recruitNum ? '' : 'hide' %>">
+                募集<%= obj.recruitNum %>人
+            </span>
+
+            <!-- interviewNum -->
+            <span class="interview-value label label-lg label-warning arrowed arrowed-right <%= obj.interviewNum ? '' : 'hide' %>">
+                面接<%= obj.interviewNum %>回
+            </span>
+
+            <!-- foreignerAllowed -->
+            <span class="foreigner-value label label-lg label-danger arrowed arrowed-right <%= obj.foreignerAllowed ? 'hide' : '' %>">
+                外国籍不可
+            </span>
+
+            <!-- action buttons -->
+            <div class="pull-right">
+
+                <!-- bookmark button -->
+                <div class="inline orange tooltip-warning <% if (!obj.isMarked) print("btn-bookmark"); %>">
+                    <i class="ace-icon fa <% if (obj.isMarked) print("fa-star"); else print("fa-star-o"); %> bigger-110"></i>
+                </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <!-- languages -->
+            <% if (obj.languages.length) { %>
+            <div class="hr hr8 hr-double"></div>
+            <% } %>
+            <div class="language"></div>
+
+            <!-- skills -->
+            <% if (obj.skills.length) { %>
+            <div class="hr hr8 hr-double"></div>
+            <% } %>
+            <div class="skill"></div>
+
+        </div>
+
+        <!-- if this job is mine -->
+        <% if (obj.isMine) { %>
+            <!-- matching result -->
+            <div class="widget-toolbox padding-8 clearfix matching">
+            </div>
+<!--             <button class="btn btn-success btn-block btn-match" data-loading-text="<i class='icon-spinner icon-spin white bigger-125'></i>&nbsp;&nbsp;リクエストを送信しています・・・">
+                <i class="ace-icon fa fa-random"></i>&nbsp;マッチング
+            </button> -->
+        <% } %>
+
+    </div>
+
+</div>

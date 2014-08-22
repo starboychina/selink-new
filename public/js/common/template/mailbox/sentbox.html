@@ -1,0 +1,64 @@
+<div id="id-message-list-navbar" class="message-navbar align-center clearfix">
+
+    <div class="message-bar">
+
+        <div class="message-infobar">
+            <span class="blue bigger-150">送信済み</span>
+        </div>
+
+        <div class="message-toolbar hide">
+            <a href="#" class="btn btn-xs btn-message btn-remove">
+                <i class="ace-icon fa fa-trash-o bigger-125"></i>
+                <span class="bigger-110">削除</span>
+            </a>
+        </div>
+
+    </div>
+
+
+    <div>
+        <div class="messagebar-item-left">
+            <label class="inline middle">
+                <input type="checkbox" class="ace toggle-all" />
+                <span class="lbl"></span>
+            </label>
+
+            &nbsp;
+
+            <div class="inline position-relative">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                    <i class="ace-icon fa fa-caret-down bigger-125 middle"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-lighter dropdown-100">
+                    <li><a class="select-all" href="#">すべて</a></li>
+                    <li><a class="select-none" href="#">選択解除</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="messagebar-item-right">
+            <div class="inline position-relative">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                    並び替え &nbsp;<i class="ace-icon fa fa-caret-down bigger-125"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-lighter pull-right dropdown-100 sort-menu">
+                    <li><a href="#" class="sort-createDate"><i class="ace-icon fa fa-check green"></i>&nbsp;送信日時</a></li>
+                    <li><a href="#" class="sort-recipient"><i class="ace-icon fa fa-check green hide"></i>&nbsp;宛先</a></li>
+                    <li><a href="#" class="sort-subject"><i class="ace-icon fa fa-check green hide"></i>&nbsp;件名</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="message-container">
+    <nav id="sentbox-page-nav">
+        <a href="/messages/sent"></a>
+    </nav>
+</div>
+
+<div class="message-footer clearfix">
+</div>

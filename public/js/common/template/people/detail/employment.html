@@ -1,0 +1,28 @@
+<blockquote>
+    <p>
+        <i class="ace-icon fa fa-building sl-icon bigger-110 blue"></i>&nbsp;
+        <span class="company-value">
+            <%= obj.company %>
+        </span>
+        <span class="position-value">
+        <%
+            if (obj.position) print('<span class="label label-sm label-primary arrowed arrowed-right">' + obj.position + '</span>');
+        %>
+        </span>
+    </p>
+    <% if (obj.startDate || obj.endDate) { %>
+        <small class="duration-value">
+            <%
+                if (obj.startDate && !obj.endDate)
+                    print(obj.startDateDisplay + "〜");
+                else if (!obj.startDate && obj.endDate)
+                    print("〜" + obj.endDateDisplay);
+                else if (obj.startDate && obj.endDate)
+                    print(obj.startDateDisplay + "〜" + obj.endDateDisplay);
+            %>
+        </small>
+    <% } %>
+    <% if (obj.address) { %>
+        <small class="address-value"> <%= obj.address %></small>
+    <% } %>
+</blockquote>

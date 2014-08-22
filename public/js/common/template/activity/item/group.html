@@ -1,0 +1,70 @@
+<%
+    var title = "",
+        start,
+        end;
+
+    if (obj.type == "group-new") {
+        title = "新しいグループを立ち上げました";
+    }
+    else if (obj.type == "group-invited") {
+        title = "あなたをグループに招待しました";
+    }
+    else if (obj.type == "group-joined") {
+        title = "グループに参加しました";
+    }
+    else if (obj.type == "group-event-new") {
+        title = obj.targetGroup.name + "にイベント開催しました";
+        start = obj.targetEvent.start ? moment(obj.targetEvent.start).format('L HH:mm') : "";
+        end = obj.targetEvent.end ? moment(obj.targetEvent.end).format('L HH:mm') : "";
+    }
+%>
+
+<div class="timeline-info">
+    <a href="#profile/<%= obj._owner._id %>">
+        <img src="<%= obj._owner.photo %>" />
+    </a>
+</div>
+
+<div class="widget-box widget-color-pink">
+    <div class="widget-header widget-header-small">
+        <h5 class="widget-title smaller">
+            <i class="ace-icon fa fa-group bigger-110"></i>&nbsp;
+            <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+            <%= title %>
+        </h5>
+        <span class="widget-toolbar no-border">
+            <i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <% if (obj.type == "group-event-new") { %>
+                <strong class="blue">
+                    <%= obj.targetEvent.title %>
+                </strong>
+                <small>
+                    【期間：<%= start %>～<%= end %>】
+                </small>
+                <p><%= obj.targetEvent.memo %></p>
+                <div class="widget-toolbox clearfix">
+                    <div class="pull-right action-buttons">
+                        <div class="space-4"></div>
+                        <div>
+                            <a href="#group/<%= obj.targetGroup._id %>"><i class="ace-icon fa fa-group bigger-110"></i>&nbsp;グループへ</a>
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <strong><a class="group-link" href="#job/<%= obj.targetGroup._id %>"><%= obj.targetGroup.name %></a></strong>
+                <div class="widget-toolbox clearfix">
+                    <div class="pull-right action-buttons">
+                        <div class="space-4"></div>
+                        <div>
+                            <a href="#group/<%= obj.targetGroup._id %>"><i class="ace-icon fa fa-group bigger-110"></i>&nbsp;グループへ</a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>

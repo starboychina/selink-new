@@ -1,0 +1,16 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-globe sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.webSite)
+                print(obj.webSite);
+            else
+                print('<span class="text-muted">個人サイト</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <input type="text" class="col-xs-12" placeholder="サイトURL" name="webSite" value="<%= obj.webSite %>">
+    </div>
+</div>

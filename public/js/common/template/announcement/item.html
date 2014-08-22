@@ -1,0 +1,23 @@
+<div class="widget-box widget-color-red" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+    <div class="widget-header widget-header-flat">
+        <h4 class="widget-title">
+            <i class="ace-icon fa fa-bullhorn"></i>&nbsp;<%= obj.title %>
+        </h4>
+        <div class="widget-toolbar">
+            <i class="ace-icon fa fa-clock-o"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </div>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main">
+
+            <div class="content">
+                <%= obj.content %>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+</div>

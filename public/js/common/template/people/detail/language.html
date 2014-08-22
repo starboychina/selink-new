@@ -1,0 +1,18 @@
+<%
+    var color = '#9585bf';
+
+    if (obj.weight > 85) {
+        color = '#59a84b';
+    } else if (obj.weight > 70) {
+        color = '#2a91d8';
+    } else if (obj.weight > 50) {
+        color = '#f2bb46';
+    } else if (obj.weight > 30) {
+        color = '#ca5952';
+    }
+%>
+<div class="easy-pie-chart percentage" data-percent="<%= obj.weight %>" data-color="<%= color %>">
+    <span class="percent"><%= obj.weight %></span>%
+</div>
+<div class="space-2"></div>
+<%= obj.language %>

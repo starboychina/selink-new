@@ -1,0 +1,26 @@
+<%
+    var length = obj.weight ? obj.weight : 20,
+        progressClass = 'progress-bar-purple';
+
+    if (obj.weight > 85) {
+        progressClass = 'progress-bar-success';
+    } else if (obj.weight > 70) {
+        progressClass = 'progress-bar';
+    } else if (obj.weight > 50) {
+        progressClass = 'progress-bar-warning';
+    } else if (obj.weight > 30) {
+        progressClass = 'progress-bar-danger';
+    }
+
+%>
+
+<div class="progress">
+    <div class="progress-bar <%= progressClass %>" style="width:<%= length %>%">
+        <span class="pull-left">
+            <i class="ace-icon fa fa-gear sl-icon"></i>&nbsp;<%= obj.skill %>
+        </span>
+        <span class="pull-right">
+            <%= length %>pt
+        </span>
+    </div>
+</div>

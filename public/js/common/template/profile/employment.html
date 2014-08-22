@@ -1,0 +1,73 @@
+<div class="sl-value">
+    <blockquote>
+        <p>
+            <i class="ace-icon fa fa-building sl-icon blue"></i>&nbsp;
+            <span class="company-value">
+            <%
+                if (obj.company) print(obj.company);
+                else print('<span class="text-muted">会社名</span>');
+            %>
+            </span>
+            <span class="position-value">
+            <%
+                if (obj.position) print('<span class="label label-sm label-primary arrowed arrowed-right">' + obj.position + '</span>');
+            %>
+            </span>
+        </p>
+        <% if (obj.address) { %>
+            <small class="address-value"> <%= obj.address %></small>
+        <% } %>
+        <% if (obj.startDate || obj.endDate) { %>
+            <small class="duration-value">
+                <%
+                    if (obj.startDate && !obj.endDate)
+                        print(obj.startDateDisplay + "〜");
+                    else if (!obj.startDate && obj.endDate)
+                        print("〜" + obj.endDateDisplay);
+                    else if (obj.startDate && obj.endDate)
+                        print(obj.startDateDisplay + "〜" + obj.endDateDisplay);
+                %>
+            </small>
+        <% } %>
+    </blockquote>
+</div>
+<div class="sl-editor">
+    <div class="form-group">
+        <div class="col-md-12 input-group">
+            <span class="input-group-addon">
+                <i class="ace-icon fa fa-building"></i>
+            </span>
+            <input type="text" placeholder="会社名" name="company" value="<%= obj.company %>">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-danger btn-remove btn-xs"><i class="ace-icon fa fa-trash-o bigger-150"></i></button>
+            </span>
+        </div>
+    </div>
+    <div class="space-2"></div>
+    <div class="form-group">
+        <div class="col-md-12 input-group">
+            <span class="input-group-addon">
+                <i class="ace-icon fa fa-map-marker"></i>
+            </span>
+            <input type="text" placeholder="住所" name="address" value="<%= obj.address %>">
+        </div>
+    </div>
+    <div class="space-2"></div>
+    <div class="form-group">
+        <div class="col-md-12 input-group">
+            <span class="input-group-addon">
+                <i class="ace-icon fa fa-bookmark"></i>
+            </span>
+            <input type="text" placeholder="職役" name="position" value="<%= obj.position %>">
+        </div>
+    </div>
+    <div class="space-2"></div>
+    <div class="form-group">
+        <div class="input-group input-daterange">
+            <span class="input-group-addon sl-input-group-addon"><i class="ace-icon fa fa-calendar"></i></span>
+            <input type="text" style="width: 150px;" placeholder="開始日" name="startDate" value="<%= obj.startDateInput %>">
+            <span class="input-group-addon"><i class="ace-icon fa fa-exchange"></i></span>
+            <input type="text" style="width: 150px;" placeholder="終了日" name="endDate" value="<%= obj.endDateInput %>">
+        </div>
+    </div>
+</div>

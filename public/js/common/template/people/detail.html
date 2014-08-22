@@ -1,0 +1,260 @@
+<%
+    var isFriend = (_.indexOf(selink.user.get('friends'), obj._id) >= 0) ? true : false,
+        isInvited = (_.indexOf(selink.user.get('invited'), obj._id) >= 0) ? true : false;
+%>
+
+<div class="row isotope">
+
+    <!-- user profile, it's an stamp which won't be isotope layout -->
+    <div class="stamp col-xs-12 col-md-6 col-lg-8">
+
+        <div class="person-info no-padding" style="border: 1px solid #CCC;">
+
+            <!-- cover -->
+            <div id="cover">
+
+                <img src="<%= obj.cover %>">
+
+                <!-- friend buttons -->
+                <% if (isFriend) { %>
+                    <button class="btn btn-sm btn-danger btn-break"
+                            data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;送信中・・・" style="position: absolute; top: 10px; right: 190px;">
+                        <i class="ace-icon fa fa-unlink"></i>&nbsp;友達を解除
+                    </button>
+                <% } else if (isInvited) { %>
+                    <button class="btn btn-sm btn-success disabled" style="position: absolute; top: 10px; right: 190px;">
+                        <i class="ace-icon fa fa-check"></i>&nbsp;友達リクエスト送信済み
+                    </button>
+                <% } else { %>
+                    <button class="btn btn-sm btn-info btn-friend"
+                            data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;送信中・・・" style="position: absolute; top: 10px; right: 190px;">
+                        <i class="ace-icon fa fa-plus"></i>&nbsp;友達にする
+                    </button>
+                <% } %>
+
+                <!-- message button -->
+                <button class="btn btn-sm btn-success btn-msg" style="position: absolute; top: 10px; right: 30px;">
+                    <i class="ace-icon fa fa-envelope"></i>&nbsp;メッセージ送信
+                </button>
+
+            </div>
+
+            <!-- photo, overlap with cover -->
+            <div class="col-xs-4 col-sm-4 center" style="margin-top: -60px;">
+
+                <div class="profile-picture ace-thumbnails" style="position: relative;">
+                    <img class="img-responsive" src="<%= obj.photo %>">
+                </div>
+
+                <div class="space-10"></div>
+
+                <div class="infobox infobox-blue infobox-small infobox-dark">
+                    <div class="infobox-icon">
+                        <i class="ace-icon fa fa-edit"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-content"><%= obj.posts.length %>件</div>
+                        <div class="infobox-content">投稿</div>
+                    </div>
+                </div>
+
+                <div class="infobox infobox-green infobox-small infobox-dark">
+                    <div class="infobox-icon">
+                        <i class="ace-icon fa fa-group"></i>
+                    </div>
+                    <div class="infobox-data">
+                        <div class="infobox-content"><%= obj.friends.length %>人</div>
+                        <div class="infobox-content">友達</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-8" style="margin-top: 10px;">
+                <!-- break confrim dialog -->
+                <div class="alert alert-danger clearfix" style="display: none;">
+                    <i class="ace-icon fa fa-warning"></i>&nbsp;
+                    <strong><%= obj.firstName %>&nbsp;<%= obj.lastName %>との友達関係を解除します、よろしいですか？</strong>
+                    <div class="space-10"></div>
+                    <p class="pull-right">
+                        <button class="btn btn-sm btn-warning btn-break-cancel">取消</button>
+                        <button class="btn btn-sm btn-danger btn-break-confirm">解除</button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- user info -->
+            <div class="col-xs-8 col-sm-5" style="margin-top: 10px;">
+
+                <!-- name -->
+                <p class="bigger-180 no-margin">
+                    <%= obj.firstName %>&nbsp;<%= obj.lastName %>
+                </p>
+
+                <!-- title -->
+                <% if (obj.title) { %>
+                    <p class="bigger-110 text-muted"><%= obj.title %></p>
+                <% } %>
+
+                <div class="space-10"></div>
+
+                <!-- employment -->
+                <% if (obj.currentEmployment) { %>
+                    <p class="row">
+                        <span class="col-xs-1"><i class="ace-icon fa fa-building"></i></span>
+                        <span class="col-xs-10"><%= obj.currentEmployment.company %></span>
+                    </p>
+                <% } %>
+
+                <!-- education -->
+                <% if (obj.finalEducation) { %>
+                    <p class="row">
+                        <span class="col-xs-1"><i class="ace-icon fa fa-graduation-cap"></i></span>
+                        <span class="col-xs-10"><%= obj.finalEducation.school %></span>
+                    </p>
+                <% } %>
+
+                <!-- email -->
+                <% if (obj.email) { %>
+                    <p class="row">
+                        <span class="col-xs-1"><i class="ace-icon fa fa-envelope"></i></span>
+                        <span class="col-xs-10"><%= obj.email %></span>
+                    </p>
+                <% } %>
+
+                <!-- tel no. -->
+                <% if (obj.telNo) { %>
+                    <p class="row">
+                        <span class="col-xs-1"><i class="ace-icon fa fa-mobile-phone bigger-140"></i></span>
+                        <span class="col-xs-10"><%= obj.telNo %></span>
+                    </p>
+                <% } %>
+
+                <!-- web site -->
+                <% if (obj.webSite) { %>
+                    <p class="row">
+                        <span class="col-xs-1"><i class="ace-icon fa fa-globe"></i></span>
+                        <span class="col-xs-10"><%= obj.webSite %></span>
+                    </p>
+                <% } %>
+
+            </div>
+
+            <!-- friend list -->
+            <div class="col-xs-12 col-sm-3" style="margin-top: 10px;">
+                <p id="friends"></p>
+                <p id="groups"></p>
+            </div>
+
+            <div class="col-xs-12 space-12"></div>
+
+            <!-- self introduction -->
+            <% if (obj.bio) { %>
+            <div class="col-xs-12 more-info" style="display: none;">
+                <i class="fa fa-quote-left fa-3x pull-left"></i>
+                <%= obj.bio %>
+            </div>
+            <% } %>
+
+            <!-- user detail info -->
+            <div class="col-xs-12 col-sm-6 more-info" style="display: none;">
+
+                <% if (obj.address || obj.nearestSt || obj.birthDay || obj.nationality || obj.gender || obj.marriage) { %>
+                <div class="widget-box transparent">
+
+                    <div class="widget-header">
+                        <h4 class="lighter"><i class="ace-icon fa fa-list-alt"></i>&nbsp;&nbsp;基本情報</h4>
+                    </div>
+
+                    <div class="widget-body">
+
+                        <div class="widget-main" style="padding: 16px 20px 0px 20px;">
+
+                            <!-- address -->
+                            <% if (obj.address) { %>
+                                <p class="row">
+                                    <span class="col-xs-1"><i class="ace-icon fa fa-map-marker"></i></span>
+                                    <span class="col-xs-10">住所：<%= obj.address %></span>
+                                </p>
+                            <% } %>
+
+                            <!-- nearest Station -->
+                            <% if (obj.nearestSt) { %>
+                                <p class="row">
+                                    <span class="col-xs-1"><i class="ace-icon fa fa-car"></i></span>
+                                    <span class="col-xs-10">最寄り駅：<%= obj.nearestSt %></span>
+                                </p>
+                            <% } %>
+
+                            <!-- birth day -->
+                            <% if (obj.birthDay) { %>
+                                <p class="row">
+                                    <span class="col-xs-1"><i class="ace-icon fa fa-calendar"></i></span>
+                                    <span class="col-xs-10">生年月日：<%= obj.birthDayDisplay %></span>
+                                </p>
+                            <% } %>
+
+                            <!-- nationality -->
+                            <% if (obj.nationality) { %>
+                                <p class="row">
+                                    <span class="col-xs-1"><i class="ace-icon fa fa-flag"></i></span>
+                                    <span class="col-xs-10">国籍：<%= obj.nationality %></span>
+                                </p>
+                            <% } %>
+
+                            <!-- gender -->
+                            <% if (obj.gender) { %>
+                                <p class="row">
+                                    <span class="col-xs-1"><i class="ace-icon fa fa-leaf"></i></span>
+                                    <span class="col-xs-10">性別：<%= obj.gender %></span>
+                                </p>
+                            <% } %>
+
+                            <!-- marriage -->
+                            <% if (obj.marriage) { %>
+                                <p class="row">
+                                    <span class="col-xs-1"><i class="ace-icon fa fa-heart"></i></span>
+                                    <span class="col-xs-10">婚姻状況：<%= obj.marriage %></span>
+                                </p>
+                            <% } %>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <% } %>
+
+                <div id="languages-display"></div>
+                <div id="skills"></div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 more-info" style="display: none;">
+                <div id="employments"></div>
+                <div id="educations"></div>
+                <div id="qualifications"></div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <button class="btn btn-sm btn-success btn-block btn-more">
+                <i class="ace-icon fa fa-user"></i>&nbsp;もっと知る
+                <i class="ace-icon fa fa-chevron-down"></i>
+            </button>
+
+            <button class="btn btn-sm btn-warning btn-block btn-less hide">
+                <i class="ace-icon fa fa-user"></i>&nbsp;戻る
+                <i class="ace-icon fa fa-chevron-up"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="isotope-item grid-sizer col-xs-12 col-sm-6 col-lg-4"></div>
+
+</div>
+
+<nav id="page_nav">
+  <a href="/users/<%= obj._id %>/posts"></a>
+</nav>

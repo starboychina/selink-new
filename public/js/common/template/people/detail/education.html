@@ -1,0 +1,25 @@
+<blockquote>
+    <p>
+        <i class="ace-icon fa fa-graduation-cap sl-icon bigger-110 green"></i>&nbsp;
+        <span class="school-value">
+            <%= obj.school %>
+        </span>
+        <span class="major-value">
+        <%
+            if (obj.major) print('<span class="label label-sm label-success arrowed arrowed-right">' + obj.major + '</span>');
+        %>
+        </span>
+    </p>
+    <% if (obj.startDate || obj.endDate) { %>
+        <small>
+            <%
+                if (obj.startDate && !obj.endDate)
+                    print(obj.startDateDisplay + "〜");
+                else if (!obj.startDate && obj.endDate)
+                    print("〜" + obj.endDateDisplay);
+                else if (obj.startDate && obj.endDate)
+                    print(obj.startDateDisplay + "〜" + obj.endDateDisplay);
+            %>
+        </small>
+    <% } %>
+</blockquote>

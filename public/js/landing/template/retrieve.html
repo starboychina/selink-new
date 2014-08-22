@@ -1,0 +1,38 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="green">
+            <i class="ace-icon fa fa-refresh bigger-110"></i>&nbsp;&nbsp;
+            <strong>パースワードリセット</strong>
+        </h4>
+    </div>
+
+    <div class="modal-body overflow-visible">
+
+        <strong class="blue"><i class="ace-icon fa fa-question-circle bigger-110"></i>&nbsp;&nbsp;パースワードを忘れたら・・・</strong>
+        <br />
+        <p><small>お手数ですが、ご登録時に使用したメールアドレスを教えていただければ、こちらからご専用のパースワードリセット案内メール情報を該当アドレスに送信させていただきます。メールの内容を沿って新しいパースワードを設定することができます。</small></p>
+        <br />
+
+        <div class="alert alert-success" style="display: none;">
+            ご協力ありがとうございます、お客様専用のパースワード変更案内はご提示していただいたメールアドレスに送信しました。お届くまで少々時間かかることがありますので、ご了承ください。また、ご利用しているメールサービスに迷惑メールと認識される可能性がありますので、長く間に届かなかった場合は、迷惑メールフォルダもご確認ください。
+        </div>
+        <div class="alert alert-danger" style="display: none;"></div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="ace-icon fa fa-envelope"></i></span>
+                <input class="form-control" type="email" name="email" placeholder="メールアドレス（アカウントID）">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-success btn-send"
+                data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;処理中・・・">
+                <i class="ace-icon fa fa-send"></i> 送信
+        </button>
+        <button class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> 閉じる</button>
+    </div>
+</div>

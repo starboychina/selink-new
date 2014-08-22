@@ -1,0 +1,220 @@
+<%
+    var isMine = (obj._owner._id === selink.user.id) ? true : false,
+        isLike = (_.indexOf(obj.like, selink.user.id) >= 0) ? true : false,
+        isMark = (_.indexOf(obj.bookmark, selink.user.id) >= 0) ? true : false;
+%>
+
+<div id="<%= obj._id %>" class="widget-box" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+
+    <!-- post header -->
+    <div class="widget-header widget-header-flat">
+
+        <!-- author photo -->
+        <a href="#profile/<%= obj._owner._id %>">
+            <img class="avatar" src="<%= obj._owner.photo %>" style="max-width: 75px;">
+        </a>
+
+        <!-- if this post is mine -->
+        <% if (isMine) { %>
+            <!-- operation menu -->
+            <div class="widget-toolbar no-border hidden">
+
+                <!-- menu toggler -->
+                <a class="yellow dropdown-toggle" data-toggle="dropdown">
+                    <i class="ace-icon fa fa-chevron-down"></i>
+                </a>
+
+                <!-- menu -->
+                <ul class="dropdown-menu dropdown-yellow pull-right dropdown-caret dropdown-close">
+
+                    <!-- remove button -->
+                    <li>
+                        <a href="#" class="btn-remove">
+                            <i class="ace-icon fa fa-trash-o red"></i>
+                            削除
+                        </a>
+                    </li>
+
+                    <!-- disable comment -->
+                    <li class="<% if (!obj.setting.commentable) print("hidden") %>">
+                        <a href="#" class="btn-forbid">
+                            <i class="ace-icon fa fa-ban pink"></i>
+                            コメント禁止
+                        </a>
+                    </li>
+
+                    <!-- enable comment -->
+                    <li class="<% if (obj.setting.commentable) print("hidden") %>">
+                        <a href="#" class="btn-forbid">
+                            <i class="ace-icon fa fa-check green"></i>
+                            コメント許可
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+        <% } %>
+
+        <!-- author name -->
+        <h5>
+            <i class="ace-icon fa fa-edit"></i>
+            <strong>
+                <%= obj._owner.firstName %>
+                <%= obj._owner.lastName %>
+            </strong>
+        </h5>
+
+        <!-- post time -->
+        <h6>
+            <i class="ace-icon fa fa-clock-o bigger-130"></i>
+            <%= moment(obj.createDate).calendar() %>
+        </h6>
+
+        <!-- group name -->
+        <% if (obj.group) { %>
+            <a class="group-label" href="#group/<%= obj.group._id %>">
+                <span class="label label-pink arrowed-in arrowed-in-right">
+                    <%= obj.group.name %>
+                </span>
+            </a>
+        <% } %>
+
+        <div class="clearfix"></div>
+
+    </div>
+
+    <!-- post body -->
+    <div class="widget-body">
+        <div class="widget-toolbox editor-toolbox" style="display: none;">
+            <div class="btn-toolbar center"></div>
+        </div>
+
+        <div class="widget-main">
+
+            <!-- if this post is mine -->
+            <% if (isMine) { %>
+
+                <!-- remove confrim dialog -->
+                <div class="alert alert-danger clearfix" style="display: none;">
+                    <i class="ace-icon fa fa-warning"></i>
+                    <strong>この投稿を削除します、よろしいですか？</strong>
+                    <div class="space-10"></div>
+                    <p class="pull-right">
+                        <button class="btn btn-sm btn-warning btn-remove-cancel">取消</button>
+                        <button class="btn btn-sm btn-danger btn-remove-confirm">削除</button>
+                    </p>
+                </div>
+
+                <div class="sl-editable tooltip-info">
+                    <!-- post content -->
+                    <div class="content" style="max-height: 500px; overflow: hidden;">
+                        <%= obj.content %>
+                    </div>
+                    <!-- post editor -->
+                    <div class="sl-editor" style="min-height: 200px;">
+                        <%= obj.content %>
+                    </div>
+                </div>
+
+                <br/>
+
+                <!-- save button -->
+                <div class="btn btn-xs btn-success btn-save hidden">
+                    <i class="ace-icon fa fa-save bigger-110"></i>
+                    <span>保存</span>
+                </div>
+
+                <!-- cancel button -->
+                <div class="btn btn-xs btn-grey btn-edit-cancel hidden">
+                    <i class="ace-icon fa fa-times bigger-110"></i>
+                    <span>取消</span>
+                </div>
+
+            <% } else { %>
+
+                <!-- post content -->
+                <div class="content" style="max-height: 500px; overflow: hidden;">
+                    <%= obj.content %>
+                </div>
+
+            <% } %>
+
+            <div class="space-4"></div>
+
+<!--             <button class="btn btn-xs btn-info btn-load-comment">
+                <i class="ace-icon fa fa-comments-o"></i>
+                新しいコメント<span class="indicator-num"></span>件
+            </button> -->
+
+            <!-- action buttons -->
+            <div class="pull-right action-buttons">
+
+                <!-- detail button -->
+                <a href="#post/<%= obj._id %>" class="tooltip-info btn-detail">
+                    <i class="ace-icon fa fa-desktop"></i>
+                </a>
+
+                <!-- bookmark button -->
+                <a href="#" class="orange tooltip-warning btn-bookmark">
+                    <i class="ace-icon fa <% if (isMark) print("fa-star"); else print("fa-star-o"); %> bigger-110"></i>
+                </a>
+
+                <!-- like button -->
+                <a href="#" class="red tooltip-error btn-like">
+                    <i class="ace-icon fa <% if (isLike) print("fa-heart"); else print("fa-heart-o"); %> "></i>
+                    <span><%= obj.like.length %></span>
+                </a>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+            <% if (obj.comments.length) { %>
+                <hr />
+            <% }%>
+
+            <!-- post comments -->
+            <div class="dialogs"></div>
+
+            <!-- show more comments button -->
+            <% if (obj.comments.length > 3) { %>
+                <button class="btn btn-xs btn-info btn-block btn-show-all">もっと見る（<%= obj.comments.length - 3 %>件）</button>
+            <% }%>
+
+        </div>
+
+        <!-- post footer -->
+        <div class="widget-toolbox padding-4 clearfix <% if (!obj.setting.commentable) print('hidden') %>">
+
+            <!-- user photo -->
+            <img class="photo-area pull-left" src="<%= selink.user.get('photo') %>" style="max-width: 55px; display: none;" />
+
+            <!-- comment text area -->
+            <div class="comment-area">
+                <div class="reply-label btn-group" style="margin-bottom: 4px; display: none;">
+                    <span class="btn btn-xs btn-info"></span>
+                    <button class="btn btn-xs btn-info">
+                        <i class="ace-icon fa fa-times icon-only"></i>
+                    </button>
+                </div>
+                <textarea name="comment" placeholder="コメントを書く" style="width: 100%; heigth: 61px;"></textarea>
+            </div>
+
+            <div class="btn-area pull-right" style="display: none;">
+                <!-- post button -->
+                <button class="btn btn-sm btn-success btn-comment disabled">
+                    <i class="ace-icon fa fa-comment bigger-125"></i>
+                    コメントする
+                </button>
+                <!-- cancel button -->
+                <button class="btn btn-sm btn-yellow btn-cancel">
+                    <i class="ace-icon fa fa-power-off bigger-125"></i>
+                    取消
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

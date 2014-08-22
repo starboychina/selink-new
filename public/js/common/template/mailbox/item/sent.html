@@ -1,0 +1,64 @@
+<%
+    var linkList = _.map(obj._recipient, function(recipient) {
+        return '<a href="#profile/' + recipient._id + '">' + recipient.firstName + ' ' + recipient.lastName + '</a>';
+    }).join('、');
+%>
+
+<label class="inline">
+    <input type="checkbox" class="ace" />
+    <span class="lbl"></span>
+</label>
+
+<% if (obj.isMarked) { %>
+    <i class="message-star ace-icon fa fa-star orange"></i>
+<% } else { %>
+    <i class="message-star ace-icon fa fa-star-o light-grey"></i>
+<% } %>
+
+<span class="sender">
+    <%= linkList %>
+</span>
+
+<span class="time" data-create-date="<%= moment(obj.createDate).valueOf() %>">
+    <%= moment(obj.createDate).calendar() %>
+</span>
+
+<span class="clearfix"></span>
+
+<span class="summary">
+    <span class="badge badge-green mail-tag"></span>
+    <span class="text">
+        <%= obj.subject %>
+    </span>
+</span>
+
+<div class="message-content" style="display: none;">
+    <div class="message-header clearfix">
+        <div class="pull-left">
+
+            <span class="blue bigger-125">
+                <%= obj.subject %>
+            </span>
+
+            <div class="space-4"></div>
+
+            <div>
+                受信者：<%= linkList %>
+            </div>
+
+        </div>
+
+        <div class="action-buttons pull-right">
+            <a href="#" class="btn-remove tooltip-error">
+                <i class="ace-icon fa fa-trash-o red icon-only bigger-130"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="hr hr-double"></div>
+
+    <div class="message-body">
+        <%= obj.content %>
+    </div>
+
+</div>

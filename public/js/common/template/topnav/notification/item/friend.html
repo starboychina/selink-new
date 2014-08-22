@@ -1,0 +1,49 @@
+<%
+    var title,
+        icon;
+
+    if (obj.type == "friend-invited") {
+        title = "から友達になるリクエストがありました";
+        icon = "fa-paper-plan blue bigger-110";
+    }
+    else if (obj.type == "friend-approved") {
+        title = "あなたの友達リクエストを承認しました";
+        icon = "fa-smile-o green bigger-110";
+    }
+    else if (obj.type == "friend-declined") {
+        title = "あなたの友達リクエストを拒否しました";
+        icon = "fa-meh-o purple bigger-110";
+    }
+    else if (obj.type == "friend-break") {
+        title = "あなたと友達を解除しました";
+        icon = "fa-frown-o red bigger-110";
+    }
+%>
+
+<a href="#profile/<%= obj._from._id %>">
+    <img src="<%= obj._from.photo %>" class="msg-photo">
+    <span class="msg-body">
+        <span class="msg-title">
+            <span class="msg-time pull-right">
+                <i class="ace-icon fa fa-clock-o"></i>&nbsp;<span><% print(moment(obj.createDate).fromNow()) %></span>
+            </span>
+            <strong>
+                <span class="blue">
+                    <%= obj._from.firstName %>&nbsp;
+                    <%= obj._from.lastName %>&nbsp;
+                </span>
+                <%= title %>
+            </strong>
+        </span>
+        <span class="msg-time">
+            <% if (obj.type == "friend-invited") { %>
+                <div class="pull-right">
+                    <button class="btn btn-minier btn-pink btn-decline"><i class="ace-icon fa fa-times"></i>&nbsp;拒否</button>
+                    <button class="btn btn-minier btn-success btn-approve"><i class="ace-icon fa fa-check"></i>&nbsp;許可</button>
+                </div>
+            <% } else { %>
+                <button class="btn btn-minier btn-info btn-acknowledge pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;了解</button>
+            <% } %>
+        </span>
+    </span>
+</a>

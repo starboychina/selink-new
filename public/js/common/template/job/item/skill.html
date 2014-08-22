@@ -1,0 +1,17 @@
+<%
+    var progressClass = 'progress-bar-purple';
+
+    if (obj.weight > 85) {
+        progressClass = 'progress-bar-success';
+    } else if (obj.weight > 70) {
+        progressClass = '';
+    } else if (obj.weight > 50) {
+        progressClass = 'progress-bar-warning';
+    } else if (obj.weight > 30) {
+        progressClass = 'progress-bar-danger';
+    }
+%>
+<div class="progress-bar <%= progressClass %>" style="width:<%= obj.weight %>%">
+    <span class="pull-left"><%= obj.skill %></span>
+    <span class="pull-right"><%= obj.weight %>pt</span>
+</div>

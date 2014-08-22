@@ -1,0 +1,22 @@
+<div class="col-xs-4 align-right">
+    <i class="icon-envelope sl-icon"></i>&nbsp;
+    E-Mail
+</div>
+<div class="col-xs-8">
+    <div class="sl-value">
+        <%
+            if (obj.secEmail)
+                print(obj.secEmail);
+            else
+                print('<span class="text-muted">クリックして編集</span>');
+        %>
+    </div>
+    <div class="sl-editor row form-group">
+        <div class="col-sm-12 input-group">
+            <span class="input-group-addon">
+                <i class="icon-envelope-alt bigger-110"></i>
+            </span>
+            <input type="text" class="col-xs-12" placeholder="メールアドレス" name="secEmail" value="<%- obj.secEmail %>">
+        </div>
+    </div>
+</div>

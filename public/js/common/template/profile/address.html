@@ -1,0 +1,24 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-map-marker sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.address)
+                print((obj.zipCode ? "（〒 " + obj.zipCode + "）" : "") + obj.address);
+            else
+                print('<span class="text-muted">住所</span>');
+        %>
+    </div>
+    <div class="sl-editor form-group">
+        <div id="zipCodeArea" class="col-sm-12">
+            <span class="input-icon">
+                <input type="text" id="zipCode" class="input-medium" placeholder="郵便番号" name="zipCode" value="<%- obj.zipCode %>">
+                <i class="ace-icon fa fa-nothing blue">〒</i>
+            </span>
+        </div>
+        <div class="col-sm-12">
+            <input type="text" id="address" class="col-xs-12" placeholder="住所" name="address" value="<%- obj.address %>">
+        </div>
+    </div>
+</div>

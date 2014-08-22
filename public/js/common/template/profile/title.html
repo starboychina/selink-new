@@ -1,0 +1,13 @@
+<div class="label label-xlg label-primary arrowed-in arrowed-in-right sl-title sl-value">
+	<%
+	    if (obj.title)
+	        print('<span>' + obj.title + '</span>');
+	    else
+	        print('<span class="text-muted">クリックして編集</span>');
+	%>
+</div>
+<div class="sl-editor row form-group">
+    <div class="col-sm-12">
+        <input class="col-sm-12 text-center" type="text" placeholder="タイトル" name="title" value="<%- obj.title %>">
+    </div>
+</div>

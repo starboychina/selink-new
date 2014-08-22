@@ -1,0 +1,23 @@
+<%
+    var content = _.str.stripTags(obj.content),
+        summary = _.str.truncate(content, 50);
+%>
+
+<a href="#message/<%= obj._id %>">
+    <img src="<%= obj._from.photo %>" class="msg-photo">
+    <span class="msg-body">
+        <span class="msg-title">
+            <span class="msg-time pull-right">
+                <i class="ace-icon fa fa-clock-o"></i>&nbsp;<span><% print(moment(obj.createDate).fromNow()) %></span>
+            </span>
+            <strong>
+                <span class="blue">
+                    <%= obj._from.firstName %>&nbsp;
+                    <%= obj._from.lastName %>
+                </span>
+                <p><%= obj.subject %></p>
+            </strong>
+            <p><%= summary %></p>
+        </span>
+    </span>
+</a>

@@ -1,0 +1,46 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="green">
+            <i class="ace-icon fa fa-bullhorn bigger-110"></i>&nbsp;&nbsp;
+            <strong>システム公告</strong>
+        </h4>
+    </div>
+
+    <div class="row modal-body overflow-visible">
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="ace-icon fa fa-bullhorn bigger-110"></i></span>
+                    <input type="text" class="col-xs-12" placeholder="タイトル" name="title" value="<%= obj.title %>">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <div class="input-group input-daterange">
+                    <span class="input-group-addon sl-input-group-addon"><i class="ace-icon fa fa-calendar bigger-110"></i></span>
+                    <input type="text" class="input-medium" placeholder="有効期限" name="expiredDate" value="<%= obj.expiredDateInput %>">
+                    <span class="input-group-addon"><i class="ace-icon fa fa-clock-o bigger-110"></i></span>
+                    <div class="bootstrap-timepicker">
+                        <input type="text" class="input-medium " placeholder="時間" name="expiredTime" value="<%= obj.expiredTime %>">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12">
+            <div class="hr hr-double dotted"></div>
+            <div class="wysiwyg-editor">
+                <%= obj.content %>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-sm btn-success btn-save"><i class="ace-icon fa fa-check"></i> 保存</button>
+        <button class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> 取消</button>
+    </div>
+</div>

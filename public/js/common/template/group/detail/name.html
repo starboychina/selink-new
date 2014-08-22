@@ -1,0 +1,12 @@
+<div class="sl-value">
+    <% if (obj.name) { %>
+        <%= obj.name %>
+    <% } else { %>
+        <span class="text-muted">グループ名</span>
+    <% } %>
+</div>
+<div class="sl-editor row">
+    <div class="col-xs-12 form-group">
+        <input type="text" class="col-xs-12 text-center" placeholder="グループ名" name="name" value="<%= obj.name %>" maxlength="50">
+    </div>
+</div>

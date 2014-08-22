@@ -1,0 +1,22 @@
+<div class="col-xs-4 align-right">
+    <i class="icon-briefcase sl-icon"></i>&nbsp;
+    IT経験年数
+</div>
+<div class="col-xs-8">
+    <div class="sl-value">
+        <%
+            if (obj.experience)
+                print(obj.experience + "年");
+            else
+                print('<span class="text-muted">クリックして編集</span>');
+        %>
+    </div>
+    <div class="sl-editor row form-group">
+        <div class="col-sm-12 input-group">
+            <span class="input-group-addon">
+                <i class="icon-suitcase bigger-110"></i>
+            </span>
+            <input type="text" class="input-small" placeholder="経験年数" name="experience" value="<%- obj.experience %>">
+        </div>
+    </div>
+</div>

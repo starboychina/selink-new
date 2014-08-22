@@ -1,0 +1,16 @@
+<div class="col-xs-1 align-right">
+    <i class="ace-icon fa fa-calendar sl-icon"></i>
+</div>
+<div class="col-xs-11">
+    <div class="sl-value">
+        <%
+            if (obj.birthDayDisplay)
+                print(obj.birthDayDisplay);
+            else
+                print('<span class="text-muted">生年月日</span>');
+        %>
+    </div>
+    <div class="sl-editor">
+        <input type="text" id="birthday-item" class="input-medium" placeholder="yyyy/mm/dd" name="birthDay" value="<%= obj.birthDayInput %>">
+    </div>
+</div>

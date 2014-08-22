@@ -1,0 +1,9 @@
+<small class="sl-value">
+    <%
+        if (obj.description) print(obj.description)
+        else print('<div class="empty-view text-muted bigger-125 center">グループ紹介はまだ登録していません<br/>ここをクリックして編集できます</div>');
+    %>
+</small>
+<div class="sl-editor">
+    <textarea style="width: 100%; height: 200px;"><%= obj.description ? obj.description.replace(/<br\s*\/?>/mg, "\n") : "" %></textarea>
+</div>

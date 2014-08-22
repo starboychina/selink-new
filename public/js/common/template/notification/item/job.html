@@ -1,0 +1,44 @@
+<%
+    var title,
+        icon,
+        content;
+
+    if (obj.type == "job-new") {
+        title = "新しい仕事情報を投稿しました";
+        icon = "fa-briefcase blue bigger-110";
+        content = obj.targetJob.name;
+    }
+    else if (obj.type == "job-bookmarked") {
+        title = "あなたの仕事情報にブックマークを付けました";
+        icon = "fa-star orange2 bigger-110";
+        content = obj.targetJob.name;
+    }
+%>
+
+<div class="profile-activity clearfix isotope-item">
+    <div>
+        <a href="#profile/<%= obj._from._id %>">
+            <img class="avatar pull-left" src="<%= obj._from.photo %>">
+        </a>
+
+        <a class="user" href="#profile/<%= obj._from._id %>">
+            <%= obj._from.firstName %>&nbsp;<%= obj._from.lastName %>
+        </a>
+
+        <%= title %>
+
+        <p>
+            <i class="ace-icon fa <%= icon %>"></i>
+            <%= content %>
+        </p>
+
+        <div class="time"><i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %></div>
+    </div>
+    <% if (obj.result) { %>
+        <div class="text-muted pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;確認済み</div>
+    <% } else { %>
+        <div class="pull-right">
+            <button class="btn btn-sm btn-info btn-acknowledge pull-right"><i class="ace-icon fa fa-check"></i>&nbsp;了解</button>
+        </div>
+    <% } %>
+</div>

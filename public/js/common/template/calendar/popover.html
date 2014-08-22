@@ -1,0 +1,26 @@
+<%
+    var startDate = obj.start ? moment(obj.start).format('LL HH:mm') : "",
+        endDate = obj.end ? moment(obj.end).format('LL HH:mm') : "" ;
+%>
+
+<div class="no-margin">
+
+    <div style="margin-top: 40px; word-break: break-all;">
+        <strong><%= obj.group.name %></strong>
+        ―
+        <strong><%= obj.title %></strong>
+        <br/>
+        <small><%= obj.memo %></small>
+    </div>
+
+    <hr style="margin: 10px 4px;">
+
+    <% if (obj.start) { %>
+        <div><small>開始日時：<%= startDate %></small></div>
+    <% } %>
+
+    <% if (obj.end) { %>
+        <div><small>終了日時：<%= endDate %></small></div>
+    <% } %>
+
+</div>

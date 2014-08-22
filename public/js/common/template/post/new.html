@@ -1,0 +1,44 @@
+<div class="widget-header widget-header-small">
+    <h5 class="widget-title bigger"><i class="ace-icon fa fa-edit"></i>&nbsp;新しい記事</h5>
+</div>
+
+<div class="widget-body">
+    <div class="widget-toolbox">
+        <div class="btn-toolbar center"></div>
+    </div>
+
+    <div class="widget-main no-padding">
+        <div class="wysiwyg-editor"></div>
+    </div>
+
+    <div class="widget-toolbox padding-4 clearfix">
+
+        <div class="btn-group pull-right">
+            <button class="btn btn-sm btn-success btn-post disabled"
+                    data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;送信中・・・">
+                投稿
+                <i class="ace-icon fa fa-paper-plane-o fa-on-right"></i>
+            </button>
+        </div>
+
+        <% if (!obj._id) { %>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown">
+                    <i class="ace-icon fa fa-group bigger-110"></i>
+                    <span class="group-name">ルグープ指定なし</span>
+                    <i class="ace-icon fa fa-angle-down fa-on-right bigger-125"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-info ace-thumbnails">
+                    <li class="center" style="width: 100%;"><a href="#" class="btn-cancel">ルグープ指定しない</a></li>
+                </ul>
+            </div>
+        <% } else { %>
+            <button class="btn btn-sm btn-info disabled dropdown-menu">
+                <i class="ace-icon fa fa-group bigger-110"></i>
+                <span class="group-name"><%= obj.name %></span>
+                <i class="ace-icon fa fa-angle-down fa-on-right bigger-125"></i>
+            </button>
+        <% } %>
+
+    </div>
+</div>

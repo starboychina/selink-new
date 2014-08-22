@@ -1,0 +1,91 @@
+<%
+    var title,
+        comment,
+        content = obj.targetPost.content,
+        content = _.str.stripTags(content);
+        content = _.str.truncate(content, 200);
+
+    if (obj.type == "post-new") {
+
+        if (obj.targetGroup)
+            title = '「<a class="group-link" href="#group/' + obj.targetGroup._id + '">' + obj.targetGroup.name + '</a>」に新しい記事を投稿しました';
+        else
+            title = "新しい記事を投稿しました";
+    }
+    else if (obj.type == "post-liked") {
+        title = "あなたの投稿に「いいね！」しました";
+    }
+    else if (obj.type == "post-bookmarked") {
+        title = "あなたの投稿にブックマークを付けました";
+    }
+    else if (obj.type == "post-commented") {
+
+        if (obj.targetPost._owner == selink.user.id)
+            title = "あなたの投稿をコメントしました";
+        else
+            title = "下記投稿をコメントしました";
+
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+    }
+    else if (obj.type == "comment-replied") {
+
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+        content = _.findWhere(obj.targetPost.comments, {_id: obj.targetReplyTo}).content;
+
+        if (comment._owner == selink.user.id)
+            title = "あなたのコメントを返信しました";
+        else
+            title = "下記コメントを返信しました";
+    }
+    else if (obj.type == "comment-liked") {
+
+        comment = _.findWhere(obj.targetPost.comments, {_id: obj.targetComment});
+
+        if (comment._owner == selink.user.id)
+            title = "あなたのコメントに「いいね！」しました";
+        else
+            title = "下記コメントに「いいね！」しました";
+    }
+
+%>
+
+<div class="timeline-info">
+    <a href="#profile/<%= obj._owner._id %>">
+        <img src="<%= obj._owner.photo %>" />
+    </a>
+</div>
+
+<div class="widget-box widget-color-green">
+    <div class="widget-header widget-header-small">
+        <h5 class="widget-title smaller">
+            <i class="ace-icon fa fa-edit bigger-110"></i>&nbsp;
+            <strong><%= obj._owner.firstName %>&nbsp;<%= obj._owner.lastName %></strong>
+            <%= title %>
+        </h5>
+        <span class="widget-toolbar no-border">
+            <i class="ace-icon fa fa-clock-o bigger-110"></i>&nbsp;<%= moment(obj.createDate).fromNow() %>
+        </span>
+    </div>
+    <div class="widget-body">
+        <div class="widget-main">
+            <% if (comment) { %>
+                <%= comment.content%>
+                <hr>
+                <div style="text-indent: 10px;">
+                    <i class="ace-icon fa fa-chevron-right blue"></i>
+                    <%= content %>
+                </div>
+            <% } else { %>
+                <%= content %>
+            <% } %>
+            <div class="widget-toolbox clearfix">
+                <div class="pull-right action-buttons">
+                    <div class="space-4"></div>
+                    <div>
+                        <a href="#post/<%= obj.targetPost._id %>"><i class="ace-icon fa fa-desktop bigger-110"></i>&nbsp;詳しく読む</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
