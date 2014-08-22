@@ -14,7 +14,7 @@ SELink needs the support of these softwares below:
 
 ## Installation
 
-  ### Node 
+### Node 
   
   * [DownLoad Node.js and install with default options](http://nodejs.org/download/)
   * install grunt-cli
@@ -27,7 +27,7 @@ SELink needs the support of these softwares below:
     ```
   * Note: on Windows system, you need install the [Microsoft Visual Studio 2012 (Express version)](http://go.microsoft.com/?linkid=9816758).
 
-  ### MongoDB
+### MongoDB
   
   * [Download MongoDB and install with default options](http://www.mongodb.org/downloads)
   * Create three database as below:
@@ -37,15 +37,15 @@ SELink needs the support of these softwares below:
     mongorestore path/to/dump/selink       // database for production (you may not need this)
     ```
   
-  ### GraphicMagik
+### GraphicMagik
   
   [Download GraphicMagik and install with default options](http://www.graphicsmagick.org/download.html)
   
-  ### Java
+### Java
   
   For running Solr, Java's version must higher than 1.7.0_55-b13. install with default options
   
-  ### Solr
+### Solr
   
   * Download Solr and install by following the instruction
   * Solr should startup at port 8080
@@ -58,7 +58,7 @@ SELink needs the support of these softwares below:
   * Copy resource/solr/schema.xml, resource/solr/solrconfig.xml, and selink.jar to each core
   * Reload each core
 
-  ### SELink
+### SELink
   
   * Swicth to the root of your SELink copy
   * Install by running command:
