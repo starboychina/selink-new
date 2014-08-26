@@ -3,24 +3,27 @@
 @import "variables.less";
 @import "mixins.less";
 
-.main-container,.page-content {
+body {
   // background-color: white;
   background: url('/asset/patterns/retina_wood_@2X.png') repeat center top;
   // background-size: cover;
+}
+
+.main-container:before,.page-content {
+  background-color: transparent;
 }
 
 .navbar-brand {
     padding-top: 15px !important;
 }
 
-.navbar-form {
-    input, button {
-        margin-right: 2px;
-    }
-}
-
 .gritter-item {
     font-size: 12px;
+}
+
+.login-container {
+
+  margin: 0;
 }
 
 .input-group {
@@ -34,9 +37,9 @@
 
 .signup-box {
 
-    width: 345px;
+    // width: 345px;
 
-    border: 3px solid rgb(118, 183, 116);
+    // border: 3px solid rgb(118, 183, 116);
 
     .alert-danger, .alert-success {
         display: none;

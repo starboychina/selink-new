@@ -1,20 +1,42 @@
-<a data-scroll-nav="0">login</a>
-<a data-scroll-nav="1">signup</a>
-<a data-scroll-nav="2">about</a>
+<div class="widget-body">
 
-<div class="form-group">
-    <input class="form-control input-medium" type="email" name="email" placeholder="メールアドレス">
+    <div class="widget-main">
+        <h4 class="header blue lighter bigger">
+            <i class="ace-icon fa fa-sign-in"></i>
+            サインイン
+        </h4>
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="ace-icon fa fa-envelope"></i></span>
+                    <input class="form-control" type="email" name="email" placeholder="メールアドレス">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="ace-icon fa fa-lock"></i></span>
+                    <input class="form-control input-medium" type="password" name="password" placeholder="パースワード">
+                </div>
+            </div>
+
+            <button class="btn btn-sm btn-link btn-forgot">
+                パースワード忘れたら
+                <i class="ace-icon fa fa-question align-middle"></i>
+            </button>
+
+            <div class="space-12"></div>
+
+            <div class="clearfix">
+                <button class="btn btn-sm btn-block btn-info btn-signin" type="submit"
+                        data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;認証中・・・">
+                    <i class="ace-icon fa fa-sign-in align-middle bigger-125"></i>&nbsp;&nbsp;ログイン
+                </button>
+                <button class="btn btn-sm btn-block btn-success btn-show">
+                    <i class="ace-icon fa fa-check align-middle bigger-125"></i>&nbsp;&nbsp;新規登録
+                </button>
+            </div>
+        </form>
+    </div>
+
 </div>
-<div class="form-group">
-   <input class="form-control input-medium" type="password" name="password" placeholder="パースワード">
-</div>
-<button class="btn btn-sm btn-success btn-signin"
-        data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;認証中・・・">
-    <i class="ace-icon fa fa-sign-in align-middle bigger-125"></i>&nbsp;&nbsp;ログイン
-</button>
-<button class="btn btn-sm btn-info btn-show">
-    <i class="ace-icon fa fa-check align-middle bigger-125"></i>&nbsp;&nbsp;新規登録
-</button>
-<button class="btn btn-sm btn-warning btn-forgot">
-    <i class="ace-icon fa fa-question align-middle bigger-125"></i>&nbsp;&nbsp;パースワード忘れたら
-</button>

@@ -12,10 +12,11 @@ define([
         template: template,
 
         // this view is a form
-        tagName: 'form',
+        // tagName: 'form',
 
         // class name
-        className: 'navbar-form navbar-right',
+        // className: 'navbar-form navbar-right',
+        className: 'login-box widget-box no-boder',
 
         // ui
         ui: {
@@ -52,7 +53,10 @@ define([
                 url: '/login',
 
                 // post form data
-                data: this.$el.serialize(),
+                data: {
+                    email: this.ui.email.val(),
+                    password: this.ui.password.val()
+                },
 
                 // method is post
                 type: 'POST',
@@ -168,7 +172,8 @@ define([
             // stop default event
             e.preventDefault();
             // show signup form
-            $('.signup-box').toggleClass('hidden');
+            $('#sign-in-area').addClass('hidden');
+            $('#sign-up-area').removeClass('hidden').slFlipInY();
         },
 
         // show password retrive dialog

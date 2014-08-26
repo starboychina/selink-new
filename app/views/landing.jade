@@ -11,6 +11,7 @@ html(lang="en", xmlns="http://www.w3.org/1999/xhtml")
     link(rel='stylesheet', href='/css/bootstrap.min.css', media="screen")
     link(rel='stylesheet', href='/css/font-awesome.min.css', media="screen")
     link(rel='stylesheet', href='/css/jquery.gritter.css', media="screen")
+    link(rel='stylesheet', href='/css/animate.min.css', media="screen")
     link(rel='stylesheet', href='/css/ace-fonts.css', media="screen")
     link(rel='stylesheet', href='/css/ace.min.css', media="screen")
     link(rel='stylesheet', href='/css/landing.css', media="screen")
@@ -20,13 +21,10 @@ html(lang="en", xmlns="http://www.w3.org/1999/xhtml")
       .navbar-header
         a.navbar-brand(href="#")
           small SELink
-      #sign-in-area
     .main-container
-      .main-content
-        .page-content
-          div(data-scroll-index="0", style="height: 1200px; width: 100%;")
-            #sign-up-area.pull-right
-          div(data-scroll-index="1", style="height: 1200px; width: 100%;")
-          div(data-scroll-index="2", style="height: 1200px; width: 100%;")
+      .page-content
+        .login-container.pull-right
+          #sign-in-area
+          #sign-up-area.hidden
     //- modal
     #modal-area.modal.fade(tabindex="-1")

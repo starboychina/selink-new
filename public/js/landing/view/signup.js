@@ -12,7 +12,7 @@ define([
         template: template,
 
         // class Name
-        className: 'signup-box widget-box hidden',
+        className: 'signup-box widget-box no-boder',
 
         // ui
         ui: {
@@ -30,6 +30,7 @@ define([
         // events
         events: {
             'click .btn-signup': 'onSignUp',
+            'click .btn-signin': 'onShowSignIn',
             'click .btn-statements': 'showStatements'
         },
 
@@ -225,6 +226,16 @@ define([
             this.$el.find('.btn-statements')
                 .removeClass('tooltip-error animated-input-error red')
                 .tooltip('destroy');
+        },
+
+        // show sign in form
+        onShowSignIn: function(e) {
+
+            // stop default event
+            e.preventDefault();
+            // show signin form
+            $('#sign-up-area').addClass('hidden');
+            $('#sign-in-area').removeClass('hidden').slFlipInY();
         },
 
         // show user statsment

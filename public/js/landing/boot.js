@@ -22,6 +22,7 @@ require.config({
         'validate': 'lib/jquery.validate',
         'gritter': 'lib/jquery.gritter',
         'scrollIt': 'lib/scrollIt',
+        'selink': 'lib/selink',
         'app': 'landing/landing'
     },
 
@@ -60,6 +61,9 @@ require.config({
         'scrollIt': {
             deps: ['jquery']
         },
+        'selink': {
+            deps: ['jquery']
+        },
         'app': {
             deps: [
                 'jquery-ui',
@@ -69,7 +73,8 @@ require.config({
                 'ace-element',
                 'validate',
                 'gritter',
-                'scrollIt'
+                'scrollIt',
+                'selink'
             ]
         }
     }
