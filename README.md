@@ -8,6 +8,7 @@ SELink needs the support of these softwares below:
 
   * [Node](http://nodejs.org/) -- application server
   * [MongoDB](http://www.mongodb.org/) -- database
+  * [Redis](http://redis.io/) -- session store
   * [GraphicMagik](http://www.graphicsmagick.org/) -- image process
   * [Solr 4.8](http://lucene.apache.org/solr/) -- data indexing
   * Java (build 1.7.0_55-b13) -- for Solr
@@ -40,6 +41,10 @@ SELink needs the support of these softwares below:
     mongorestore path/to/dump/selink       // database for production (you may not need this)
     ```
   
+### Redis
+
+  * [Download Redis and install with default options](http://redis.io/download)
+
 ### GraphicMagik
   
   [Download GraphicMagik and install with default options](http://www.graphicsmagick.org/download.html)
