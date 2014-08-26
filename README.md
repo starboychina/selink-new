@@ -47,11 +47,11 @@ SELink needs the support of these softwares below:
 
 ### GraphicMagik
   
-  [Download GraphicMagik and install with default options](http://www.graphicsmagick.org/download.html)
+  * [Download GraphicMagik and install with default options](http://www.graphicsmagick.org/download.html)
   
 ### Java
   
-  For running Solr, Java's version must higher than 1.7.0_55-b13. install with default options
+  * For running Solr, Java's version must higher than 1.7.0_55-b13. install with default options
   
 ### Solr
   
@@ -69,16 +69,18 @@ SELink needs the support of these softwares below:
 
 ### SELink
   
-  * Swicth to the root of your SELink copy
+  * Swicth to the root directory of your SELink copy
   * Install by running command:
 
     ```javascript
     npm install
     ```
 
+### Build web client
+
 ## Startup
 
   * Single app mode
   * Cluster mode
 
-## Relate
+## Other resource
