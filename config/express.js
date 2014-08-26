@@ -5,6 +5,7 @@ var path = require('path'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     methodOverride = require('method-override'),
+    lessMiddleware = require('less-middleware'),
     session = require('express-session'),
     RedisStore = require('connect-redis')(session),
     io = require('socket.io'),
@@ -56,14 +57,11 @@ module.exports = function(config) {
 
     /* TODO: CSRF support */
 
-    // Set up LESS
-    // app.use(require('less-middleware')({
-    //     src: path.join(config.root, 'public', 'css', 'less'),
-    //     paths: path.join(config.root, 'public', 'css', 'less', 'bootstrap'),
-    //     dest: path.join(config.root, 'public', 'css'),
-    //     prefix: '/css',
-    //     compress: true
-    // }));
+    // Less Middleware
+    app.use(lessMiddleware('/less', {
+        dest: '/css',
+        pathRoot: path.join(config.root, 'public')
+    }));
 
     // Public folder
     app.use(express.static(path.join(config.root, 'public')));
