@@ -13,6 +13,10 @@ module.exports = {
             key: fs.readFileSync(rootPath + '/resource/ssl/test/selink.pem'),
             cert: fs.readFileSync(rootPath + '/resource/ssl/test/selink.crt')
         },
+        awssdk: {
+            accessKey: 'AKIAJIOX3T2P5QLWVC6A',
+            secretKey: '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'
+        },
         mongodb: {
             host: 'mongodb://localhost/selink_test',
         },
@@ -22,7 +26,8 @@ module.exports = {
             core : 'selink_test',
         },
         redis: {
-
+            host: '',
+            port: '6379'
         },
         mail: {
             service: "Gmail",
@@ -43,6 +48,10 @@ module.exports = {
             key: fs.readFileSync(rootPath + '/resource/ssl/development/selink.pem'),
             cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
+        awssdk: {
+            accessKey: 'AKIAJIOX3T2P5QLWVC6A',
+            secretKey: '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'
+        },
         mongodb: {
             host: 'mongodb://localhost/selink_dev'
         },
@@ -52,7 +61,8 @@ module.exports = {
             core : 'selink_dev',
         },
         redis: {
-
+            host: '',
+            port: '6379'
         },
         mail: {
             service: "Gmail",
@@ -73,6 +83,10 @@ module.exports = {
             key: fs.readFileSync(rootPath + '/resource/ssl/development/selink.pem'),
             cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
+        awssdk: {
+            accessKey: 'AKIAJIOX3T2P5QLWVC6A',
+            secretKey: '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'
+        },
         mongodb: {
             host: 'mongodb://localhost/selink'
         },
@@ -82,7 +96,8 @@ module.exports = {
             core : 'selink',
         },
         redis: {
-
+            host: '',
+            port: '6379'
         },
         mail: {
             port: 587,
