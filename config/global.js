@@ -15,7 +15,9 @@ module.exports = {
         },
         awssdk: {
             accessKey: 'AKIAJIOX3T2P5QLWVC6A',
-            secretKey: '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'
+            secretKey: 'MQ2orSOjfdgY5+94RpTfuYxBZ8VeKBEZVAXfTwil',
+            s3:'s3-ap-northeast-1.amazonaws.com',
+            bucket: 'selink-test'
         },
         mongodb: {
             host: 'mongodb://localhost/selink_test',
@@ -50,7 +52,9 @@ module.exports = {
         },
         awssdk: {
             accessKey: 'AKIAJIOX3T2P5QLWVC6A',
-            secretKey: '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'
+            secretKey: 'MQ2orSOjfdgY5+94RpTfuYxBZ8VeKBEZVAXfTwil',
+            s3:'s3-ap-northeast-1.amazonaws.com',
+            bucket: 'selink-dev'
         },
         mongodb: {
             host: 'mongodb://localhost/selink_dev'
@@ -85,7 +89,9 @@ module.exports = {
         },
         awssdk: {
             accessKey: 'AKIAJIOX3T2P5QLWVC6A',
-            secretKey: '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'
+            secretKey: 'MQ2orSOjfdgY5+94RpTfuYxBZ8VeKBEZVAXfTwil',
+            s3:'s3-ap-northeast-1.amazonaws.com',
+            bucket: 'selink'
         },
         mongodb: {
             host: 'mongodb://localhost/selink'

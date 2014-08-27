@@ -94,9 +94,7 @@ module.exports = function(config) {
     // assume 404 since no middleware responded
     app.use(function(req, res, next){
         // 404 page
-        res.status(404).render('404', {
-            product: ""
-        });
+        res.status(404).render('404', {});
     });
 
     // Express 3 requires a http.Server to attach socke.io

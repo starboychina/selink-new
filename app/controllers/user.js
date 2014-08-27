@@ -3,6 +3,7 @@ var _ = require('underscore'),
     gm = require('gm'),
     util = require('util'),
     path = require('path'),
+    AWS = require('aws-sdk'),
     mongoose = require('mongoose'),
     formidable = require('formidable'),
     User = mongoose.model('User'),
@@ -13,10 +14,12 @@ var _ = require('underscore'),
     Activity = mongoose.model('Activity');
 
 // parse a file upload
-var foridableForm = new formidable.IncomingForm({
+var formidableForm = new formidable.IncomingForm({
     uploadDir: __dirname + '../../../public/upload',
     keepExtensions: true
 });
+
+var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 // User login
 exports.login = function(req, res, next) {
@@ -125,7 +128,7 @@ exports.update = function(req, res, next) {
 // Upload Photo
 exports.uploadPhoto = function(req, res, next) {
 
-    foridableForm.parse(req, function(err, fields, files) {
+    formidableForm.parse(req, function(err, fields, files) {
 
         // handle photo file
         if (files.photo) {
@@ -158,28 +161,60 @@ exports.scalePhoto = function(req, res, next) {
 
     // TODO: check exsitence of tempPhoto
 
-    var photoPath = path.join(__dirname, '../../public/upload/', req.session.tempPhoto);
+    var photoName = req.session.tempPhoto;
+    var photoPath = path.join(__dirname, '../../public/upload/', photoName);
+    var contentType = 'application/octet-stream';
+    var remotePath = 'https://s3-ap-northeast-1.amazonaws.com/selink-dev/' + req.user.id + '/' + photoName;
+
+    if (photoName.indexOf('.jpg') >= 0) contentType = 'image/jpg';
+    else if (photoName.indexOf('.jpeg') >= 0) contentType = 'image/jpg';
+    else if (photoName.indexOf('.gif') >= 0) contentType = 'image/gif';
+    else if (photoName.indexOf('.png') >= 0) contentType = 'image/png';
 
     gm(photoPath)
         .crop(req.body.w, req.body.h, req.body.x, req.body.y)
         .resize(200, 200)
-        .write(photoPath, function(err) {
+        .toBuffer(function (err, buffer) {
             if (err) next(err);
             else {
 
-                // update user info
-                User.findByIdAndUpdate(req.params.user, {photo: './upload/' + req.session.tempPhoto}, function(err, updatedUser) {
+                s3.putObject({
+                    ACL: 'public-read',
+                    Bucket: 'selink-dev',
+                    Key: req.user.id + '/' + photoName,
+                    Body: buffer,
+                    ContentType: contentType
+                }, function(err, response) {
+
                     if (err) next(err);
-                    else res.send({photo: updatedUser.photo});
+                    else {
+
+                        // update user info
+                        User.findByIdAndUpdate(req.params.user, {photo: remotePath}, function(err, updatedUser) {
+                            if (err) next(err);
+                            else res.send({photo: updatedUser.photo});
+                        });
+                    }
                 });
             }
         });
+        // .write(photoPath, function(err) {
+        //     if (err) next(err);
+        //     else {
+
+        //         // update user info
+        //         User.findByIdAndUpdate(req.params.user, {photo: './upload/' + req.session.tempPhoto}, function(err, updatedUser) {
+        //             if (err) next(err);
+        //             else res.send({photo: updatedUser.photo});
+        //         });
+        //     }
+        // });
 };
 
 // Upload Cover
 exports.uploadCover = function(req, res, next) {
 
-    foridableForm.parse(req, function(err, fields, files) {
+    formidableForm.parse(req, function(err, fields, files) {
 
         // handle cover file
         if (files.cover) {

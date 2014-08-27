@@ -1,6 +1,7 @@
 var env = process.env.NODE_ENV || 'development',
     config = require('./config/global')[env],
     fs = require('fs'),
+    AWS = require('aws-sdk'),
     mongoose = require('mongoose'),
     solrClient = require('solr-client');
 
@@ -22,6 +23,12 @@ GLOBAL.solr = solrClient.createClient(config.solr);
 solr.ping(function(err, obj) {
     if (err) console.log(err);
     else console.log("Solr " + config.solr.host + ':' + config.solr.port + '/' + config.solr.core + " connected");
+});
+
+// Config AWS
+AWS.config.update({
+    accessKeyId: config.awssdk.accessKey,
+    secretAccessKey: config.awssdk.secretKey
 });
 
 // Create Exrepss Server

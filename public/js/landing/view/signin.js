@@ -146,14 +146,17 @@ define([
         _showError: function(errors) {
 
             for(var key in errors) {
+
                 this.$el.find('input[name="' + key + '"]')
-                    .addClass('animated-input-error tooltip-error')
+                    .addClass('tooltip-error')
                     .tooltip({
                         placement: 'bottom',
                         title: errors[key]
                     })
                     .closest('.form-group')
-                    .addClass('has-error');
+                    .addClass('has-error')
+                    .find('i')
+                    .addClass('animated-input-error');
             }
         },
 
