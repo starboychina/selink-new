@@ -17,7 +17,7 @@ var async = require('async'),
     User = mongoose.model('User'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
-    Mailer = require('../mailer/mailer.js');
+    Mailer = require('../../mailer/mailer.js');
 
 var populateField = {
     '_owner': 'type firstName lastName title cover photo',

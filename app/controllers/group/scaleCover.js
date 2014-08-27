@@ -1,4 +1,9 @@
 // Scale Cover
+
+var gm = require('gm'),
+    path = require('path'),
+    Group = require('mongoose').model('Group');
+
 module.exports = function(req, res, next) {
 
     // TODO: check exsitence of tempCover

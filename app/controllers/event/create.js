@@ -5,7 +5,7 @@ var _ = require('underscore'),
     Event = mongoose.model('Event'),
     Group = mongoose.model('Group'),
     Activity = mongoose.model('Activity'),
-    Mailer = require('../mailer/mailer.js');
+    Mailer = require('../../mailer/mailer.js');
 
 module.exports = function(req, res, next) {
 

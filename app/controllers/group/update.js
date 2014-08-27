@@ -7,6 +7,9 @@
 // 3. update the group in solr
 // 4. return the group to client
 
+var async = require('async'),
+    Group = require('mongoose').model('Group');
+
 module.exports = function(req, res, next) {
 
     async.waterfall([

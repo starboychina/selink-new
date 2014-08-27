@@ -10,6 +10,14 @@
 // 6. send email to invited people
 // 7. return the group to client
 
+var async = require('async'),
+    mongoose = require('mongoose'),
+    Group = mongoose.model('Group'),
+    User = mongoose.model('User'),
+    Activity = mongoose.model('Activity'),
+    Notification = mongoose.model('Notification'),
+    Mailer = require('../../mailer/mailer.js');
+
 module.exports = function(req, res, next) {
 
     async.waterfall([

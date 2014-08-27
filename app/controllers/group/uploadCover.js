@@ -1,4 +1,13 @@
 // Upload Cover
+var gm = require('gm'),
+    formidable = require('formidable');
+
+// parse a file upload
+var foridableForm = new formidable.IncomingForm({
+    uploadDir: __dirname + '../../../public/upload',
+    keepExtensions: true
+});
+
 module.exports = function(req, res, next) {
 
     foridableForm.parse(req, function(err, fields, files) {
