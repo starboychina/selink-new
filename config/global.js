@@ -28,7 +28,7 @@ module.exports = {
             core : 'selink_test',
         },
         redis: {
-            host: '',
+            host: 'localhost',
             port: '6379'
         },
         mail: {
@@ -65,7 +65,7 @@ module.exports = {
             core : 'selink_dev',
         },
         redis: {
-            host: '',
+            host: 'localhost',
             port: '6379'
         },
         mail: {
@@ -102,7 +102,7 @@ module.exports = {
             core : 'selink',
         },
         redis: {
-            host: '',
+            host: 'localhost',
             port: '6379'
         },
         mail: {

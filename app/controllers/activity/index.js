@@ -1,5 +1,3 @@
-var Activity = require('mongoose').model('Activity');
-
 /*
     No. | Activity Type     | Target  | Content
     --------------------------------------------
@@ -34,6 +32,8 @@ var Activity = require('mongoose').model('Activity');
 */
 
 // Activity index
+var Activity = require('mongoose').model('Activity');
+
 module.exports = function(req, res, next) {
 
     // page number

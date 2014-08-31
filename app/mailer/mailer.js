@@ -6,7 +6,7 @@ var env = process.env.NODE_ENV || 'development',
     nodemailer = require('nodemailer');
 
 // Setup mail transport facility
-var transport = nodemailer.createTransport("SMTP", config.mail);
+var transport = nodemailer.createTransport(config.mail);
 
 exports.accountActive = function(recipient) {
 

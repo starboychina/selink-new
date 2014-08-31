@@ -1,20 +1,25 @@
-// Create new sub document
-var User = require('mongoose').model('User');
+// Update Job
+var _ = require('underscore'),
+    Job = require('mongoose').model('Job');
 
 module.exports = function(req, res, next) {
 
-    User.findById(req.params.id, function(err, user) {
+    // TODO: check ownership
+
+    var newJob = _.omit(req.body, '_id');
+
+    Job.findByIdAndUpdate(req.params.job, newJob, function(err, job) {
         if (err) next(err);
         else {
 
-            var length = user[req.params.sub].push(req.body);
+            // send saved job back
+            job.populate('_owner', 'type firstName lastName title cover photo createDate', function(err, job) {
 
-            user.save(function(err, updatedUser) {
                 if (err) next(err);
                 else {
 
-                    // index user in solr
-                    solr.add(updatedUser.toSolr(), function(err, solrResult) {
+                    // index job in solr
+                    solr.add(job.toSolr(), function(err, solrResult) {
                         if (err) next(err);
                         else {
                             console.log(solrResult);
@@ -25,7 +30,7 @@ module.exports = function(req, res, next) {
                         }
                     });
 
-                    res.send(updatedUser[req.params.sub][length - 1]);
+                    res.json(job);
                 }
             });
         }
