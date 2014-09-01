@@ -113,7 +113,7 @@ define([
 
         // after show
         onShow: function() {
-            this.$el.addClass('animated fadeInRight');
+            this.$el.addClass('animated fadeIn');
         }
     });
 });

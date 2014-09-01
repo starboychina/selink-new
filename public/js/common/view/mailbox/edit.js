@@ -42,14 +42,14 @@ define([
             var userName = new Bloodhound({
                 datumTokenizer: function(d) {
 
-                    if (d.has('firstName')) {
-                        return Bloodhound.tokenizers.whitespace(d.get('firstName') + ' ' + d.get('lastName'));
+                    if (d.firstName) {
+                        return Bloodhound.tokenizers.whitespace(d.firstName + ' ' + d.lastName);
                     }
                         else return '';
                 },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                // remote: '/suggestUser?initial=%QUERY'
-                local: selink.user.friends.models
+                remote: '/suggest/user?initial=%QUERY'
+                // local: selink.user.friends.models
             });
 
             // initialize the bloodhound suggestion engine
@@ -65,7 +65,7 @@ define([
                 ttSource: {
                     name: 'friends',
                     displayKey: function(d) {
-                        return d.get('firstName') + ' ' + d.get('lastName');
+                        return d.firstName + ' ' + d.lastName;
                     },
                     source: userName.ttAdapter(),
                     templates: {
@@ -76,7 +76,7 @@ define([
                                 '<p class="repo-name"><%= firstName %>&nbsp;<%= lastName %></p>',
                                 '<div style="clear: both"></div>',
                                 '</div>'
-                                ].join(''), d.toJSON());
+                                ].join(''), d);
                         }
                     }
                 }
@@ -89,7 +89,7 @@ define([
         onSend: function() {
 
             var inputs = {
-                recipient: _.pluck(this.$el.find('input[name="recipient"]').data('models'), 'id'),
+                recipient: _.pluck(this.$el.find('input[name="recipient"]').data('models'), '_id'),
                 subject: this.ui.subject.val(),
                 content: this.ui.message.cleanHtml()
             };

@@ -46,11 +46,21 @@ module.exports = function(grunt) {
                     mainConfigFile: "./public/js/landing/boot.js"
                 }
             }
+        },
+        
+        jshint: {
+            options: {
+                ignores: ['public/js/lib/**', 'public/js/require.min.js']
+            },
+            all: ['app/**/*.js', 'config/**/*.js', 'public/js/']
         }
     });
 
     // Load the plugin that provides the "requirejs" task.
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+
+    // Load the plugin that provides the "jshint" task.
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default task(s).
     grunt.registerTask('default', ['requirejs']);

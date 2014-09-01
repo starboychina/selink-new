@@ -160,9 +160,7 @@ define([
             // or
             else
                 // update badge
-                $badge.slFlipOutY(null, function() {
-                    $badge.empty().text(msgNum).removeClass('flipOutY').slFlipInY();
-                });
+                $badge.empty().text(msgNum).removeClass('flipOutY').slFlipInY();
 
             // update notification number on title
             this.$el.find('.title-num').empty().text(msgNum);

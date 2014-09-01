@@ -209,7 +209,7 @@ define([
         showMessageEditor: function() {
 
             var messageEditor = new MessageEditView({
-                recipient: [this.model]
+                recipient: [this.model.toJSON()]
             });
 
             selink.modalArea.show(messageEditor);

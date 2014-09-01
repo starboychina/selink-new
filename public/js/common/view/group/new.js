@@ -49,7 +49,7 @@ define([
             this.$el.find('#group-create-wizard').ace_wizard()
                 .on('change' , function(e, info) {
 
-                    if (info.step == 2) {
+                    if (info.step == 2 && info.direction == 'next') {
 
                         var name = _.str.trim(self.ui.groupName.val());
 

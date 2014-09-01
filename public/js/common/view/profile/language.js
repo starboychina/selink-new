@@ -70,9 +70,7 @@ define([
 
                     c.lineWidth = 10;//this.lineWidth;
 
-                    this.o.cursor
-                        && (sat = eat - this.cursorExt)
-                        && (eat = eat + this.cursorExt);
+                    this.o.cursor && (sat = eat - this.cursorExt) && (eat = eat + this.cursorExt);
 
                     c.beginPath();
                         c.strokeStyle = this.o.bgColor;

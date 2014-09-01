@@ -399,7 +399,7 @@ approveApplication = function(req, res, next, notification) {
             Group.findByIdAndUpdate(notification.targetGroup, {
                 '$pull': {applicants: notification._from},
                 '$addToSet': {participants: notification._from},
-            }, callback)
+            }, callback);
         },
 
         // mark the notification as confirmed
@@ -505,7 +505,7 @@ declineApplication = function(req, res, next, notification) {
             // remove the applicant's from group's applicants list
             Group.findByIdAndUpdate(notification.targetGroup, {
                 '$pull': {applicants: notification._from}
-            }, callback)
+            }, callback);
         },
 
         // mark the notification as confirmed

@@ -175,7 +175,7 @@ exports.groupInvitation = function(recipients, sender, group) {
 
             // Load the template and send the emails
             template('group-invitation', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], group);
                     render.batch(batch);
                 }
@@ -331,7 +331,7 @@ exports.newPost = function(recipients, sender, post, group) {
 
             // Load the template and send the emails
             template('new-post', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], sender, post, group);
                     render.batch(batch);
                 }
@@ -553,7 +553,7 @@ exports.newJob = function(recipients, job) {
 
             // Load the template and send the emails
             template('new-job', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], job);
                     render.batch(batch);
                 }
@@ -601,7 +601,7 @@ exports.newMessage = function(recipients, message) {
 
             // Load the template and send the emails
             template('new-message', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], message);
                     render.batch(batch);
                 }
@@ -649,7 +649,7 @@ exports.newEvent = function(recipients, event) {
 
             // Load the template and send the emails
             template('new-event', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], event);
                     render.batch(batch);
                 }
@@ -698,7 +698,7 @@ exports.newAnnouncement = function(recipients, announcement) {
 
             // Load the template and send the emails
             template('new-announcement', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], announcement);
                     render.batch(batch);
                 }
@@ -746,7 +746,7 @@ exports.newUser = function(recipients, user) {
 
             // Load the template and send the emails
             template('new-user', true, function(err, batch) {
-                for(recipient in recipients) {
+                for(var recipient in recipients) {
                     var render = new Render(recipients[recipient], user);
                     render.batch(batch);
                 }

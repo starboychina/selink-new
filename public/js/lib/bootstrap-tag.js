@@ -127,9 +127,9 @@
 
       $('<span/>', {
         'class' : "tag",
-        'data-id' : model.id
+        'data-id' : model._id
       })
-      .text(model.get('firstName') + ' ' + model.get('lastName'))
+      .text(model.firstName + ' ' + model.lastName)
       .append($('<button type="button" class="close">&times;</button>')
         .on('click', function () {
           that.remove(that.element.siblings('.tag').index($(this).closest('.tag')))
@@ -152,7 +152,7 @@
         // }
 
         var dup = _.find(this.models, function(current) {
-          if (current.id === model.id) {
+          if (current.id === model._id) {
             var badge = that.element.siblings('[data-id="' + current.id + '"]')
             badge.addClass('tag-warning')
             setTimeout(function () {
@@ -164,7 +164,7 @@
 
         if (dup) return
       }
-
+      
       this.values.push(value)
       this.models.push(model)
       // this.createBadge(value)
@@ -186,7 +186,7 @@
         this.element.val(this.values.join(', '))
 
         this.models = _.reject(this.models, function(model) {
-          return model.id === id
+          return model._id === id
         })
         this.element.data('models', this.models)
 
