@@ -10,6 +10,11 @@ var formidableForm = new formidable.IncomingForm({
 
 module.exports = function(req, res, next) {
 
+    formidableForm.on('progress', function(bytesReceived, bytesExpected) {
+
+        console.log(bytesReceived + '/' + bytesExpected);
+    });
+
     formidableForm.parse(req, function(err, fields, files) {
 
         // handle photo file
@@ -18,10 +23,10 @@ module.exports = function(req, res, next) {
             var photoType = files.photo.type;
             var photoPath = files.photo.path;
 
-            if (['image/jpeg', 'image/gif', 'image/png'].indexOf(photoType) === -1) {
-                res.status(415).send("Only jpeg, gif or png file are valide");
-                return;
-            }
+            // if (['image/jpeg', 'image/gif', 'image/png'].indexOf(photoType) === -1) {
+            //     res.status(415).send("Only jpeg, gif or png file are valide");
+            //     return;
+            // }
 
             var photoName = /.*[\/|\\](.*)$/.exec(photoPath)[1];
 

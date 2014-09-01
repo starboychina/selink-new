@@ -32,7 +32,8 @@ define([
             completeness: '.completeness-value',
             bar: '.progress-bar',
             searchTxt: '.form-search input',
-            searchBtn: '.btn-search'
+            searchBtn: '.btn-search',
+            inputFile: 'input[type="file"]'
         },
 
         events: {
@@ -79,6 +80,33 @@ define([
             this.messageNav = new MessageMenu();
 
             this.model.set({'completeness': this.model.completeness()}, {silent: true});
+        },
+
+        onRender: function() {
+
+            var self = this;
+
+            this.ui.inputFile.fileupload({
+                type: 'PUT',
+                dataType: 'json',
+                done: function(e, data) {
+
+                    // self.model.set('photoOriginal', data.result.fileName);
+
+                    // var cropView = new CropView({model: self.model});
+
+                    // selink.modalArea.show(cropView);
+                    // selink.modalArea.$el.modal('show');
+                },
+                error: function() {
+                    // show error
+                    $.gritter.add({
+                        title: 'ファイルアップロードが失敗しました',
+                        text: '画像は「jpg」、「gif」、「png」のフォーマットのみ受け付けます。お手数ですが、お確かめ上に、もう一度アップロードしてください。',
+                        class_name: 'gritter-error'
+                    });
+                }
+            });
         },
 
         // after show

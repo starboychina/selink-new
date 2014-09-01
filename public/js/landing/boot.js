@@ -14,6 +14,7 @@ require.config({
         'backbone.wreqr': 'lib/backbone.wreqr',
         'backbone.babysitter': 'lib/backbone.babysitter',
         'text': 'lib/text',
+        'fastclick': 'lib/fastclick',
         // core theme
         'ace': 'lib/ace',
         'ace-extra': 'lib/ace-extra',
@@ -70,6 +71,7 @@ require.config({
                 'bootstrap',
                 'underscore.string',
                 'marionette',
+                'fastclick',
                 'ace-element',
                 'validate',
                 'gritter',
@@ -82,10 +84,13 @@ require.config({
 
 require([
     'marionette',
+    'fastclick',
     'app'
 ], function(
     marionette,
+    fastclick,
     landing
 ) {
+    fastclick.attach(document.body);
     landing.start();
 });

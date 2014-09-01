@@ -47,7 +47,7 @@ define([
             this.$el.find('.btn-join').button('loading');
 
             // create a participant in this group
-            this.model.save(null, {
+            this.model.save({}, {
                 url: 'groups/' + this.model.id + '/join',
                 success: function(model, response, options) {
 
@@ -75,8 +75,8 @@ define([
             // show loading icon, and prevent user click twice
             this.$el.find('.btn-apply').button('loading');
 
-            // create a participant in this group
-            this.model.save(null, {
+            // create a applicant in this group
+            this.model.save({}, {
                 url: 'groups/' + this.model.id + '/apply',
                 success: function(model, response, options) {
 

@@ -102,7 +102,7 @@ define([
         // like comment
         onLike: function() {
 
-            this.model.save(null, {
+            this.model.save({}, {
                 url: this.model.url() + '/like',
                 patch: true,
                 wait: true

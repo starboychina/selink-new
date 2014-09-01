@@ -16,6 +16,7 @@ require.config({
         'backbone.validation': 'lib/backbone.validation',
         'deep-model': 'lib/deep-model',
         'text': 'lib/text',
+        'fastclick': 'lib/fastclick',
         // core theme
         'ace': "lib/ace",
         'ace-extra': "lib/ace-extra",
@@ -54,6 +55,7 @@ require.config({
         'infinite-scroll': 'lib/jquery.infinitescroll',
         'tag': 'lib/bootstrap-tag',
         'typeahead': 'lib/typeahead.bundle',
+        'videojs': 'lib/video',
         'selink': 'lib/selink',
         // 'socket.io': '../socket.io/socket.io.js',
         'socket.io': 'lib/socket.io',
@@ -172,6 +174,7 @@ require.config({
                 'underscore.string',
                 'deep-model',
                 'backbone.validation',
+                'fastclick',
                 'ace-element',
                 'pie-chart',
                 'full-calendar',
@@ -196,6 +199,7 @@ require.config({
                 'infinite-scroll',
                 'tag',
                 'typeahead',
+                'videojs',
                 'selink',
                 'socket.io'
             ]
@@ -208,6 +212,7 @@ require([
     'marionette',
     'moment',
     'backbone.validation',
+    'fastclick',
     'pie-chart',
     'fileupload',
     'autosize',
@@ -221,6 +226,7 @@ require([
     marionette,
     moment,
     validation,
+    fastclick,
     pieChart,
     fileupload,
     autosize,
@@ -230,6 +236,8 @@ require([
     nicescroll,
     employer
 ) {
+    fastclick.attach(document.body);
+    videojs.options.flash.swf = "/swf/video-js.swf"
     $.bridget( 'isotope', isotope );
     employer.start();
 });

@@ -92,6 +92,8 @@ module.exports = function(app) {
 
     // Create post
     app.post('/posts', checkLoginStatus, controller.post.create);
+    
+    app.put('/media', checkLoginStatus, controller.post.media);
 
     // Update post
     app.patch('/posts/:post', checkLoginStatus, controller.post.update);

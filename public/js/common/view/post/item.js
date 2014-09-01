@@ -401,7 +401,7 @@ define([
             // stop defautl link behavior
             event.preventDefault();
 
-            this.model.save(null, {
+            this.model.save({}, {
                 url: '/posts/' + this.model.get('_id') + '/like',
                 patch: true,
                 wait: true
@@ -429,7 +429,7 @@ define([
             // stop defautl link behavior
             event.preventDefault();
 
-            this.model.save(null, {
+            this.model.save({}, {
                 url: '/posts/' + this.model.get('_id') + '/bookmark',
                 patch: true,
                 wait: true

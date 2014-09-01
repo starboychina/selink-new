@@ -4,7 +4,7 @@ var gm = require('gm'),
 
 // parse a file upload
 var foridableForm = new formidable.IncomingForm({
-    uploadDir: __dirname + '../../../public/upload',
+    uploadDir: __dirname + '../../../../public/upload',
     keepExtensions: true
 });
 
