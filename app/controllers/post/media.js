@@ -12,30 +12,42 @@ module.exports = function(req, res, next) {
 
     formidableForm.on('progress', function(bytesReceived, bytesExpected) {
 
-        console.log(bytesReceived + '/' + bytesExpected);
+        sio.sockets.in(req.user.id).emit('progress', {
+            progress: bytesReceived/bytesExpected * 100,
+        });
+
     });
 
     formidableForm.parse(req, function(err, fields, files) {
 
+        console.log(err)
+        console.log(fields)
+        console.log(files)
+
         // handle photo file
-        if (files.photo) {
+        if (files.media) {
 
-            var photoType = files.photo.type;
-            var photoPath = files.photo.path;
+            var mediaType = files.media.type;
+            var mediaPath = files.media.path;
 
-            // if (['image/jpeg', 'image/gif', 'image/png'].indexOf(photoType) === -1) {
+            // if (['image/jpeg', 'image/gif', 'image/png'].indexOf(mediaType) === -1) {
             //     res.status(415).send("Only jpeg, gif or png file are valide");
             //     return;
             // }
 
-            var photoName = /.*[\/|\\](.*)$/.exec(photoPath)[1];
+            var mediaName = /.*[\/|\\](.*)$/.exec(mediaPath)[1];
 
-            req.session.tempPhoto = photoName;
+            req.session.tempMedia = mediaName;
 
-            gm(photoPath).size(function(err, size) {
-                if (err) next(err);
-                else res.json({fileName: './upload/' + photoName});
+            res.json({
+                src: './upload/' + mediaName,
+                type: mediaType
             });
+
+            // gm(mediaPath).size(function(err, size) {
+            //     if (err) next(err);
+            //     else res.json({fileName: './upload/' + mediaName});
+            // });
 
         } else {
             res.json(400, {});

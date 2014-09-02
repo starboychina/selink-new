@@ -9,7 +9,8 @@ define([
     'common/view/post/item',
     'common/view/announcement/item',
     'common/view/job/item',
-    'common/view/group/item'
+    'common/view/group/item',
+    'common/view/post/create'
 ], function(
     template,
     BaseView,
@@ -21,7 +22,8 @@ define([
     PostItemView,
     AnnouncementItemView,
     JobItemView,
-    GroupItemView
+    GroupItemView,
+    PostCreateView
 ) {
 
     var NewsFeedCollection = BaseCollection.extend({
@@ -79,6 +81,17 @@ define([
             // this collection holds the posts delivered in real time
             this.realtimePost = new BaseCollection();
 
+            // create region manager (this composite view will have layout ability)
+            this.rm = new Backbone.Marionette.RegionManager();
+
+            // create regions
+            this.regions = this.rm.addRegions({
+                createPostRegion: '#create-post',
+            });
+
+            // create new post view
+            this.postCreateView = new PostCreateView();
+
             // if new post delivered
             selink.socket.on('post-new', function(data) {
 
@@ -99,6 +112,9 @@ define([
         onShow: function() {
 
             var self = this;
+
+            // display new post view
+            this.regions.createPostRegion.show(this.postCreateView);
 
             // attach infinite scroll
             this.$el.find(this.childViewContainer).infinitescroll({
@@ -124,6 +140,14 @@ define([
 
             // call super onShow
             BaseView.prototype.onShow.apply(this);
+        },
+
+        // before destroy
+        onBeforeDestroy: function() {
+            // destroy region manager
+            this.rm.destroy();
+            // call super onBeforeDestroy
+            BaseView.prototype.onBeforeDestroy.apply(this);
         },
 
         // load the new posts
