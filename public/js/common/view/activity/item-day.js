@@ -25,7 +25,7 @@ define([
         },
 
         onShow: function() {
-            this.$el.slFadeInUp();
+            this.$el.slAnimated('fadeInUp');
         }
     });
 

@@ -56,7 +56,7 @@ define([
 
             var self = this;
 
-            this.ui.cover.slFadeOutUp('', function() {
+            this.ui.cover.slAnimated('fadeOutUp', '', function() {
                 $(this).attr('src', self.model.get('cover'));
                 $(this).removeClass('fadeOutUp').addClass('fadeInDown');
             });

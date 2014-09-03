@@ -164,7 +164,7 @@ define([
             var self = this;
 
             // hide view first
-            this.$el.slBounceOut('', function(){
+            this.$el.slAnimated('bounceOut', '', function(){
                 $(this).removeClass('animated bounceOut');
                 // remove model
                 self.model.collection.remove(self.model);

@@ -36,9 +36,9 @@ define([
         finish: function(media) {
 
             if (_.str.startsWith(media.type, 'image'))
-                $('<img>').attr('src', media.src).appendTo(this.$el.find('.well')).slBounceIn();
+                $('<img>').attr('src', media.src).appendTo(this.$el.find('.well'));
             else if (_.str.startsWith(media.type, 'video')) {
-                $('<video id="testvideo" controls preload="auto">').addClass('video-js vjs-default-skin').appendTo(this.$el.find('.well')).slBounceIn();
+                $('<video id="testvideo" controls preload="auto">').addClass('video-js vjs-default-skin').appendTo(this.$el.find('.well'));
 
                 $('<source>').attr({
                     src: media.src,

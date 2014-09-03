@@ -244,7 +244,7 @@ define([
                 .find('i')
                 .removeClass('fa-star-o')
                 .addClass('fa-star')
-                .slFlip();
+                .slAnimated('flip');
             // remove bookmark button, can't bookmark it twice
             this.ui.bookmarkBtn.removeClass('btn-bookmark');
         },

@@ -29,7 +29,7 @@ define(['common/view/composite-empty'], function(EmptyView) {
                 // append the subview
                 this.$el.find(this.childViewContainer).append(itemView.el);
 
-                itemView.$el.slBounceIn();
+                itemView.$el.slAnimated('bounceIn');
 
                 // show subview's editor panel
                 if (itemView.ui && itemView.ui.editor && itemView.ui.value) {
@@ -52,7 +52,7 @@ define(['common/view/composite-empty'], function(EmptyView) {
         },
 
         attention: function(event) {
-            $(event.target).find('.sl-icon').slSwing();
+            $(event.target).find('.sl-icon').slAnimated('swing');
         },
 
         // Add new composite item
