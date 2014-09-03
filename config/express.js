@@ -72,7 +72,7 @@ module.exports = function(config) {
     }
 
     // SELink Routes
-    require('./routes')(app);
+    require('./routes')(app, config);
 
     // assume "not found" in the error msgs
     // is a 404. this is somewhat silly, but

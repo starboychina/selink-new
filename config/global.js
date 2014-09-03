@@ -5,6 +5,7 @@ var fs = require('fs'),
 module.exports = {
 
     test: {
+        root: rootPath,
         app: {
             name: 'SELink [TEST]',
             env: 'test'
@@ -14,9 +15,11 @@ module.exports = {
             cert: fs.readFileSync(rootPath + '/resource/ssl/test/selink.crt')
         },
         awssdk: {
-            accessKey: 'AKIAJIOX3T2P5QLWVC6A',
-            secretKey: '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',
-            s3:'s3-ap-northeast-1.amazonaws.com',
+            accessKey: 'AKIAJOJ4USCDFU42NG6A',
+            secretKey: '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'
+        },
+        s3: {
+            host: 'https://s3-ap-northeast-1.amazonaws.com',
             bucket: 'selink-test'
         },
         mongodb: {
@@ -37,11 +40,11 @@ module.exports = {
                 user: "joe.19840729.china@gmail.com",
                 pass: "19840729"
             }
-        },
-        root: rootPath
+        }
     },
 
     development: {
+        root: rootPath,
         app: {
             name: 'SELink [DEV]',
             env: 'development'
@@ -51,9 +54,11 @@ module.exports = {
             cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
         awssdk: {
-            accessKey: 'AKIAJIOX3T2P5QLWVC6A',
-            secretKey: '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',
-            s3:'s3-ap-northeast-1.amazonaws.com',
+            accessKey: 'AKIAJOJ4USCDFU42NG6A',
+            secretKey: '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'
+        },
+        s3: {
+            host: 'https://s3-ap-northeast-1.amazonaws.com',
             bucket: 'selink-dev'
         },
         mongodb: {
@@ -74,11 +79,11 @@ module.exports = {
                 user: "joe.19840729.china@gmail.com",
                 pass: "19840729"
             }
-        },
-        root: rootPath
+        }
     },
 
     production: {
+        root: rootPath,
         app: {
             name: 'SELink',
             env: 'production'
@@ -88,9 +93,11 @@ module.exports = {
             cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
         awssdk: {
-            accessKey: 'AKIAJIOX3T2P5QLWVC6A',
-            secretKey: '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',
-            s3:'s3-ap-northeast-1.amazonaws.com',
+            accessKey: 'AKIAJOJ4USCDFU42NG6A',
+            secretKey: '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'
+        },
+        s3: {
+            host: 'https://s3-ap-northeast-1.amazonaws.com',
             bucket: 'selink'
         },
         mongodb: {
@@ -111,7 +118,6 @@ module.exports = {
                 user: "administrator@selink.jp",
                 pass: "ZSkikuD2O5"
             }
-        },
-        root: rootPath
+        }
     }
 };

@@ -1,30 +1,41 @@
-var fs = require('fs');
-var User = require('mongoose').model('User');
-var controller = {};
-var pattern = /(.*)?\.js/;
-var controller_path = __dirname + '/../app/controllers';
+var fs = require('fs'),
+    path = require('path'),
+    User = require('mongoose').model('User');
 
-fs.readdirSync(controller_path).forEach(function (dir) {
+module.exports = function(app, config) {
 
-    var stats = fs.statSync(controller_path + '/' + dir);
+    // prepare controller
+    var controller = {},
+        pattern = /(.*)?\.js/,
+        controller_path = path.join(config.root + '/app/controllers');
 
-    if (stats.isDirectory()) {
+    // open the controller path, loop through the contents
+    fs.readdirSync(controller_path).forEach(function (dir) {
 
-        controller[dir] = {};
+        // get stats object of a dir/file
+        var stats = fs.statSync(controller_path + '/' + dir);
 
-        fs.readdirSync(controller_path + '/' + dir).forEach(function(file) {
+        // if encounter a dir
+        if (stats.isDirectory()) {
 
-            if (~file.indexOf('.js') && file) {
-                var match = pattern.exec(file);
-                controller[dir][match[1]] = require(controller_path + '/' + dir + '/' + file);
-            }
-        });
-    }
-});
+            // create controller sub categroy
+            controller[dir] = {};
 
-console.log(controller);
+            // then loop through the dir
+            fs.readdirSync(controller_path + '/' + dir).forEach(function(file) {
 
-module.exports = function(app) {
+                // if encounter a .js file
+                if (~file.indexOf('.js') && file) {
+
+                    // load this file as request handler
+                    var match = pattern.exec(file);
+                    controller[dir][match[1]] = require(controller_path + '/' + dir + '/' + file);
+                }
+            });
+        }
+    });
+
+    // attach request handler below
 
     // Landing
     app.get('/', function(req, res, next){
@@ -262,10 +273,10 @@ module.exports = function(app) {
 
     // Upload user photo
     app.put('/users/:user/photo', checkLoginStatus, controller.user.uploadPhoto);
-    app.put('/users/:user/photo-scale', checkLoginStatus, controller.user.scalePhoto);
+    app.put('/users/:user/photo-crop', checkLoginStatus, controller.user.cropPhoto);
     // Upload cover
     app.put('/users/:user/cover', checkLoginStatus, controller.user.uploadCover);
-    app.put('/users/:user/cover-scale', checkLoginStatus, controller.user.scaleCover);
+    app.put('/users/:user/cover-crop', checkLoginStatus, controller.user.cropCover);
 
     // Get user info
     app.get('/users/:user', checkLoginStatus, controller.user.show);

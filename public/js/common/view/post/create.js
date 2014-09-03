@@ -47,13 +47,6 @@ define([
                 done: function(e, data) {
 
                     self.mediaCreateView.finish(data.result);
-
-                    // self.model.set('photoOriginal', data.result.fileName);
-
-                    // var cropView = new CropView({model: self.model});
-
-                    // selink.modalArea.show(cropView);
-                    // selink.modalArea.$el.modal('show');
                 },
                 error: function() {
                     // show error

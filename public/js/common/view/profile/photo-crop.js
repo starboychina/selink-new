@@ -39,7 +39,7 @@ define([
             $.ajax({
 
                 // page url
-                url: '/users/' + this.model.get('_id') + '/photo-scale',
+                url: '/users/' + this.model.get('_id') + '/photo-crop',
 
                 // post data
                 data: this.select,
@@ -56,7 +56,8 @@ define([
                 // success handler
                 success: function(result) {
 
-                    self.model.set('photo', result.photo);
+                    // set with parse cause we need the photo path point to s3
+                    self.model.set(self.model.parse(result));
 
                     selink.modalArea.$el.modal('hide');
                 }

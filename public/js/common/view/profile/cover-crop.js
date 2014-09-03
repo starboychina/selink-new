@@ -39,7 +39,7 @@ define([
             $.ajax({
 
                 // page url
-                url: '/users/' + this.model.get('_id') + '/cover-scale',
+                url: '/users/' + this.model.get('_id') + '/cover-crop',
 
                 // post data
                 data: this.select,
@@ -56,7 +56,8 @@ define([
                 // success handler
                 success: function(result) {
 
-                    self.model.set('cover', result.cover);
+                    // set with parse cause we need the cover path point to s3
+                    self.model.set(self.model.parse(result));
 
                     selink.modalArea.$el.modal('hide');
                 }

@@ -1,10 +1,13 @@
 // Upload Cover
-var gm = require('gm'),
+var env = process.env.NODE_ENV || 'development',
+    config = require('../../../config/global')[env],
+    gm = require('gm'),
+    path = require('path'),
     formidable = require('formidable');
 
 // parse a file upload
 var formidableForm = new formidable.IncomingForm({
-    uploadDir: __dirname + '../../../../public/upload',
+    uploadDir: path.join(config.root + '/public/upload'),
     keepExtensions: true
 });
 

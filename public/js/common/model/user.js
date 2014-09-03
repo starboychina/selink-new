@@ -156,7 +156,7 @@ define([
             this.educations.set(response.educations, {parse: true, remove: false});
 
             // set final education
-            if (response.educations.length)
+            if (response.educations && response.educations.length)
                 response.finalEducation = _.max(response.educations, function(education) {
                     return education.startDate ? moment(education.startDate).valueOf() : 0;
                 });
@@ -165,7 +165,7 @@ define([
             this.employments.set(response.employments, {parse: true, remove: false});
 
             // set current employment
-            if (response.employments.length)
+            if (response.employments && response.employments.length)
                 response.currentEmployment = _.max(response.employments, function(employment) {
                     return employment.startDate ? moment(employment.startDate).valueOf() : 0;
                 });
@@ -182,6 +182,18 @@ define([
                 response.birthDayDisplay = moment(response.birthDay).format('LL');
                 response.birthDayInput = moment(response.birthDay).format('L');
             }
+
+            // normalize the photo to s3 path
+            if(response.photo && response._id)
+                response.photo = _.str.join('/', selink.s3, response._id, 'photo', response.photo);
+            else if (response.photo && !response._id)
+                response.photo = _.str.join('/', selink.s3, selink.user.id, 'photo', response.photo);
+
+            // normalize the cover to s3 path
+            if(response.cover && response._id)
+                response.cover = _.str.join('/', selink.s3, response._id, 'cover', response.cover);
+            else if (response.cover && !response._id)
+                response.cover = _.str.join('/', selink.s3, selink.user.id, 'cover', response.cover);
 
             return response;
         },

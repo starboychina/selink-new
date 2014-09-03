@@ -11,6 +11,9 @@ define([
     // create application instance
     window.selink = new Backbone.Marionette.Application();
 
+    // application s3 setting
+    selink.s3 = 'https://s3-ap-northeast-1.amazonaws.com/selink-dev';
+
     // create regions
     selink.addRegions({
         pageContent: '.page-content',

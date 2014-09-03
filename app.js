@@ -13,7 +13,7 @@ mongoose.connection.on('open', function() {
 });
 
 // Load MongoDB models
-var models_path = __dirname + '/app/models';
+var models_path = config.root + '/app/models';
 fs.readdirSync(models_path).forEach(function (file) {
     if (~file.indexOf('.js')) require(models_path + '/' + file);
 });

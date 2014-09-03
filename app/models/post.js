@@ -20,6 +20,12 @@ var Post = new Schema({
         trim: true,
     },
 
+    // Post attachment
+    attachment: {
+        type: String,
+        trim: true
+    }
+
     // People who liking this post
     like: [{
         type: Schema.Types.ObjectId,
