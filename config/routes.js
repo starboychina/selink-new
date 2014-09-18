@@ -149,7 +149,7 @@ module.exports = function(app, config) {
 
     // Upload group cover
     app.put('/groups/:group/cover', checkLoginStatus, controller.group.uploadCover);
-    app.put('/groups/:group/cover-scale', checkLoginStatus, controller.group.scaleCover);
+    app.put('/groups/:group/cover-crop', checkLoginStatus, controller.group.cropCover);
 
     // Invite members
     app.patch('/groups/:group/invite', checkLoginStatus, controller.group.invite);

@@ -39,7 +39,7 @@ define([
             $.ajax({
 
                 // page url
-                url: '/groups/' + this.model.get('_id') + '/cover-scale',
+                url: '/groups/' + this.model.get('_id') + '/cover-crop',
 
                 // post data
                 data: this.select,
@@ -56,7 +56,7 @@ define([
                 // success handler
                 success: function(result) {
 
-                    self.model.set('cover', result.cover);
+                    self.model.set(result);
 
                     selink.modalArea.$el.modal('hide');
                 }

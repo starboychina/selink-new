@@ -153,7 +153,14 @@ define([
         // show groups
         showGroupView: function(id) {
 
-            if (id) {
+            if (!id || id == 'joined' || id == 'mine' || id == 'discover') {
+
+                // create group view
+                selink.groupView = new GroupView({type: id});
+                // show group view
+                selink.pageContent.show(selink.groupView);
+
+            } else {
 
                 var group = new GroupModel({_id: id});
                 group.fetch({
@@ -166,20 +173,14 @@ define([
                     }
                 });
 
-            } else {
-
-                // create group view
-                selink.groupView = new GroupView();
-                // show group view
-                selink.pageContent.show(selink.groupView);
             }
         },
 
         // show people
-        showPeopleView: function() {
+        showPeopleView: function(id) {
 
             // create people view
-            selink.peopleView = new PeopleView();
+            selink.peopleView = new PeopleView({type: id});
             // show people view
             selink.pageContent.show(selink.peopleView);
         },

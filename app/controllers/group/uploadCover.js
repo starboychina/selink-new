@@ -1,16 +1,9 @@
 // Upload Cover
-var gm = require('gm'),
-    formidable = require('formidable');
-
-// parse a file upload
-var foridableForm = new formidable.IncomingForm({
-    uploadDir: __dirname + '../../../../public/upload',
-    keepExtensions: true
-});
+var uploadForm = require('../../utils/upload');
 
 module.exports = function(req, res, next) {
 
-    foridableForm.parse(req, function(err, fields, files) {
+    uploadForm.parse(req, function(err, fields, files) {
 
         // handle cover file
         if (files.cover) {
@@ -25,12 +18,10 @@ module.exports = function(req, res, next) {
 
             var coverName = /.*[\/|\\](.*)$/.exec(coverPath)[1];
 
-            req.session.tempCover = coverName;
+            req.session.tempCoverName = coverName;
+            req.session.tempCoverType = coverType;
 
-            gm(coverPath).size(function(err, size) {
-                if (err) next(err);
-                else res.json({fileName: './upload/' + coverName});
-            });
+            res.json({fileName: './upload/' + coverName});
 
         } else res.json(400, {});
 

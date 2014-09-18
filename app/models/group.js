@@ -82,6 +82,18 @@ var Group = new Schema({
     }
 });
 
+// Create cover reference point to s3
+Group.virtual('cover_ref').get(function () {
+    if (this.cover)
+        return _s.join('/', config.s3.host, config.s3.bucket, 'groups', this._id, 'cover', this.cover);
+    else
+        return _s.join('/', config.s3.host, config.s3.bucket, 'asset/default_cover.jpg');
+});
+
+// enable virtual output
+Group.set('toJSON', { virtuals: true });
+Group.set('toObject', { virtuals: true });
+
 Group.methods.toSolr = function() {
     return {
         type: 'Group',

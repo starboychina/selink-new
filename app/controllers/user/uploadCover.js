@@ -23,8 +23,7 @@ module.exports = function(req, res, next) {
 
             res.json({fileName: './upload/' + coverName});
 
-        } else {
-            res.json(400, {});
-        }
+        } else res.json(400, {});
+
     });
 };

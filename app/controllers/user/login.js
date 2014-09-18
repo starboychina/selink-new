@@ -35,7 +35,7 @@ module.exports = function(req, res, next) {
                 sio.sockets.in(room).emit('user-login', {
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    photo: user.photo
+                    photo_ref: user.photo_ref
                 });
             });
 
