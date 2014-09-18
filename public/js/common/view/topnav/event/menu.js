@@ -60,7 +60,7 @@ define([
             // accept group event real-time
             selink.socket.on('group-event-new', function(data) {
                 $.gritter.add({
-                    title: '<img src="' + data.group.cover + '">',
+                    title: '<img src="' + data.group.cover_ref + '">',
                     text: data.group.name + 'イベント開催しました。<br/><strong>' + data.title + '</strong>',
                     time: 8000,
                     class_name: 'gritter-success'

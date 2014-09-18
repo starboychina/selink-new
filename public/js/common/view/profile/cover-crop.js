@@ -56,8 +56,7 @@ define([
                 // success handler
                 success: function(result) {
 
-                    // set with parse cause we need the cover path point to s3
-                    self.model.set(self.model.parse(result));
+                    self.model.set(result);
 
                     selink.modalArea.$el.modal('hide');
                 }

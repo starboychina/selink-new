@@ -90,7 +90,7 @@ define([
                     trigger: 'hover',
                     container: 'body',
                     placement: 'auto right',
-                    title: '<img src="' + this.model.get('targetGroup').cover + '" />',
+                    title: '<img src="' + this.model.get('targetGroup').cover_ref + '" />',
                     content: _.template(groupPopoverTemplate, this.model.get('targetGroup')),
                 });
 
@@ -101,7 +101,7 @@ define([
                 trigger: 'hover',
                 container: 'body',
                 placement: 'auto right',
-                title: '<img src="' + this.model.get('_owner').cover + '" />',
+                title: '<img src="' + this.model.get('_owner').cover_ref + '" />',
                 content: _.template(peoplePopoverTemplate, this.model.get('_owner')),
             });
         },

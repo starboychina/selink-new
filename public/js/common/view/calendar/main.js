@@ -153,7 +153,7 @@ define([
                             trigger: 'hover',
                             container: 'body',
                             placement: 'auto right',
-                            title: '<img src="' + event.group.cover + '" />',
+                            title: '<img src="' + event.group.cover_ref + '" />',
                             content: _.template(popoverTemplate, event),
                         });
                     }

@@ -170,7 +170,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: '友達になるリクエストが届きました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-warning'
                 });
@@ -184,7 +184,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたの友達リクエストを承認しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -202,7 +202,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたの友達リクエストを拒否しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-info'
                 });
@@ -219,7 +219,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたと友達を解除しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-error'
                 });
@@ -255,7 +255,7 @@ define([
                 $.gritter.add({
                     title: title,
                     text: '<a href="#post/' + data.targetPost._id + '">' + text + "</a>",
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -270,7 +270,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたの投稿にいいね！しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -284,7 +284,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたの投稿にブックマーク付けました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -302,7 +302,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: text,
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -320,7 +320,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: text,
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -334,7 +334,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたのコメントにいいね！しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -348,7 +348,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: '新しい仕事情報を投稿しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -362,7 +362,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'あなたの仕事情報にブックマーク付けました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -376,7 +376,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: '新しいグループ「' + data.targetGroup.name + '」を立ち上げました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -390,7 +390,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」に招待しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -404,7 +404,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」から退会されました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-info'
                 });
@@ -421,7 +421,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」に参加しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -435,7 +435,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」の招待を拒否しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-info'
                 });
@@ -449,7 +449,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」を参加申請しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -463,7 +463,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」の参加申請を承認しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });
@@ -481,7 +481,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: 'グループ「' + data.targetGroup.name + '」の参加申請を拒否しました。',
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-info'
                 });

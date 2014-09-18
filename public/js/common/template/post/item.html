@@ -11,7 +11,7 @@
 
         <!-- author photo -->
         <a href="#profile/<%= obj._owner._id %>">
-            <img class="avatar" src="<%= obj._owner.photo %>" style="max-width: 75px;">
+            <img class="avatar" src="<%= obj._owner.photo_ref %>" style="max-width: 75px;">
         </a>
 
         <!-- if this post is mine -->
@@ -140,6 +140,26 @@
 
             <% } %>
 
+            <% if (obj.images && obj.images.length) { %>
+                <div class="space-4"></div>
+
+                <% _.each(obj.images_ref, function(ref) { %>
+                    <div><img src="<%= ref %>"></div>
+                <% }); %>
+            <% } %>
+
+            <% if (obj.video) { %>
+                <div class="space-4"></div>
+
+                <video id="example_video_1" class="video-js vjs-default-skin"
+                    controls preload="auto" style="width: 100%;"
+                    poster="http://video-js.zencoder.com/oceans-clip.png">
+                    <source src="<%= obj.video_ref %>.mp4" type='video/mp4' />
+                    <source src="<%= obj.video_ref %>.webm" type='video/webm' />
+                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                </video>
+            <% } %>
+
             <div class="space-4"></div>
 
 <!--             <button class="btn btn-xs btn-info btn-load-comment">
@@ -188,7 +208,7 @@
         <div class="widget-toolbox padding-4 clearfix <% if (!obj.setting.commentable) print('hidden') %>">
 
             <!-- user photo -->
-            <img class="photo-area pull-left" src="<%= selink.user.get('photo') %>" style="max-width: 55px; display: none;" />
+            <img class="photo-area pull-left" src="<%= selink.user.get('photo_ref') %>" style="max-width: 55px; display: none;" />
 
             <!-- comment text area -->
             <div class="comment-area">

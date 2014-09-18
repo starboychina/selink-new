@@ -68,6 +68,7 @@ define([
         },
 
         events: {
+            'click .btn-create': 'showCreatePosts',
             'click .btn-load': 'loadNewPosts'
         },
 
@@ -80,17 +81,6 @@ define([
 
             // this collection holds the posts delivered in real time
             this.realtimePost = new BaseCollection();
-
-            // create region manager (this composite view will have layout ability)
-            this.rm = new Backbone.Marionette.RegionManager();
-
-            // create regions
-            this.regions = this.rm.addRegions({
-                createPostRegion: '#create-post',
-            });
-
-            // create new post view
-            this.postCreateView = new PostCreateView();
 
             // if new post delivered
             selink.socket.on('post-new', function(data) {
@@ -112,9 +102,6 @@ define([
         onShow: function() {
 
             var self = this;
-
-            // display new post view
-            this.regions.createPostRegion.show(this.postCreateView);
 
             // attach infinite scroll
             this.$el.find(this.childViewContainer).infinitescroll({
@@ -142,12 +129,12 @@ define([
             BaseView.prototype.onShow.apply(this);
         },
 
-        // before destroy
-        onBeforeDestroy: function() {
-            // destroy region manager
-            this.rm.destroy();
-            // call super onBeforeDestroy
-            BaseView.prototype.onBeforeDestroy.apply(this);
+        showCreatePosts: function() {
+
+            this.postCreateView = new PostCreateView();
+
+            selink.modalArea.show(this.postCreateView);
+            selink.modalArea.$el.modal('show');
         },
 
         // load the new posts

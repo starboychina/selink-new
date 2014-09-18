@@ -66,7 +66,7 @@ define([
                 $.gritter.add({
                     title: data._from.firstName + ' ' + data._from.lastName,
                     text: data.subject,
-                    image: data._from.photo,
+                    image: data._from.photo_ref,
                     time: 8000,
                     class_name: 'gritter-success'
                 });

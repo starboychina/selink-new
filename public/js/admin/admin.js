@@ -134,7 +134,7 @@ define([
             $.gritter.add({
                 title: data.firstName + ' ' + data.lastName,
                 text: 'オンラインになりました',
-                image: data.photo,
+                image: data.photo_ref,
                 class_name: 'gritter-success'
             });
         });

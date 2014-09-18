@@ -34,9 +34,17 @@ require.config({
         // wizard
         'wizard': "lib/fuelux/fuelux.wizard",
         // file upload
-        'jquery.ui.widget': 'lib/jquery.ui.widget',
-        'iframetransport': 'lib/jquery.iframe-transport',
-        'fileupload': 'lib/jquery.fileupload',
+        'jquery.ui.widget': 'lib/upload/jquery.ui.widget',
+        'iframetransport': 'lib/upload/jquery.iframe-transport',
+        'fileupload': 'lib/upload/jquery.fileupload',
+        'fileupload-process': 'lib/upload/jquery.fileupload-process',
+        'load-image': 'lib/upload/load-image',
+        'load-image-meta': 'lib/upload/load-image-meta',
+        'load-image-exif': 'lib/upload/load-image-exif',
+        'load-image-ios': 'lib/upload/load-image-ios',
+        'canvas-to-blob': 'lib/upload/canvas-to-blob',
+        'imagePreview': 'lib/upload/jquery.fileupload-image',
+        'videoPreview': 'lib/upload/jquery.fileupload-video',
         'jcrop': 'lib/jquery.Jcrop',
         // input mask
         'maskedinput': "lib/jquery.maskedinput",
@@ -115,6 +123,30 @@ require.config({
         'fileupload': {
             deps: ['jquery', 'jquery.ui.widget', 'iframetransport']
         },
+        'fileupload-process': {
+            deps: ['fileupload']
+        },
+        'load-image': {
+            deps: ['jquery']
+        },
+        'load-image-meta': {
+            deps: ['load-image']
+        },
+        'load-image-exif': {
+            deps: ['load-image-meta']
+        },
+        'load-image-ios': {
+            deps: ['load-image']
+        },
+        'canvas-to-blob': {
+            deps: ['jquery']
+        },
+        'imagePreview': {
+            deps: ['fileupload-process', 'load-image-exif', 'load-image-ios', 'canvas-to-blob']
+        },
+        'videoPreview': {
+            deps: ['fileupload-process', 'load-image']
+        },
         'jcrop': {
             deps: ['jquery']
         },
@@ -184,6 +216,8 @@ require.config({
                 'moment',
                 'wizard',
                 'fileupload',
+                'imagePreview',
+                'videoPreview',
                 'jcrop',
                 'maskedinput',
                 'autosize',

@@ -30,7 +30,7 @@ define([
                 trigger: 'hover',
                 container: 'body',
                 placement: 'auto top',
-                title: '<img src="' + this.model.get('cover') + '" />',
+                title: '<img src="' + this.model.get('cover_ref') + '" />',
                 content: _.template(popoverTemplate, this.model.attributes),
             });
         },

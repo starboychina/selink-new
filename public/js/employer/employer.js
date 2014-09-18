@@ -11,9 +11,6 @@ define([
     // create application instance
     window.selink = new Backbone.Marionette.Application();
 
-    // application s3 setting
-    selink.s3 = 'https://s3-ap-northeast-1.amazonaws.com/selink-dev';
-
     // create regions
     selink.addRegions({
         pageContent: '.page-content',
@@ -75,11 +72,11 @@ define([
             },
         });
 
-        $("html").niceScroll({
-            // scrollspeed: 120,
-            // mousescrollstep: 80,
-            horizrailenabled: false
-        });
+        // $("html").niceScroll({
+        //     // scrollspeed: 120,
+        //     // mousescrollstep: 80,
+        //     horizrailenabled: false
+        // });
 
         // body listen to click event, for close sl-editor, if any
         $('body').bind('click', closeEditor);
@@ -137,7 +134,7 @@ define([
             $.gritter.add({
                 title: data.firstName + ' ' + data.lastName,
                 text: 'オンラインになりました',
-                image: data.photo,
+                image: data.photo_ref,
                 class_name: 'gritter-success'
             });
         });

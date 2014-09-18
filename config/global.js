@@ -15,12 +15,18 @@ module.exports = {
             cert: fs.readFileSync(rootPath + '/resource/ssl/test/selink.crt')
         },
         awssdk: {
-            accessKey: 'AKIAJOJ4USCDFU42NG6A',
-            secretKey: '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'
+            region: 'ap-northeast-1',
+            accessKeyId: 'AKIAI2EFNU2BNRYTSKTQ',
+            secretAccessKey: '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'
         },
         s3: {
             host: 'https://s3-ap-northeast-1.amazonaws.com',
             bucket: 'selink-test'
+        },
+        sns: {
+            pipelineId: '',
+            mp4PresetId: '',
+            webmPresetId: ''
         },
         mongodb: {
             host: 'mongodb://localhost/selink_test',
@@ -54,12 +60,18 @@ module.exports = {
             cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
         awssdk: {
-            accessKey: 'AKIAJOJ4USCDFU42NG6A',
-            secretKey: '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'
+            region: 'ap-northeast-1',
+            accessKeyId: 'AKIAI2EFNU2BNRYTSKTQ',
+            secretAccessKey: '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'
         },
         s3: {
             host: 'https://s3-ap-northeast-1.amazonaws.com',
             bucket: 'selink-dev'
+        },
+        sns: {
+            pipelineId: '1409719474215-50dzhm',
+            mp4PresetId: '1409841778895-126phl',
+            webmPresetId: '1409841987185-nf4lag'
         },
         mongodb: {
             host: 'mongodb://localhost/selink_dev'
@@ -93,12 +105,18 @@ module.exports = {
             cert: fs.readFileSync(rootPath + '/resource/ssl/development/selink.crt')
         },
         awssdk: {
-            accessKey: 'AKIAJOJ4USCDFU42NG6A',
-            secretKey: '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'
+            region: 'ap-northeast-1',
+            accessKeyId: 'AKIAI2EFNU2BNRYTSKTQ',
+            secretAccessKey: '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'
         },
         s3: {
             host: 'https://s3-ap-northeast-1.amazonaws.com',
             bucket: 'selink'
+        },
+        sns: {
+            pipelineId: '',
+            mp4PresetId: '',
+            webmPresetId: ''
         },
         mongodb: {
             host: 'mongodb://localhost/selink'

@@ -57,7 +57,7 @@ define([
             var self = this;
 
             this.ui.cover.slFadeOutUp('', function() {
-                $(this).attr('src', self.model.get('cover'));
+                $(this).attr('src', self.model.get('cover_ref'));
                 $(this).removeClass('fadeOutUp').addClass('fadeInDown');
             });
         },

@@ -109,7 +109,7 @@ define([
                 trigger: 'hover',
                 container: 'body',
                 placement: 'auto right',
-                title: '<img src="' + this.model.get('_owner').cover + '" />',
+                title: '<img src="' + this.model.get('_owner').cover_ref + '" />',
                 content: _.template(popoverTemplate, this.model.get('_owner')),
             });
 

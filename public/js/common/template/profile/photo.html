@@ -1,6 +1,4 @@
 <%
-    var dispPhoto = obj.photo ? obj.photo : './asset/images/no_photo_male.jpg';
-
     var progressClass = 'progress-bar';
 
     if (obj.completeness == 100) {
@@ -20,7 +18,7 @@
 <span class="fileinput-button profile-picture ace-thumbnails">
 	<li class="sl-avatar">
 		<div>
-		    <img id="avatar" class="img-responsive" src="<%= dispPhoto %>">
+		    <img id="avatar" class="img-responsive" src="<%= obj.photo_ref %>">
 		    <div class="text">
                 <div class="inner">
                     <i class="ace-icon fa fa-camera-retro fa-2x"></i>

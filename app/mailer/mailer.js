@@ -1,6 +1,4 @@
-var env = process.env.NODE_ENV || 'development',
-    config = require('../../config/global')[env],
-    path = require('path'),
+var path = require('path'),
     templatesDir = path.resolve(__dirname, 'templates'),
     emailTemplates = require('email-templates'),
     nodemailer = require('nodemailer');

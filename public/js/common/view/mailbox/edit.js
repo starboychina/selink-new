@@ -72,7 +72,7 @@ define([
                         suggestion: function(d) {
                             return _.template([
                                 '<div>',
-                                '<p class="repo-language" style="margin-right: 8px;"><img src="<%= photo %>" style="max-width: 50px;"></p>',
+                                '<p class="repo-language" style="margin-right: 8px;"><img src="<%= photo_ref %>" style="max-width: 50px;"></p>',
                                 '<p class="repo-name"><%= firstName %>&nbsp;<%= lastName %></p>',
                                 '<div style="clear: both"></div>',
                                 '</div>'

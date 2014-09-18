@@ -1,7 +1,7 @@
 <div class="widget-box" data-create-date="<%= moment(obj.createDate).valueOf() %>">
     <div class="widget-header widget-header-flat">
         <a href="#profile/<%= obj._owner._id %>" title="<%- obj._owner.firstName %>">
-            <img class="avatar" src="<%= obj._owner.photo %>">
+            <img class="avatar" src="<%= obj._owner.photo_ref %>">
         </a>
 
         <% if (obj.isAdmin) { %>

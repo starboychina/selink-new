@@ -16,6 +16,8 @@
 //   12. return the new post to client
 
 var _ = require('underscore'),
+    fs = require('fs'),
+    path = require('path'),
     async = require('async'),
     mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
@@ -23,6 +25,8 @@ var _ = require('underscore'),
     Group = mongoose.model('Group'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
+    s3 = require('../../utils/aws').s3,
+    transcoder = require('../../utils/aws').transcoder,
     Mailer = require('../../mailer/mailer.js');
 
 var populateField = {
@@ -35,32 +39,100 @@ module.exports = function(req, res, next) {
 
     async.waterfall([
 
-        // // before save the post, extract the inlined base64 picture
-        // function preProcess(callback) {
+        // upload images to s3
+        function processImages(callback) {
 
-        //     var capture = /"data:image\/(.*?);base64,(.+?)"/g;
-        //         data = capture.exec(req.body.content);
+            if (req.body.images && req.body.images.length)
 
-        //     while(data) {
+                // upload all images
+                async.map(req.body.images, function(image, callback){
 
-        //         var tempName = temp.path({suffix: '.' + data[1]});
+                    var imagePath = path.join(config.root, '/public/upload/', image.name);
 
-        //         console.log(tempName);
+                    fs.readFile(imagePath, function(err, data) {
 
-        //         fs.writeFile(tempName, data[2], 'base64');
-        //     }
+                        s3.putObject({
+                            ACL: 'public-read',
+                            Key: 'users/' + req.user.id + '/post/' + image.name,
+                            Bucket: config.s3.bucket,
+                            Body: data,
+                            ContentType: image.type
+                        }, callback);
+                    });
 
-        //     callback(null, req.body.content);
-        // },
+                }, callback);
+
+            else callback(null, null);
+        },
+
+        // upload video to s3 and transcode it
+        function processVideo(imageRes, callback) {
+
+            if (req.body.video) {
+
+                var videoName = req.body.video.name,
+                    videoPath = path.join(config.root, '/public/upload/', videoName);
+
+                fs.readFile(videoPath, function(err, data) {
+
+                    s3.putObject({
+                        ACL: 'public-read',
+                        Key: 'users/' + req.user.id + '/input/' + videoName,
+                        Bucket: config.s3.bucket,
+                        Body: data,
+                        ContentType: req.body.video.type
+                    }, function(err, data) {
+
+                        if (err) callback(err);
+                        else 
+                            transcoder.createJob({
+                                Input: {
+                                    Key: 'users/' + req.user.id + '/input/' + videoName,
+                                },
+                                PipelineId: config.sns.pipelineId,
+                                Outputs: [
+                                    {
+                                        Key: 'users/' + req.user.id + '/post/' + videoName + '.mp4',
+                                        PresetId: config.sns.mp4PresetId
+                                    },
+                                    {
+                                        Key: 'users/' + req.user.id + '/post/' + videoName + '.webm',
+                                        PresetId: config.sns.webmPresetId
+                                    }
+                                ]
+                            }, callback);
+                    });
+                });
+
+            } else callback(null, null);
+        },
 
         // create post
-        function createPost(callback) {
+        function createPost(transcoderRes, callback) {
 
-            Post.create({
+            console.log(transcoderRes);
+
+            var post = {
                 _owner: req.user.id,
-                group: req.body.group,
                 content: req.body.content
-            }, callback);
+            };
+
+            if (req.body.group)
+                post.group = req.body.group;
+
+            if (req.body.images)
+                post.images = _.pluck(req.body.images, 'name');
+
+            if (req.body.video) {
+                post.video = req.body.video.name;
+                post.setting = {};
+                post.setting.publicity = 'none';
+            }
+
+            if (transcoderRes && transcoderRes.Job)
+                post.transcoderJobId = transcoderRes.Job.Id;
+
+            Post.create(post, callback);
         },
 
         // create relate information

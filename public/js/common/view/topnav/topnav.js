@@ -154,7 +154,7 @@ define([
             var self = this;
 
             this.$el.find('.nav-user-photo').slRollOut('', function() {
-                $(this).attr('src', self.model.get('photo'));
+                $(this).attr('src', self.model.get('photo_ref'));
                 $(this).removeClass('rollOut').addClass('rollIn');
             });
         },

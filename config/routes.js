@@ -104,7 +104,7 @@ module.exports = function(app, config) {
     // Create post
     app.post('/posts', checkLoginStatus, controller.post.create);
     
-    app.put('/media', checkLoginStatus, controller.post.media);
+    app.put('/media', checkLoginStatus, controller.post.upload);
 
     // Update post
     app.patch('/posts/:post', checkLoginStatus, controller.post.update);
@@ -328,6 +328,9 @@ module.exports = function(app, config) {
     app.get('/solr/message', checkLoginStatus, controller.solr.message);
     app.get('/solr/announcement', checkLoginStatus, controller.solr.announcement);
     app.get('/solr/tag', checkLoginStatus, controller.solr.tag);
+
+    // AWS SNS
+    app.post('/subscription', controller.aws.subscription);
 };
 
 checkLoginStatus = function(req, res, next) {

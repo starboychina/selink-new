@@ -183,18 +183,6 @@ define([
                 response.birthDayInput = moment(response.birthDay).format('L');
             }
 
-            // normalize the photo to s3 path
-            if(response.photo && response._id)
-                response.photo = _.str.join('/', selink.s3, response._id, 'photo', response.photo);
-            else if (response.photo && !response._id)
-                response.photo = _.str.join('/', selink.s3, selink.user.id, 'photo', response.photo);
-
-            // normalize the cover to s3 path
-            if(response.cover && response._id)
-                response.cover = _.str.join('/', selink.s3, response._id, 'cover', response.cover);
-            else if (response.cover && !response._id)
-                response.cover = _.str.join('/', selink.s3, selink.user.id, 'cover', response.cover);
-
             return response;
         },
 
@@ -246,7 +234,7 @@ define([
 
             var completeness = 0;
 
-            if (this.get('photo') && this.get('photo') != "./asset/images/no_photo_male.jpg")
+            if (this.get('photo'))
                 completeness += 10;
 
             if (this.get('firstName'))

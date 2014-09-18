@@ -1480,12 +1480,7 @@
 			    {name:'createLink', className:'btn-pink'},
 			    {name:'unlink', className:'btn-pink'},
 			    null,
-			    {name:'insertImage', className:'btn-success'},
-			    null,
-			    'foreColor',
-			    null,
-			    {name:'undo', className:'btn-grey'},
-			    {name:'redo', className:'btn-grey'}
+			    'foreColor'
 			],
 			// customize: add defautl option -end
         }, $options);

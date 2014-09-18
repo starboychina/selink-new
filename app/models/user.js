@@ -337,6 +337,26 @@ var User = new Schema({
 //     };
 // };
 
+// Create photo reference point to s3
+User.virtual('photo_ref').get(function () {
+    if (this.photo)
+        return _s.join('/', config.s3.host, config.s3.bucket, 'users', this._id, 'photo', this.photo);
+    else
+        return _s.join('/', config.s3.host, config.s3.bucket, 'asset/no_photo_male.jpg');
+});
+
+// Create cover reference point to s3
+User.virtual('cover_ref').get(function () {
+    if (this.cover)
+        return _s.join('/', config.s3.host, config.s3.bucket, 'users', this._id, 'cover', this.cover);
+    else
+        return _s.join('/', config.s3.host, config.s3.bucket, 'asset/default_cover.jpg');
+});
+
+// enable virtual output
+User.set('toJSON', { virtuals: true });
+User.set('toObject', { virtuals: true });
+
 User.methods.toSolr = function() {
 
     var languages = _.map(this.languages, function(language) {

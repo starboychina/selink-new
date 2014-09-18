@@ -29,8 +29,7 @@ var Group = new Schema({
     // Cover
     cover: {
         type: String,
-        trim: true,
-        default: './asset/images/default_cover.jpg'
+        trim: true
     },
 
     // Description

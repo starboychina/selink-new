@@ -1,21 +1,17 @@
 // Crop Photo
-var env = process.env.NODE_ENV || 'development',
-    config = require('../../../config/global')[env],
-    fs = require('fs'),
+var fs = require('fs'),
     gm = require('gm'),
     path = require('path'),
-    mime = require('mime'),
-    AWS = require('aws-sdk'),
     async = require('async'),
-    User = require('mongoose').model('User');
-
-var s3 = new AWS.S3({apiVersion: '2006-03-01'});
+    User = require('mongoose').model('User'),
+    s3 = require('../../utils/aws').s3;
 
 module.exports = function(req, res, next) {
 
     // TODO: check exsitence of tempPhoto
 
-    var photoName = req.session.tempPhoto,
+    var photoName = req.session.tempPhotoName,
+        photoType = req.session.tempPhotoType,
         photoPath = path.join(config.root, '/public/upload/', photoName);
 
     async.waterfall([
@@ -35,7 +31,7 @@ module.exports = function(req, res, next) {
                 deleteCurrentPhoto: function(callback) {
 
                     s3.deleteObject({
-                        Key: req.user.id + '/photo/' + req.user.photo,
+                        Key: 'users/' + req.user.id + '/photo/' + req.user.photo,
                         Bucket: config.s3.bucket,
                     }, callback)
                 },
@@ -44,10 +40,10 @@ module.exports = function(req, res, next) {
 
                     s3.putObject({
                         ACL: 'public-read',
-                        Key: req.user.id + '/photo/' + photoName,
+                        Key: 'users/' + req.user.id + '/photo/' + photoName,
                         Bucket: config.s3.bucket,
                         Body: buffer,
-                        ContentType: mime.lookup(photoPath)
+                        ContentType: photoType
                     }, callback);
                 },
 
@@ -59,22 +55,25 @@ module.exports = function(req, res, next) {
             }, function(err, results) {
 
                 if (err) callback(err);
-                else callback(null, results.updateUser.photo);
+                else callback(null, results.updateUser);
             });
         },
 
-        function deleteTempFile(photo, callback) {
+        function deleteTempFile(user, callback) {
 
             fs.unlink(photoPath, function(err) {
                 if (err) callback(err);
-                else callback(null, photo);
+                else callback(null, user);
             });
         }
 
-    ], function(err, photo) {
+    ], function(err, user) {
 
         if (err) next(err);
-        else res.json({photo: photo});
+        else res.json({
+            photo: user.photo,
+            photo_ref: user.photo_ref
+        });
     });
 
 };

@@ -15,7 +15,7 @@
 
 <div class="timeline-info">
     <a href="#profile/<%= obj._owner._id %>">
-        <img src="<%= obj._owner.photo %>" />
+        <img src="<%= obj._owner.photo_ref %>" />
     </a>
 </div>
 
@@ -41,7 +41,7 @@
             </a>
             <%= content %>
             <a class="pull-right" href="#profile/<%= obj.targetUser[0]._id %>">
-                <img src="<%= obj.targetUser[0].photo %>" style="max-width: 50px;" />
+                <img src="<%= obj.targetUser[0].photo_ref %>" style="max-width: 50px;" />
             </a>
             <div class="clearfix"></div>
         </div>

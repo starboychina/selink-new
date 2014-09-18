@@ -1,4 +1,5 @@
 var path = require('path'),
+    http = require('http'),
     https = require('https'),
     express = require('express'),
     favicon = require('static-favicon'),
@@ -31,6 +32,14 @@ module.exports = function(config) {
         app.use(require('express-logger')({
             path: config.root + '/log/requests.log'
         }));
+
+    // Fix Content-Type for aws sns
+    app.use(function(req, res, next){
+        if (req.headers['x-amz-sns-message-type']) {
+            req.headers['content-type'] = 'application/json;charset=UTF-8';
+        }
+        next();
+    });
 
     // Parse application/json
     app.use(bodyParser.json());
@@ -98,7 +107,8 @@ module.exports = function(config) {
     });
 
     // Express 3 requires a http.Server to attach socke.io
-    var server = https.createServer(config.ssl, app);
+    // var server = https.createServer(config.ssl, app);
+    var server = http.createServer(app);
 
     // attach socket.io
     GLOBAL.sio = io.listen(server);

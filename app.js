@@ -5,6 +5,8 @@ var env = process.env.NODE_ENV || 'development',
     mongoose = require('mongoose'),
     solrClient = require('solr-client');
 
+GLOBAL.config = config;
+
 // Connect to MongoDB
 mongoose.connect(config.mongodb.host);
 mongoose.connection.on('open', function() {
@@ -26,10 +28,7 @@ solr.ping(function(err, obj) {
 });
 
 // Config AWS
-AWS.config.update({
-    accessKeyId: config.awssdk.accessKey,
-    secretAccessKey: config.awssdk.secretKey
-});
+AWS.config.update(config.awssdk);
 
 // Create Exrepss Server
 var app = require('./config/express')(config);

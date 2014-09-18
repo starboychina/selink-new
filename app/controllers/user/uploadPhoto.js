@@ -1,19 +1,9 @@
 // Upload Photo
-var env = process.env.NODE_ENV || 'development',
-    config = require('../../../config/global')[env],
-    gm = require('gm'),
-    path = require('path'),
-    formidable = require('formidable');
-
-// parse a file upload
-var formidableForm = new formidable.IncomingForm({
-    uploadDir: path.join(config.root + '/public/upload'),
-    keepExtensions: true
-});
+var uploadForm = require('../../utils/upload');
 
 module.exports = function(req, res, next) {
 
-    formidableForm.parse(req, function(err, fields, files) {
+    uploadForm.parse(req, function(err, fields, files) {
 
         // handle photo file
         if (files.photo) {
@@ -28,12 +18,10 @@ module.exports = function(req, res, next) {
 
             var photoName = /.*[\/|\\](.*)$/.exec(photoPath)[1];
 
-            req.session.tempPhoto = photoName;
+            req.session.tempPhotoName = photoName;
+            req.session.tempPhotoType = photoType;
 
-            gm(photoPath).size(function(err, size) {
-                if (err) next(err);
-                else res.json({fileName: './upload/' + photoName});
-            });
+            res.json({fileName: './upload/' + photoName});
 
         } else {
             res.json(400, {});

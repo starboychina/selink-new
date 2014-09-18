@@ -1,21 +1,17 @@
 // Crop Cover
-var env = process.env.NODE_ENV || 'development',
-    config = require('../../../config/global')[env],
-    fs = require('fs'),
+var fs = require('fs'),
     gm = require('gm'),
     path = require('path'),
-    mime = require('mime'),
-    AWS = require('aws-sdk'),
     async = require('async'),
-    User = require('mongoose').model('User');
-
-var s3 = new AWS.S3({apiVersion: '2006-03-01'});
+    User = require('mongoose').model('User'),
+    s3 = require('../../utils/aws').s3;
 
 module.exports = function(req, res, next) {
 
     // TODO: check exsitence of tempCover
 
-    var coverName = req.session.tempCover,
+    var coverName = req.session.tempCoverName,
+        coverType = req.session.tempCoverType,
         coverPath = path.join(config.root, '/public/upload/', coverName);
 
     async.waterfall([
@@ -34,7 +30,7 @@ module.exports = function(req, res, next) {
                 deleteCurrentCover: function(callback) {
 
                     s3.deleteObject({
-                        Key: req.user.id + '/cover/' + req.user.cover,
+                        Key: 'users/' + req.user.id + '/cover/' + req.user.cover,
                         Bucket: config.s3.bucket,
                     }, callback)
                 },
@@ -43,10 +39,10 @@ module.exports = function(req, res, next) {
 
                     s3.putObject({
                         ACL: 'public-read',
-                        Key: req.user.id + '/cover/' + coverName,
+                        Key: 'users/' + req.user.id + '/cover/' + coverName,
                         Bucket: config.s3.bucket,
                         Body: buffer,
-                        ContentType: mime.lookup(coverPath)
+                        ContentType: coverType
                     }, callback);
                 },
 
@@ -58,41 +54,25 @@ module.exports = function(req, res, next) {
             }, function(err, results) {
 
                 if (err) callback(err);
-                else callback(null, results.updateUser.cover);
+                else callback(null, results.updateUser);
             });
         },
 
-        function deleteTempFile(cover, callback) {
+        function deleteTempFile(user, callback) {
 
             fs.unlink(coverPath, function(err) {
                 if (err) callback(err);
-                else callback(null, cover);
+                else callback(null, user);
             });
         }
 
-    ], function(err, cover) {
+    ], function(err, user) {
 
         if (err) next(err);
-        else res.json({cover: cover});
+        else res.json({
+            cover: user.cover,
+            cover_ref: user.cover_ref
+        });
     });
 
-
-
-
-
-    // var coverPath = path.join(__dirname, '../../public/upload/', req.session.tempCover);
-
-    // gm(coverPath)
-    //     .crop(req.body.w, req.body.h, req.body.x, req.body.y)
-    //     .write(coverPath, function(err) {
-    //         if (err) next(err);
-    //         else {
-
-    //             // update user info
-    //             User.findByIdAndUpdate(req.params.user, {cover: './upload/' + req.session.tempCover}, function(err, updatedUser) {
-    //                 if (err) next(err);
-    //                 else res.send({cover: updatedUser.cover});
-    //             });
-    //         }
-    //     });
 };

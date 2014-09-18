@@ -1,9 +1,62 @@
-<button class="btn btn-app btn-success no-radius btn-media fileinput-button" style="width: 45%;">
-	<input id="fileupload" type="file" name="media" data-url="/media">
-    <i class="ace-icon fa fa-camera"></i>
-    画像・ビデオ
-</button>
-<button class="btn btn-app btn-info no-radius btn-text" style="width: 45%;">
-    <i class="ace-icon fa fa-edit"></i>
-    記事を書く
-</button>
+<div class="modal-content">
+
+    <!-- modal body -->
+    <div class="modal-header">
+
+        <!-- modal close button -->
+        <button class="close" data-dismiss="modal" aria-hidden="true">x</button>
+
+        <img class="avatar" src="<%= selink.user.get('photo_ref') %>" style="max-width: 75px;">
+
+        <!-- modal title -->
+        <h4 class="green">
+            <i class="ace-icon fa fa-camera bigger-110"></i>&nbsp;&nbsp;
+            <strong>画像・ビデオを投稿</strong>
+        </h4>
+
+        <span class="btn btn-success fileinput-button">
+            <input type="file" name="image" data-url="/media" accept="image/*">
+            <i class="ace-icon fa fa-plus"></i>
+            <i class="ace-icon fa fa-camera"></i>
+            画像
+        </span>
+
+        <span class="btn btn-primary fileinput-button">
+            <input type="file" name="video" data-url="/media" accept="video/*">
+            <i class="ace-icon fa fa-plus"></i>
+            <i class="ace-icon fa fa-video-camera"></i>
+            ビデオ
+        </span>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- modal body -->
+    <div class="modal-body">
+
+        <ul class="ace-thumbnails"></ul>
+
+        <div class="col-xs-12">
+            <div class="wysiwyg-editor" style="max-height: 200px;"></div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- modal footer -->
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-success btn-post disabled"
+                data-loading-text="<i class='ace-icon fa fa-spinner fa-spin white bigger-125'></i>&nbsp;&nbsp;送信中・・・">
+            <i class="ace-icon fa fa-check"></i>
+            投稿
+        </button>
+
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">
+            <i class="ace-icon fa fa-times"></i>
+            取消
+        </button>
+
+    </div>
+
+</div>
