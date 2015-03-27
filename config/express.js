@@ -54,7 +54,10 @@ module.exports = function(config) {
     app.use(cookieParser('cookie secret sauce'));
 
     // Redis session storage
-    var redisStore = new RedisStore();
+    var redisStore = new RedisStore({
+        host:config.redis.host,
+        port:config.redis.port
+    });
 
     // Session
     app.use(session({
