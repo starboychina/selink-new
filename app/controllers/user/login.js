@@ -40,7 +40,7 @@ module.exports = function(req, res, next) {
             });
 
             // send success signal
-            res.json({});
+            res.json({"_id":user.id});
         }
     });
 };
