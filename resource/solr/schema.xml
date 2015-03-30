@@ -17,6 +17,7 @@
         <field name="address" type="text_ja" indexed="true" stored="true" termVectors="true"/>
         <field name="language" type="payloads" indexed="true" stored="true" termVectors="true" multiValued="true"/>
         <field name="skill" type="payloads" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="device" type="payloads" indexed="true" stored="true" termVectors="true" multiValued="true"/>
         <field name="weight" type="int" indexed="true" stored="true"/>
 
         <!-- job -->

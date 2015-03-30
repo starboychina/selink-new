@@ -9,7 +9,8 @@ var Skill = require('./profile/skill'),
     Employment = require('./profile/employment'),
     Education = require('./profile/education'),
     Qualification = require('./profile/qualification'),
-    Language = require('./profile/language');
+    Language = require('./profile/language'),
+    Device = require('./profile/device');
 
 var User = new Schema({
 
@@ -150,6 +151,9 @@ var User = new Schema({
 
     // Skill
     skills: [Skill],
+
+    // Device
+    devices: [Device],
 
     // Friends
     friends: [{
@@ -380,6 +384,11 @@ User.methods.toSolr = function() {
     var qualifications = _.map(this.qualifications, function(qualification) {
         return qualification.name;
     });
+    
+    var devices = _.map(this.devices, function(device) {
+        var payload = device.weight;
+        return device.name + "|" + payload;
+    });
 
     return {
         type: 'User',
@@ -396,6 +405,7 @@ User.methods.toSolr = function() {
         address: this.address,
         nearestSt: this.nearestSt,
         language: languages,
+        device: devices,
         skill: skills,
         education: educations,
         employment: employments,

@@ -331,6 +331,9 @@ module.exports = function(app, config) {
 
     // AWS SNS
     app.post('/subscription', controller.aws.subscription);
+
+    // device uuid & token
+    app.post('/mobile/users/:id/device', checkLoginStatus, controller.mobile.device);
 };
 
 checkLoginStatus = function(req, res, next) {
