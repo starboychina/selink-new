@@ -334,6 +334,8 @@ module.exports = function(app, config) {
 
     // device uuid & token
     app.post('/mobile/user/device', checkLoginStatus, controller.mobile.device);
+    // regist
+    app.post('/mobile/user/regist', controller.mobile.regist);
 };
 
 checkLoginStatus = function(req, res, next) {
