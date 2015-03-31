@@ -73,9 +73,9 @@ module.exports = function(req, res, next) {
                             });
                         }
                     });
-
-                    // redirect to home page
-                    res.redirect('/');
+                    // put user's id into session
+                    req.session.userId = user.id;//auto login
+                    res.json({"_id":user.id});
                 }
             });
         }
