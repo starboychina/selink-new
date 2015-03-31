@@ -7,22 +7,24 @@ module.exports = function(req, res, next) {
     //req.body = req.query; テスト
     req.params.id = req.session.userId;
     req.params.sub = "devices"
-    User.findById(req.params.id, function(err, user) {
-            //res.json(400, user);
-        if (err) next(err);
-        else {
-            if (req.body.uuid){
+    if (req.body.uuid){
+        User.findById(req.params.id, function(err, user) {
+                //res.json(400, user);
+            if (err) next(err);
+            else {
                 user.devices.forEach(function(device) {
                     if(device.uuid == req.body.uuid){
                         req.params.subid = device.id
                     }
                 });
+                if(req.params.subid){
+                    Update(req, res, next)
+                }else{
+                    Create(req, res, next)
+                }
             }
-            if(req.params.subid){
-                Update(req, res, next)
-            }else{
-                Create(req, res, next)
-            }
-        }
-    });
+        });
+    }else{
+        res.json(400, {});
+    }
 };
