@@ -122,6 +122,21 @@ Post.virtual('images_ref').get(function () {
     else
         return [];
 });
+// Create images reference point to s3
+Post.virtual('images_mobile').get(function () {
+
+    // if the _owner field was populated, it should be an object
+    // and the owner's id will be embeded in that object, so we need extract it.
+    var userId = this._owner._id ? this._owner._id : this._owner;
+
+    if (this.imagesformobile && this.imagesformobile.length)
+        return _.map(this.imagesformobile, function(image) { 
+            image.name = _s.join('/', config.s3.host, config.s3.bucket, 'users', userId, 'post', image.name);
+            return image;
+        });
+    else
+        return [];
+});
 
 // Create videp reference point to s3
 Post.virtual('video_ref').get(function () {
