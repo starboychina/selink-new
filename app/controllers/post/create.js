@@ -25,6 +25,7 @@ var _ = require('underscore'),
     Group = mongoose.model('Group'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
+    gm = require('gm'),
     s3 = require('../../utils/aws').s3,
     transcoder = require('../../utils/aws').transcoder,
     Mailer = require('../../mailer/mailer.js');
@@ -48,7 +49,14 @@ module.exports = function(req, res, next) {
                 async.map(req.body.images, function(image, callback){
 
                     var imagePath = path.join(config.root, '/public/upload/', image.name);
-
+                    image.size = {width:0,height:0};
+                    //image size
+                    gm(imagePath)
+                        .size(function (err, size) {
+                            if (!err) {
+                                image.size = size;
+                            }
+                        });
                     fs.readFile(imagePath, function(err, data) {
 
                         s3.putObject({
@@ -120,8 +128,17 @@ module.exports = function(req, res, next) {
             if (req.body.group)
                 post.group = req.body.group;
 
-            if (req.body.images)
+            if (req.body.images){
                 post.images = _.pluck(req.body.images, 'name');
+                for (var i  in req.body.images){
+                    post.imagesformobile.push({
+                        name:req.body.images[i].name
+                        type:"image"
+                        width:req.body.images[i].size.width
+                        height:req.body.images[i].size.height
+                    });
+                }
+            }
 
             if (req.body.video) {
                 post.video = req.body.video.name;

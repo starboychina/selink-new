@@ -4,7 +4,8 @@ var _ = require('underscore'),
     // validate = require('mongoose-validator').validate,
     Schema = mongoose.Schema;
 
-var Comment = require('./comment');
+var Comment = require('./comment'),
+    MediaFile = require('./mobile/mediafile');
 
 var Post = new Schema({
 
@@ -26,6 +27,9 @@ var Post = new Schema({
         type: String,
         trim: true
     }],
+
+    // Post images
+    imagesformobile: [MediaFile],
 
     // Post video
     video: {
