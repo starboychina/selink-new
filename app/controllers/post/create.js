@@ -134,7 +134,7 @@ module.exports = function(req, res, next) {
                 var imagesformobile = Array();
                 for (var i  in req.body.images){
                     imagesformobile[i] = {
-                        name:req.body.images[i].name,
+                        name:req.body.images[i].url,
                         type:"image",
                         width:req.body.images[i].size.width,
                         height:req.body.images[i].size.height
