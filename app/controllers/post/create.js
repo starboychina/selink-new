@@ -130,14 +130,16 @@ module.exports = function(req, res, next) {
 
             if (req.body.images){
                 post.images = _.pluck(req.body.images, 'name');
+                var imagesformobile = array();
                 for (var i  in req.body.images){
-                    post.imagesformobile[i] = {
+                    imagesformobile[i] = {
                         name:req.body.images[i].name,
                         type:"image",
                         width:req.body.images[i].size.width,
                         height:req.body.images[i].size.height
                     };
                 }
+                post.imagesformobile = imagesformobile
             }
 
             if (req.body.video) {
