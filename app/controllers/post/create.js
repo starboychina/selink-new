@@ -50,6 +50,7 @@ module.exports = function(req, res, next) {
 
                     var imagePath = path.join(config.root, '/public/upload/', image.name);
                     image.size = {width:0,height:0};
+                    image.url = 'users/' + req.user.id + '/post/' + image.name
                     //image size
                     gm(imagePath)
                         .size(function (err, size) {
@@ -130,7 +131,7 @@ module.exports = function(req, res, next) {
 
             if (req.body.images){
                 post.images = _.pluck(req.body.images, 'name');
-                var imagesformobile = array();
+                var imagesformobile = Array();
                 for (var i  in req.body.images){
                     imagesformobile[i] = {
                         name:req.body.images[i].name,
