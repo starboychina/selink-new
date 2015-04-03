@@ -22,6 +22,12 @@ var Post = new Schema({
         trim: true,
     },
 
+    // Post content
+    contentText: {
+        type: String,
+        trim: true,
+    },
+
     // Post images
     images: [{
         type: String,

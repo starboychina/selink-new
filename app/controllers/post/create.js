@@ -122,7 +122,8 @@ module.exports = function(req, res, next) {
 
             var post = {
                 _owner: req.user.id,
-                content: req.body.content
+                content: req.body.content,
+                contentText: req.body.content.replace(/<[^>]*>/g, '')
             };
 
             if (req.body.group)
