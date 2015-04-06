@@ -90,7 +90,6 @@ module.exports = function(req, res, next) {
                         Body: data,
                         ContentType: req.body.video.type
                     }, function(err, data) {
-
                         if (err) callback(err);
                         else 
                             transcoder.createJob({
@@ -135,7 +134,7 @@ module.exports = function(req, res, next) {
                 for (var i  in req.body.images){
                     imagesformobile[i] = {
                         name:req.body.images[i].name,
-                        type:"image",
+                        type:req.body.images[i].type,
                         width:req.body.images[i].size.width,
                         height:req.body.images[i].size.height
                     };
