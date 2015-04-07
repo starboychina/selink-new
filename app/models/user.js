@@ -341,6 +341,13 @@ var User = new Schema({
 //     };
 // };
 
+
+User.virtual('bioText').get(function () {
+    if (this.bio)
+        return this.bio.replace(/<[^>]*>/g, '');
+    else
+        return '';
+});
 // Create photo reference point to s3
 User.virtual('photo_ref').get(function () {
     if (this.photo)
