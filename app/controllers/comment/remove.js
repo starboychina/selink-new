@@ -38,7 +38,7 @@ module.exports = function(req, res, next) {
 
             post.save(function(err, post) {
                 if (err) callback(err);
-                else callback(null, post.comments.id(req.params.comment));
+                else callback(null, post.removedComments.id(req.params.comment));
             });
         }
 
