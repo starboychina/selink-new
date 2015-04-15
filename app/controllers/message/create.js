@@ -3,7 +3,8 @@ var _ = require('underscore'),
     User = mongoose.model('User'),
     Activity = mongoose.model('Activity'),
     Message = mongoose.model('Message'),
-    Mailer = require('../../mailer/mailer.js');
+    Mailer = require('../../mailer/mailer.js'),
+    push = require('../../utils/push');
 
 module.exports = function(req, res, next) {
 
@@ -34,6 +35,29 @@ module.exports = function(req, res, next) {
                         sio.sockets.in(room).emit('message-new', msg);
                     });
 
+                    // push
+                    User.find()
+                        //.select('email')
+                        .where('_id').in(msg._recipient)
+                        .where('logicDelete').equals(false)
+                        .exec(function(err, users) {
+                            for (var i = users.length - 1; i >= 0; i--) {
+                                if(!isUserOnline(users[i].id)){
+                                    for (var j = users[i].devices.length - 1; j >= 0; j--) {
+                                        if(users[i].devices[j].token){
+                                            var token = users[i].devices[j].token;
+                                            var badge = 1;
+                                            var alertMessage = msg.content;
+                                            var payload = {'messageFrom': 'Caroline'};
+                                            push(token,alertMessage,payload,badge);
+                                        }
+                                    };
+                                }
+                                
+                            };
+                        });
+
+
                     // send email to all recipients
                     User.find()
                         .select('email')
@@ -57,3 +81,13 @@ module.exports = function(req, res, next) {
         }
     });
 };
+
+function isUserOnline(user){
+    var clients = sio.sockets.manager.roomClients
+    for (var index in clients){
+        if(clients[index]['/'+user]){
+            return true;
+        }
+    }
+    return false;
+}
