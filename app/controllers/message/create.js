@@ -83,11 +83,6 @@ module.exports = function(req, res, next) {
 };
 
 function isUserOnline(user){
-    var clients = sio.sockets.manager.roomClients
-    for (var index in clients){
-        if(clients[index]['/'+user]){
-            return true;
-        }
-    }
-    return false;
+    var c = sio.sockets.clients(req.session.userId);
+    return c.length > 0;
 }
