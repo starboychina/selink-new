@@ -60,7 +60,7 @@ module.exports = function(req, res, next) {
                                 if(user.devices[j].token){
                                     var token = user.devices[j].token;
                                     var badge = 1;
-                                    var alertMessage = user.firstName + " " +user.lastName + "さんから友達になるリクエストがありました";
+                                    var alertMessage = req.user.firstName + " " + req.user.lastName + "さんから友達になるリクエストがありました";
                                     var payload = {'messageFrom': 'Caroline'};
                                     push(token,alertMessage,payload,badge);
                                 }
