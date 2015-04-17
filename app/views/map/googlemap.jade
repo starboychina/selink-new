@@ -290,16 +290,13 @@ html(lang="ja", xmlns="http://www.w3.org/1999/xhtml")
           var dataPhoto = data[i];
           var latLng = new google.maps.LatLng(dataPhoto.latitude,
               dataPhoto.longitude);
-          var marker = new google.maps.Marker({
-            position: latLng
-          });
           var marker2 = new RichMarker({
               map: map,
               position: latLng,
               draggable: true,
               flat: true,
               anchor: RichMarkerPosition.MIDDLE,
-              content: '<div style="background:green;">You should drag it!</div>'
+              content: '<div style="background:green;"><img src="http://lorempixel.com/400/200/" width="100px"><br ><span style="line-height:30px;padding:10px">Any Html Code</span></div>'
             });
           markers.push(marker2);
         }
