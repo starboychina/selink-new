@@ -24,12 +24,25 @@ html(lang="ja", xmlns="http://www.w3.org/1999/xhtml")
   script(src="/js/lib/jquery.js")
   script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASm3CwaK9qtcZEWYa-iQwHaGi3gcosAJc&sensor=false&v=3.18")
   script(src="https://googlemaps.github.io/js-marker-clusterer/src/markerclusterer.js")
-  script(src="https://googlemaps.github.io/js-marker-clusterer/examples/data.json")
+  script(src="/js/map/richmarker-compiled.js")
   script(type='text/javascript').
       function initialize() {
       $("#map").height($(document).height());
-        var center = new google.maps.LatLng(35.6557103,139.759508);
-
+        var center = new google.maps.LatLng(35.623257,139.7759661);
+        var data = [
+                  {
+                      "longitude": 139.7596938,
+                      "latitude": 35.6654039
+                  },
+                  {
+                      "longitude": 139.7601524,
+                      "latitude": 35.6626544
+                  },
+                  {
+                      "longitude": 139.7672238,
+                      "latitude": 35.664699
+                  }
+              ];
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
           maxZoom:17,
@@ -273,14 +286,22 @@ html(lang="ja", xmlns="http://www.w3.org/1999/xhtml")
         });
 
         var markers = [];
-        for (var i = 0; i < 100; i++) {
-          var dataPhoto = data.photos[i];
+        for (var i = 0; i < data.length; i++) {
+          var dataPhoto = data[i];
           var latLng = new google.maps.LatLng(dataPhoto.latitude,
               dataPhoto.longitude);
           var marker = new google.maps.Marker({
             position: latLng
           });
-          markers.push(marker);
+          var marker2 = new RichMarker({
+              map: map,
+              position: latLng,
+              draggable: true,
+              flat: true,
+              anchor: RichMarkerPosition.MIDDLE,
+              content: '<div style="background:green;">You should drag it!</div>'
+            });
+          markers.push(marker2);
         }
         var markerCluster = new MarkerClusterer(map, markers);
       }
