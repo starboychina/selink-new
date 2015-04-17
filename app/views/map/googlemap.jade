@@ -32,6 +32,8 @@ html(lang="ja", xmlns="http://www.w3.org/1999/xhtml")
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 12,
+          maxZoom:17,
+          minZoom:12,
           center: center,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           // This is where you would paste any style found on Snazzy Maps.
