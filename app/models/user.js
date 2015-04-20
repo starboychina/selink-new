@@ -10,10 +10,10 @@ var Skill = require('./profile/skill'),
     Education = require('./profile/education'),
     Qualification = require('./profile/qualification'),
     Language = require('./profile/language'),
-    Device = require('./profile/device');
+    Device = require('./profile/device'),
+    Openid = require('./profile/openid');
 
 var User = new Schema({
-
     // Primary email
     email: {
         type: String,
@@ -137,6 +137,12 @@ var User = new Schema({
         // validate: validate('len', 0, 5000)
     },
 
+    // Self Introduction
+    bioText: {
+        type: String,
+        trim: true,
+        // validate: validate('len', 0, 5000)
+    },
     // Language
     languages: [Language],
 
@@ -154,6 +160,9 @@ var User = new Schema({
 
     // Device
     devices: [Device],
+
+    // Openid
+    openids: [Openid],
 
     // Friends
     friends: [{
@@ -341,13 +350,6 @@ var User = new Schema({
 //     };
 // };
 
-
-User.virtual('bioText').get(function () {
-    if (this.bio)
-        return this.bio.replace(/<[^>]*>/g, '');
-    else
-        return '';
-});
 // Create photo reference point to s3
 User.virtual('photo_ref').get(function () {
     if (this.photo)

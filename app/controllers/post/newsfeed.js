@@ -43,9 +43,6 @@ module.exports = function(req, res, next) {
             if (err) next(err);
             else if (posts.length === 0) res.json(404, {});
             else {
-                for (var i = posts.length - 1; i >= 0; i--) {
-                    posts[i].contentText = posts[i].content.replace(/<[^>]*>/g, '')
-                };
                 res.json(posts);
             }
         });
