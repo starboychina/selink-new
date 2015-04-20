@@ -4,3 +4,6 @@ public/upload
 *~
 .DS_Store
 npm-debug.log
+resource/push/cert.pem
+
+bin/selink
