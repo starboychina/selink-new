@@ -7,3 +7,5 @@ npm-debug.log
 resource/push/cert.pem
 
 bin/selink
+
+config/global.js
