@@ -25,7 +25,7 @@ module.exports = function(req, res, next){
         // find the post and update it
         function updatePost(callback) {
             if (req.body.content) {
-                req.body.contentText = req.body.content;
+                req.body.contentText = req.body.content.replace(/<[^>]*>/g, '');
             }
             Post.findByIdAndUpdate(req.params.post, req.body, callback);
         },
