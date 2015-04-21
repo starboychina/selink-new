@@ -340,6 +340,8 @@ module.exports = function(app, config) {
     app.post('/mobile/posts', checkLoginStatus, controller.mobile.postCreate);
     // Google Map
     app.get('/mobile/map', checkLoginStatus, controller.mobile.googlemap);
+    // Stations
+    app.get('/mobile/stations', checkLoginStatus, controller.mobile.station);
 };
 
 checkLoginStatus = function(req, res, next) {
