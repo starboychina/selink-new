@@ -342,6 +342,8 @@ module.exports = function(app, config) {
     app.get('/mobile/map', checkLoginStatus, controller.mobile.googlemap);
     // Stations
     app.get('/mobile/stations', checkLoginStatus, controller.mobile.station);
+    // Stations Info
+    app.get('/mobile/stations/:sub', checkLoginStatus, controller.mobile.stationrelation);
 };
 
 checkLoginStatus = function(req, res, next) {
