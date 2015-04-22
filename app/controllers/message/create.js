@@ -83,6 +83,6 @@ module.exports = function(req, res, next) {
 };
 
 function isUserOnline(user){
-    var c = sio.sockets.clients(req.session.userId);
+    var c = sio.sockets.clients(user);
     return c.length > 0;
 }
