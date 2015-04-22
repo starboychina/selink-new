@@ -47,7 +47,7 @@ module.exports = function(req, res, next) {
                                         if(users[i].devices[j].token){
                                             var token = users[i].devices[j].token;
                                             var badge = 1;
-                                            var alertMessage = eq.user.firstName + " " + req.user.lastName + " : " +msg.content;
+                                            var alertMessage = req.user.firstName + " " + req.user.lastName + " : " +msg.content;
                                             var payload = {'messageFrom': 'Caroline'};
                                             push(token,alertMessage,payload,badge);
                                         }
