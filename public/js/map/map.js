@@ -381,7 +381,7 @@ function showPosts1(detail_wp,station){
 var cwidth = 70;
 function setAnime(viewid){
 	var marker = $("#marker_"+viewid);
-	var space = 20 ;
+	var space = 0 ;
 	var x_left = (cwidth + space ) *-1;
 	var x_right = space + marker.height();
 	var y_top = (cwidth + space ) *-1;
