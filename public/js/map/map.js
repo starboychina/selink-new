@@ -1,5 +1,5 @@
 
-var center = new google.maps.LatLng(35.64557,139.7459661);
+var center = new google.maps.LatLng(35.645736,139.747575);
 var markerWidth = 260;
 var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
