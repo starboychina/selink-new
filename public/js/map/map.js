@@ -2,9 +2,9 @@
 var center = new google.maps.LatLng(35.64557,139.7459661);
 var markerWidth = 260;
 var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 12,
+      zoom: 15,
       maxZoom:17,
-      minZoom:15,
+      minZoom:13,
       center: center,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       // This is where you would paste any style found on Snazzy Maps.
