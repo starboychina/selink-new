@@ -1,6 +1,6 @@
 
 var center = new google.maps.LatLng(35.645736,139.747575);
-var markerWidth = 260;
+var markerWidth = 200;
 var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       maxZoom:17,
@@ -287,13 +287,13 @@ function serMarkerView(station){
 	var markerTabItem = $("<li></li>").css({
 		"float":"left",
 		"width":(markerWidth/4-4)+"px",
-		"height":"46px",
+		"height":"36px",
 		"list-style":"none",
 		"background":"#FFF",
 		"margin":"2px",
 		"text-align": "center"
 	});
-	var icon = $("<i></i>").addClass("fa").css({"font-size":"25px"});
+	var icon = $("<i></i>").addClass("fa").css({"font-size":"20px"});
 	var icon_group = icon.clone().addClass("fa-group");
 	var icon_user = icon.clone().addClass("fa-user");
 	var icon_post = icon.clone().addClass("fa-edit");
