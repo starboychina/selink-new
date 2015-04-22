@@ -1,9 +1,10 @@
 
-var center = new google.maps.LatLng(35.66557,139.7459661);
+var center = new google.maps.LatLng(35.64557,139.7459661);
+var markerWidth = 260;
 var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
       maxZoom:17,
-      minZoom:13,
+      minZoom:15,
       center: center,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       // This is where you would paste any style found on Snazzy Maps.
@@ -267,16 +268,16 @@ $(function(){
 		    	markers.push(new RichMarker(marker));
 	    	};
 	    }
-	    var mcOptions = {gridSize: 100, maxZoom: 17};
+	    var mcOptions = {gridSize: 150, maxZoom: 17};
 	    var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 	});
 });
 
 function serMarkerView(station){
 	var markerImg = $("<div></div>");
-	markerImg.html('<img src="http://lorempixel.com/400/200/" width="200px">');
+	markerImg.html('<img src="http://lorempixel.com/400/200/" width="'+markerWidth+'">');
 	var markerTab = $("<ul></ul>").css({
-		"background":"#FFF",
+		"background":"#DDD",
 		"margin":"0",
 		"float": "left",
 		"padding": "0",
@@ -285,26 +286,46 @@ function serMarkerView(station){
 
 	var markerTabItem = $("<li></li>").css({
 		"float":"left",
-		"width":"46px",
+		"width":(markerWidth/4-4)+"px",
 		"height":"46px",
 		"list-style":"none",
 		"background":"#FFF",
-		"margin":"2px"
+		"margin":"2px",
+		"text-align": "center"
 	});
-	var group = markerTabItem.clone().append('<i class="fa fa-group" style="font-size:25px;"></i>');
-	var user = markerTabItem.clone().append('<i class="fa fa-user" style="font-size:25px;"></i>');
-	var post = markerTabItem.clone().append('<i class="fa fa-edit" style="font-size:25px;"></i>');
-	var post1 = markerTabItem.clone().append('<i class="fa fa-edit" style="font-size:25px;"></i>');
+	var icon = $("<i></i>").addClass("fa").css({"font-size":"25px"});
+	var icon_group = icon.clone().addClass("fa-group");
+	var icon_user = icon.clone().addClass("fa-user");
+	var icon_post = icon.clone().addClass("fa-edit");
+	var icon_post1 = icon.clone().addClass("fa-edit");
+
+
+
+	var group = markerTabItem.clone().append(icon_group,'<br /> Group');
+	var user = markerTabItem.clone().append(icon_user,'<br /> User');
+	var post = markerTabItem.clone().append(icon_post,'<br /> HOT');
+	var post1 = markerTabItem.clone().append(icon_post1,'<br /> 吐');
 	markerTab.append(group,user,post,post1);
 
 	var div = document.createElement('div');
 	$(div).attr({"id":station._id}).css({
 		"float": "left",
-		"width": "200px"
+		"width": markerWidth +"px"
 	}).append(markerImg,markerTab);
 
 	$.getJSON( "/mobile/stations/users?nearestSt="+station.name, function( data ) {
-		//user.append(data.length);
+		icon_user.text(data.length);
+		var count_group = 0;
+		var count_post = 0;
+		for (var i = data.length - 1; i >= 0; i--) {
+			var user = data[i];
+			count_group += user.groups.length;
+			count_post += user.posts.length;
+		};
+		icon_group.text(count_group);
+		icon_user.text(data.length);
+		icon_post.text(count_post);
+		icon_post1.text(count_post);
 		console.log(station._id );
 	});
 
