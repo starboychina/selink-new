@@ -4,7 +4,7 @@ var User = require('mongoose').model('User'),
     Update = require('../user/updateSubDocument');
 
 module.exports = function(req, res, next) {
-    req.body = req.query; //テスト
+    //req.body = req.query; //テスト
     req.params.id = req.session.userId;
     req.params.sub = "openids";
     if (req.body.openid){
@@ -25,7 +25,7 @@ module.exports = function(req, res, next) {
 			    	};
                 	User.find(param,{"_id":true},function(err,users){
 				    	if (err) next(err);
-				        else if (users.length > 0) res.json(401, users);
+				        else if (users.length > 0) res.json(401, {});
 				        else Create(req, res, next);
 				    });
 
