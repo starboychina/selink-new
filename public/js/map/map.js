@@ -394,7 +394,7 @@ function getDataCount(view,id,url){
 		return dataTemp[id];
 	}
 	$.getJSON( url, function( data ) {
-		dataTemp[id] = data.length;
+		dataTemp[id] = data.length == 0 ?"0"?data.length;
 		view.text(data.length);
 	}).error(function() { 
 		dataTemp[id] = "0";
