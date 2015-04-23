@@ -284,6 +284,7 @@ function setMarkerView(station){
 			"float": "left",
 			"font-size": "40px",
 			"margin": "-40px 0",
+			"text-shadow": "5px 5px 10px #888888",
 		}).click(function(){
 			showDetail($(this),station);
 		});
