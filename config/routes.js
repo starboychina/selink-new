@@ -344,6 +344,10 @@ module.exports = function(app, config) {
     app.get('/mobile/stations', checkLoginStatus, controller.mobile.station);
     // Stations Info
     app.get('/mobile/stations/:sub', checkLoginStatus, controller.mobile.stationrelation);
+    // openid
+    app.put('/mobile/user/openid', checkLoginStatus, controller.mobile.openid);
+    // login with openid 
+    app.post('/mobile/user/openid', controller.mobile.openidlogin);
 };
 
 checkLoginStatus = function(req, res, next) {
