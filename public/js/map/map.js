@@ -283,7 +283,7 @@ function setMarkerView(station){
 		.css({
 			"float": "left",
 			"font-size": "40px",
-			"margin": "-40px 0"
+			"margin": "-40px 0",
 		}).click(function(){
 			showDetail($(this),station);
 		});
@@ -313,101 +313,7 @@ function showDetail(el,station){
 
 	setAnime(station._id);
 }
-/////////////////////////////
-var iconMark = $("<i></i>").addClass("fa").css({
-	"font-size":"20px",
-	"margin-top":"10px",
-	"float":"left",
-	"width":"0",
-	"width":"100%"
-});
-function showGroups(detail_wp,station){
-	var icon = iconMark.clone().addClass("fa-group");
 
-	var id = "wp_group_"+station._id;
-	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
-		.attr({"id":id})
-		.css(defaultCss)
-		.append(icon,'<br /> Group')
-		.appendTo(detail_wp);
-
-	$.getJSON( "/mobile/stations/groups?nearestSt="+station.name, function( data ) {
-		icon.text(data.length);
-	}).error(function() { icon.text(0); });
-
-}
-function showUsers(detail_wp,station){
-	var icon = iconMark.clone().addClass("fa-user");
-	var id = "wp_user_"+station._id;
-	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
-		.attr({"id":id})
-		.css(defaultCss)
-		.append(icon,'<br /> User')
-		.appendTo(detail_wp);
-
-	$.getJSON( "/mobile/stations/users?nearestSt="+station.name, function( data ) {
-		icon.text(data.length);
-	}).error(function() { icon.text(0); });
-
-}
-function showPosts(detail_wp,station){
-	var icon = iconMark.clone().addClass("fa-edit");
-	var id = "wp_post_"+station._id;
-	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
-		.attr({"id":id})
-		.css(defaultCss)
-		.append(icon,'<br /> HOT')
-		.appendTo(detail_wp);
-
-	$.getJSON( "/mobile/stations/posts?nearestSt="+station.name, function( data ) {
-		icon.text(data.length);
-	}).error(function() { icon.text(0); });
-
-}
-function showPosts1(detail_wp,station){
-	var icon = iconMark.clone().addClass("fa-edit");
-	var id = "wp_post1_"+station._id;
-	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
-		.attr({"id":id})
-		.css(defaultCss)
-		.append(icon,'<br /> 吐')
-		.appendTo(detail_wp);
-	$.getJSON( "/mobile/stations/posts?nearestSt="+station.name, function( data ) {
-		icon.text(data.length);
-	}).error(function() { icon.text(0); });
-
-}
-////////////////////////////////
-var cwidth = 70;
-function setAnime(viewid){
-	var marker = $("#marker_"+viewid);
-	var space = 0 ;
-	var x_left = (cwidth + space ) *-1;
-	var x_right = space + marker.height();
-	var y_top = (cwidth + space ) *-1;
-	var y_bottom = space + marker.width();
-
-	var detailList = {
-		"group":x_left+"px 0 0 "+y_top+"px",
-		"user":x_right+"px 0 0 "+y_top+"px",
-		"post":x_left+"px 0 0 "+y_bottom+"px",
-		"post1":x_right+"px 0 0 "+y_bottom+"px",
-	};
-	for (var index in detailList) {
-		var cid = "#wp_" + index + "_" + viewid;
-		var view = $(cid);
-		if(view.size()>0){
-			var css = getAnimeCssOption(view,detailList[index]);
-			if(css.width != "0"){
-				marker.attr({"data-detail":"show"});
-			}else{
-				marker.attr({"data-detail":"hide"});
-			}
-			var animate = getAnimeOption(viewid);
-			view.animate(css,animate);
-		}
-	};
-}
 var defaultCss = $.extend( defaultCssAnime, {
 			"float":"left",
 			"position": "absolute",
@@ -415,21 +321,50 @@ var defaultCss = $.extend( defaultCssAnime, {
 			"text-align":"center",
 			"border-radius":"10px",
 			"border":"1px solid rgba(98, 234, 194, 0.5)",
-			"background":"rgba(141, 205, 186, 0.5)",
+			"background":"rgba(178, 223, 199, 0.7)",
+			"box-shadow": "5px 5px 10px #888888",
 		});
 var defaultCssAnime = {
 			"width":"0",
 			"height":"0",
 			"margin": "0",
 		};
-function getAnimeCssOption(view,openmargin){
+////////////////////////////////
+var cwidth = 70;		
+var r = 120;//半径
+
+var setAnime = function(viewid){
+	var marker = $("#marker_"+viewid);
+	var count_total = $("#wp_"+viewid).children().size()*2 - 1;
+	var position_start = 2 ;
+	$("#wp_"+viewid).children().each(function(index){
+		var css = cssOption(marker,$(this),count_total, position_start+index);
+		if(css.width != "0"){
+			marker.attr({"data-detail":"show"});
+		}else{
+			marker.attr({"data-detail":"hide"});
+		}
+		var animate = getAnimeOption(viewid);
+		$(this).animate(css,animate);
+	});
+
+}
+var cssOption = function(marker,view,count_total,index){
+	var center = {
+		t:-marker.height()/2,
+		l:-marker.width()
+	}
+	var point = {
+		t:center.t + r*(Math.cos(-index*2*Math.PI/count_total)),
+		l:center.l + r*(Math.sin(-index*2*Math.PI/count_total))
+	}
 	return view.width() == cwidth ? defaultCssAnime:{
-			"margin": openmargin,
+			"margin":point.t+"px 0 0 "+point.l +"px",
 			"width":cwidth+"px",
 			"height":cwidth+"px",
 		}
 }
-function getAnimeOption(viewid){
+var getAnimeOption = function (viewid){
 	return {
 		duration: "10000",
 		easing: "easeOutBounce",
@@ -441,68 +376,77 @@ function getAnimeOption(viewid){
 		}
 	};
 }
-//////////////////////////////////
 
 
-
-function setMarkerView1(station){
-	var markerWidth = 200;
-	var markerImg = $("<div></div>");
-	markerImg.html('<img src="http://lorempixel.com/400/200/" width="'+markerWidth+'">');
-	var markerTab = $("<ul></ul>").css({
-		"background":"#DDD",
-		"margin":"0",
-		"float": "left",
-		"padding": "0",
-		"height": "auto"
+/////////////////////////////
+var iconMark = $("<i></i>").addClass("fa").css({
+	"font-size":"20px",
+	"margin-top":"10px",
+	"float":"left",
+	"width":"0",
+	"width":"100%"
+});
+var dataTemp = Array();
+//データ数を取得	
+function getDataCount(view,id,url){
+	if(dataTemp[id]){
+		view.text(dataTemp[id]);
+		return dataTemp[id];
+	}
+	$.getJSON( url, function( data ) {
+		dataTemp[id] = data.length;
+		view.text(data.length);
+	}).error(function() { 
+		dataTemp[id] = "0";
+		view.text(0); 
 	});
 
-	var markerTabItem = $("<li></li>").css({
-		"float":"left",
-		"width":(markerWidth/4-4)+"px",
-		"height":"36px",
-		"list-style":"none",
-		"background":"#FFF",
-		"margin":"2px",
-		"text-align": "center"
-	});
-	var icon = $("<i></i>").addClass("fa").css({"font-size":"20px"});
-	var icon_group = icon.clone().addClass("fa-group");
-	var icon_user = icon.clone().addClass("fa-user");
-	var icon_post = icon.clone().addClass("fa-edit");
-	var icon_post1 = icon.clone().addClass("fa-edit");
+}
+function showGroups(detail_wp,station){
+	var icon = iconMark.clone().addClass("fa-group");
 
+	var id = "wp_group_"+station._id;
+	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
+		.attr({"id":id})
+		.css(defaultCss)
+		.css({"background":"rgba(255, 248, 178, 0.7)"})
+		.append(icon,'<br /> Group')
+		.appendTo(detail_wp);
 
+	getDataCount(icon,id,"/mobile/stations/groups?nearestSt="+station.name);
+}
+function showUsers(detail_wp,station){
+	var icon = iconMark.clone().addClass("fa-user");
+	var id = "wp_user_"+station._id;
+	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
+		.attr({"id":id})
+		.css(defaultCss)
+		.css({"background":"rgba(195, 209, 252, 0.7)"})
+		.append(icon,'<br /> User')
+		.appendTo(detail_wp);
 
-	var group = markerTabItem.clone().append(icon_group,'<br /> Group');
-	var user = markerTabItem.clone().append(icon_user,'<br /> User');
-	var post = markerTabItem.clone().append(icon_post,'<br /> HOT');
-	var post1 = markerTabItem.clone().append(icon_post1,'<br /> 吐');
-	markerTab.append(group,user,post,post1);
+	getDataCount(icon,id,"/mobile/stations/users?nearestSt="+station.name);
+}
+function showPosts(detail_wp,station){
+	var icon = iconMark.clone().addClass("fa-edit");
+	var id = "wp_post_"+station._id;
+	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
+		.attr({"id":id})
+		.css(defaultCss)
+		.css({"background":"rgba(242, 197, 186, 0.7)"})
+		.append(icon,'<br /> HOT')
+		.appendTo(detail_wp);
 
-	var div = document.createElement('div');
-	$(div).attr({"id":station._id}).css({
-		"float": "left",
-		"width": markerWidth +"px"
-	}).append(markerImg,markerTab);
-
-	$.getJSON( "/mobile/stations/posts?nearestSt="+station.name, function( data ) {
-		count_post.text(data.length);
-		var count_group = 0;
-		var count_post = 0;
-		var users = Array();
-		for (var i = data.length - 1; i >= 0; i--) {
-			var user = data[i];
-			count_group += user.groups.length;
-			count_post += user.posts.length;
-		};
-		icon_group.text(count_group);
-		icon_user.text(data.length);
-		icon_post.text(count_post);
-		icon_post1.text(count_post);
-		console.log(station._id );
-	});
-
-	return div;
-
+	getDataCount(icon,id,"/mobile/stations/posts?nearestSt="+station.name);
+}
+function showPosts1(detail_wp,station){
+	var icon = iconMark.clone().addClass("fa-edit");
+	var id = "wp_post1_"+station._id;
+	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<div />")
+		.attr({"id":id})
+		.css(defaultCss)
+		.css({"background":"rgba(178, 223, 199, 0.7)"})
+		.append(icon,'<br /> 吐')
+		.appendTo(detail_wp);
+	getDataCount(icon,id,"/mobile/stations/posts?nearestSt="+station.name);
 }
