@@ -323,6 +323,7 @@ var defaultCss = $.extend( defaultCssAnime, {
 			"border":"1px solid rgba(98, 234, 194, 0.5)",
 			"background":"rgba(178, 223, 199, 0.7)",
 			"box-shadow": "5px 5px 10px #888888",
+			"z-index": "9",
 		});
 var defaultCssAnime = {
 			"width":"0",
