@@ -68,7 +68,11 @@ var Group = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Event'
     }],
-
+    //Station
+    station: {
+        type: Schema.Types.ObjectId,
+        ref: 'Station'
+    },
     // Logic delete flag
     logicDelete: {
         type: Boolean,

@@ -19,6 +19,7 @@ var async = require('async'),
     User = mongoose.model('User'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
+    Line = mongoose.model('Line'),
     Mailer = require('../../mailer/mailer.js');
 
 var populateField = {
@@ -37,7 +38,12 @@ module.exports = function(req, res, next) {
             req.body._owner = req.user.id;
             req.body.participants = req.user.id;
 
-            Group.create(req.body, callback);
+            //station
+            Line.findOne({"name":"JR山手線","stations.name":req.user.nearestSt},{"stations.$":true},function(err,line){
+                if (err) callback(err);
+                req.body.station = line.stations[0].id;
+                Group.create(req.body, callback);
+            });
         },
 
         function createRelateInfo(group, callback) {

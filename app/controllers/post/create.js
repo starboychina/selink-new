@@ -25,6 +25,7 @@ var _ = require('underscore'),
     Group = mongoose.model('Group'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
+    Line = mongoose.model('Line'),
     gm = require('gm'),
     s3 = require('../../utils/aws').s3,
     transcoder = require('../../utils/aws').transcoder,
@@ -150,15 +151,18 @@ module.exports = function(req, res, next) {
 
             if (transcoderRes && transcoderRes.Job)
                 post.transcoderJobId = transcoderRes.Job.Id;
-
-            Post.create(post, callback);
+            //station
+            Line.findOne({"name":"JR山手線","stations.name":req.user.nearestSt},{"stations.$":true},function(err,line){
+                if (err) callback(err);
+                post.station = line.stations[0].id;
+                Post.create(post, callback);
+            });
         },
 
         // create relate information
         function createRelateInfo(post, callback) {
 
             async.parallel({
-
                 // save the post id in user profile
                 updateUser: function(callback) {
                     req.user.posts.addToSet(post.id);

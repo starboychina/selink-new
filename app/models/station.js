@@ -34,4 +34,5 @@ var Station = new Schema({
     }
 });
 
+mongoose.model('Station', Station);
 module.exports = Station;

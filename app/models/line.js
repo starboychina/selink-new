@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    Station = require('./mobile/station'),
+    Station = require('./station'),
     // validate = require('mongoose-validator').validate,
     Schema = mongoose.Schema;
 
