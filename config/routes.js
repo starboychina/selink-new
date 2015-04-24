@@ -348,6 +348,12 @@ module.exports = function(app, config) {
     app.put('/mobile/user/openid', checkLoginStatus, controller.mobile.openid);
     // login with openid 
     app.post('/mobile/user/openid', controller.mobile.openidlogin);
+    // test
+    app.get('/mobile/station', controller.mobile.createstation);
+    // test
+    app.get('/mobile/group', checkLoginStatus,controller.mobile.group);
+    // Get groups (user related)
+    app.get('/mobile/user/:user/groups', checkLoginStatus, controller.mobile.group);
 };
 
 checkLoginStatus = function(req, res, next) {

@@ -1,5 +1,7 @@
 // Create new sub document
-var Line = require('mongoose').model('Line');
+var mongoose = require('mongoose'),
+  Line = mongoose.model('Line'),
+  Station = mongoose.model('Station');
 var stationdata = [
   {
     "FIELD1":"東京",
@@ -8581,18 +8583,27 @@ var stationdata = [
 ]
 module.exports = function(req, res, next) {
     var modeldata = {};
+    var stations = Array();
     for (var i = stationdata.length - 1; i >= 0; i--) {
         var d = stationdata[i];
         /////////////temp data
         var temp = {};
         temp.name = d.FIELD7;//line name
-        temp.station = {
+        var s = lookup(stations,d.FIELD1);
+        if(! s){
+          s = {
+                _id : mongoose.Types.ObjectId(),
                 name:d.FIELD1,
                 zipcode:d.FIELD3,
                 address:d.FIELD4,
                 lon:d.FIELD5,
                 lat:d.FIELD6,
             };
+          stations.push(s);
+        }
+        temp.station = s;
+
+
         if(modeldata[temp.name]){
             modeldata[temp.name].push(temp);
         }else{
@@ -8607,9 +8618,9 @@ module.exports = function(req, res, next) {
         temp.pref = 13;
         for (var i = d.length - 1; i >= 0; i--) {
             if(temp.stations){
-                temp.stations.push(d[i].station)
+                temp.stations.push(d[i].station._id)
             }else{
-                temp.stations = [d[i].station];
+                temp.stations = [d[i].station._id];
             }
         };
         if(linedata.length >0){
@@ -8620,6 +8631,14 @@ module.exports = function(req, res, next) {
         
     };
     //Line.create(linedata);
-    res.json(400, "ok");
+    //Station.create(stations);
+    res.json(400, linedata);
     return;
 };
+function lookup( arr,name ) {
+    for(var i = 0, len = arr.length; i < len; i++) {
+        if( arr[ i ].name === name )
+            return arr[ i ];
+    }
+    return false;
+}
