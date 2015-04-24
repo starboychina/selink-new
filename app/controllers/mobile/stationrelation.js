@@ -33,26 +33,34 @@ var finduser = function(req, res, next){
 	});
 };
 
-var findUserIds = function (req, res, next,callback){
-	User.find(req.query,{"_id":true},function(err,users){
-    	if (err) next(err);
-        else if (users.length === 0) res.json(404, {});
-
-    	var uids = Array();
-    	for (var i = users.length - 1; i >= 0; i--) {
-    		uids.push(users[i].id);
+var findStations = function (req, res, next,callback){
+	var oneStation = {};
+	for (var index in req.query) {
+		if ( /stations./.test(index)){
+			oneStation = {
+				'name':true,
+				'pref':true,
+				'stations.$': true};
+			break;
+		}
+	};
+    //station
+    Line.find(req.query,oneStation,function(err,lines){
+        if (err) next(err);
+        else if (lines.length === 0) res.json(404, {});
+		var sids = Array();
+    	for (var i = lines.length - 1; i >= 0; i--) {
+    		sids.push(lines[i].stations[0].id);
     	};
-    	callback(uids);
+    	callback(sids);
     });
 }
 
 var findposts = function(req, res, next){
-	findUserIds(req, res, next,function(uids){
-		var query = Post.find();
+	findStations(req, res, next,function(sids){
+		var query = Post.find({"station": {$in: sids}});
 	    // query posts belong to current user and his/her friends and groups
-	    query.or([
-	        {_owner: {$in: uids}}
-	        ]);
+
 		query.select('-removedComments -logicDelete')
 		        .populate('_owner', 'type firstName lastName title cover photo')
 		        .populate('group', 'type firstName lastName title cover photo')
@@ -71,11 +79,11 @@ var findposts = function(req, res, next){
 };
 
 var findgroups = function(req, res, next){
-	findUserIds(req, res, next,function(uids){
+	findStations(req, res, next,function(sids){
 		var query = Group.find();
 	    // query posts belong to current user and his/her friends and groups
 	    query.or([
-	        {_owner: {$in: uids}}
+	        {"station": {$in: sids}}
 	        ]);
 	    
 		query.select('_owner type name cover description participants posts events createDate')

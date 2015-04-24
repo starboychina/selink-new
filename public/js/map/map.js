@@ -6,6 +6,9 @@ var map = new google.maps.Map(document.getElementById('map'), {
       maxZoom:17,
       minZoom:12,
       center: center,
+      disableDefaultUI: true,               //取消默认的试图
+      //navigationControl: true,              //true表示显示控件
+      //mapTypeControl: false,                //false表示不显示控件
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       // This is where you would paste any style found on Snazzy Maps.
       styles: [
@@ -415,7 +418,7 @@ function showGroups(detail_wp,station){
 		.append(icon,'<br /> Group')
 		.appendTo(detail_wp);
 
-	getDataCount(icon,id,"/mobile/stations/groups?nearestSt="+station.name);
+	getDataCount(icon,id,"/mobile/stations/groups?stations.name="+station.name);
 }
 function showUsers(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-user");
@@ -439,7 +442,7 @@ function showPosts(detail_wp,station){
 		.append(icon,'<br /> HOT')
 		.appendTo(detail_wp);
 
-	getDataCount(icon,id,"/mobile/stations/posts?nearestSt="+station.name);
+	getDataCount(icon,id,"/mobile/stations/posts?stations.name="+station.name);
 }
 function showPosts1(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-edit");
@@ -450,5 +453,5 @@ function showPosts1(detail_wp,station){
 		.css({"background":"rgba(178, 223, 199, 0.7)"})
 		.append(icon,'<br /> 吐')
 		.appendTo(detail_wp);
-	getDataCount(icon,id,"/mobile/stations/posts?nearestSt="+station.name);
+	getDataCount(icon,id,"/mobile/stations/posts?stations.name="+station.name);
 }
