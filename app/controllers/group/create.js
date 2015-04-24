@@ -133,16 +133,17 @@ module.exports = function(req, res, next) {
                         createDate: new Date()
                     });
                 });
-
-            req.body.invited.forEach(function(room) {
-                sio.sockets.in(room).emit('group-invited', {
-                    _id: invitation.id,
-                    _from: from,
-                    type: 'group-invited',
-                    targetGroup: group,
-                    createDate: new Date()
+            if(req.body.invited && req.body.invited.length>0){  
+                req.body.invited.forEach(function(room) {
+                    sio.sockets.in(room).emit('group-invited', {
+                        _id: invitation.id,
+                        _from: from,
+                        type: 'group-invited',
+                        targetGroup: group,
+                        createDate: new Date()
+                    });
                 });
-            });
+            }
 
             //send invitation email
             User.find()
