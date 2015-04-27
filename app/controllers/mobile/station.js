@@ -5,15 +5,18 @@ var mongoose = require('mongoose'),
 module.exports = function(req, res, next) {
 	req.body = req.query; //テスト
 
+	var condition_line = {};
 	var condition_station = {};
 	for (var index in req.body) {
 		if ( /stations./.test(index)){
 			var key = index.replace(/stations./,"");
 			condition_station[key] = new RegExp('^.*'+req.body[index]+'.*$', "i");
+		}else{
+			condition_line[index] = req.body[index];
 		}
 	};
 
-	var query = Line.find();
+	var query = Line.find(condition_line);
 		query.populate('stations',{},condition_station)
 		        .exec(function(err, lines) {
 		            if (err) next(err);
