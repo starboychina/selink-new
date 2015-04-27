@@ -10,9 +10,9 @@ module.exports = function(req, res, next) {
 	for (var index in req.body) {
 		if ( /stations./.test(index)){
 			var key = index.replace(/stations./,"");
-			condition_station[key] = new RegExp('^.*'+req.body[index]+'.*$', "i");
+			condition_station[key] = new RegExp('^'+req.body[index]+'$', "i");
 		}else{
-			condition_line[index] = req.body[index];
+			condition_line[index] = new RegExp('^'+req.body[index]+'$', "i");
 		}
 	};
 
