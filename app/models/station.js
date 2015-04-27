@@ -8,6 +8,10 @@ var Station = new Schema({
         trim: true,
         // validate: validate('len', 0, 20)
     },
+    kana: {
+        type: String,
+        trim: true,
+    },
     zipcode: {
         type: String,
         trim: true

@@ -8,10 +8,17 @@ var Line = new Schema({
         type: String,
         trim: true
     },
+    kana: {
+        type: String,
+        trim: true
+    },
     pref: {
         type: Number,
     },
-    stations: [Station],
+    stations: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Station'
+    }],
 });
 
 mongoose.model('Line', Line);

@@ -14,10 +14,15 @@ module.exports = function(req, res, next) {
 		}
 	};
 
-    Line.find(req.body,oneStation,function(err,lines){
-    	if(err){res.json(404, {});}
-    	res.json(200, lines);
-    });
+	var query = Line.find(req.body,oneStation);
+		query.populate('stations')
+		        .exec(function(err, posts) {
+		            if (err) next(err);
+		            else if (posts.length === 0) res.json(404, {});
+		            else {
+    					res.json(200, posts);
+		            }
+		        });
     //res.json(400, "ok");
     return;
 };
