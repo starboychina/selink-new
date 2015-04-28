@@ -21,8 +21,6 @@ module.exports = function(req, res, next) {
 		res.json(404, {});
 
 	}
-
-	console.log(sub);
 	return;
 };
 
@@ -33,32 +31,50 @@ var finduser = function(req, res, next){
 	});
 };
 
-var findStations = function (req, res, next,callback){
-	var oneStation = {};
+var findgroups = function (req, res, next,callback){
+
+	var condition_group = {};
+	var condition_station = {};
 	for (var index in req.query) {
 		if ( /stations./.test(index)){
-			oneStation = {
-				'name':true,
-				'pref':true,
-				'stations.$': true};
-			break;
+			var key = index.replace(/stations./,"");
+			condition_station[key] = new RegExp('^'+req.query[index]+'$', "i");
+		}else{
+			condition_group[index] = new RegExp('^'+req.query[index]+'$', "i");
 		}
 	};
-    //station
-    Line.find(req.query,oneStation,function(err,lines){
-        if (err) next(err);
-        else if (lines.length === 0) res.json(404, {});
-		var sids = Array();
-    	for (var i = lines.length - 1; i >= 0; i--) {
-    		sids.push(lines[i].stations[0].id);
-    	};
-    	callback(sids);
-    });
+
+	var query = Group.find(condition_group)
+		.select('_owner type name cover description participants posts events createDate station')
+		.populate('station',{},condition_station)
+        .where('logicDelete').equals(false)
+        .limit(req.query.size || 20)
+        .sort('-createDate')
+        .exec(function(err, groups) {
+            if (err) next(err);
+            else if (groups.length === 0) res.json(404, {});
+            else {
+            	if (Object.keys(condition_station).length >0) {
+	            	groups = groups.filter(function(group){
+	            		return group.station;
+	            	});
+            	}
+            	if (callback){
+            		var gids = new Array();
+            		for (var i = groups.length - 1; i >= 0; i--) {
+            			gids = gids.concat(groups[i].posts);
+            		};
+            		callback(gids);
+            	}else{
+            		res.json(200, groups);
+            	}
+            }
+        });
 }
 
 var findposts = function(req, res, next){
-	findStations(req, res, next,function(sids){
-		var query = Post.find({"station": {$in: sids}});
+	findgroups(req, res, next,function(sids){
+		var query = Post.find({"_id": {$in: sids}});
 	    // query posts belong to current user and his/her friends and groups
 
 		query.select('-removedComments -logicDelete')
@@ -75,25 +91,5 @@ var findposts = function(req, res, next){
     					res.json(200, posts);
 		            }
 		        });
-	});
-};
-
-var findgroups = function(req, res, next){
-	findStations(req, res, next,function(sids){
-		var query = Group.find();
-	    // query posts belong to current user and his/her friends and groups
-	    query.or([
-	        {"station": {$in: sids}}
-	        ]);
-	    
-		query.select('_owner type name cover description participants posts events createDate')
-        .where('logicDelete').equals(false)
-        .limit(req.query.size || 20)
-        .sort('-createDate')
-        .exec(function(err, groups) {
-            if (err) next(err);
-            else if (groups.length === 0) res.json(404, {});
-            else res.json(groups);
-        });
 	});
 };

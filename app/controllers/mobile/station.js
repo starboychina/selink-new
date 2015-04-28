@@ -1,7 +1,6 @@
 // Create new sub document
 var mongoose = require('mongoose'),
-	Line = mongoose.model('Line'),
-	Station = mongoose.model('Line');
+	Line = mongoose.model('Line');
 module.exports = function(req, res, next) {
 	req.body = req.query; //テスト
 

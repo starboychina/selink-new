@@ -100,11 +100,6 @@ var Post = new Schema({
             default: true
         }
     },
-    //Station
-    station: {
-        type: Schema.Types.ObjectId,
-        ref: 'Station'
-    },
 
     // Logical Delete flag
     logicDelete: {
