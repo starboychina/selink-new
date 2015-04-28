@@ -33,63 +33,51 @@ module.exports = function(req, res, next) {
         User.findById(req.params.user, 'groups', function(err, uesr) {
             // pass the user to internal method
             if (err) next(err);
-            else _mygroup(req, res, uesr, next);
+            else _findgroup(req, res, uesr, next);
         });
 
     } else {
 
         // no specified user, pass null to internal method
-        _mygroup(req, res, req.user, next);
+        _findgroup(req, res, req.user, next);
     }
 };
-_mygroup = function(req, res, user, next){
+_findgroup = function(req, res, user, next){
 	if (req.query.before){
 		_group_discover(req, res, user, next,{});
 	}else{
 	    // create query
 	    var query = Group.find();
 	    query.or([
-	        {_owner: user.id},
-	        {_id: {$in: user.groups}}
-	    ]).where( {'type':{'$ne':"station"}});
+	        {_owner: user.id,'type':{'$ne':"station"}},
+	        {_id: {$in: user.groups}},
+            {'type':{'$ne':"private",'$ne':"station"}}
+	    ]);
+
+        if (req.query.before)
+            query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
 	    query.select('_owner type name cover description participants posts events createDate')
 	        .where('logicDelete').equals(false)
+            .limit(req.query.size || 20)
 	        .sort('-createDate')
 	        .exec(function(err, groups) {
 	            if (err) next(err);
 	            else if (groups.length === 0) _group_discover(req, res, user, next,{});
-	            else _group_discover(req, res, user, next,groups);
+	            else{
+                    groups = groups.map(function (group) {
+                        group = group.toObject();
+                        if( group.type == "station"){
+                            group.selection = "station";
+                        }else if(group._owner == user.id || user.groups.indexOf(group._id) != -1){
+                            group.selection = "mygroup";
+                        }else{
+                            group.selection = "discover";
+                        }
+                        return group;
+                    });
+                    res.json(groups);
+                } 
 	        });
 	}
-}
-
-
-// internal method for index
-_group_discover = function(req, res, user, next,mygroup) {
-	var data = {
-		"mygroup":mygroup,
-		"discover":{}
-	}
-    // create query
-    var query = Group.find();
-    query.where('_id').nin(user.groups)
-        .where( {'type':{'$ne':"station",'$ne':"private"}});
-
-    // if request items before some time point
-    if (req.query.before)
-        query.where('createDate').lt(moment.unix(req.query.before).toDate());
-
-    query.select('_owner type name cover description participants posts events createDate')
-        .where('logicDelete').equals(false)
-        .limit(req.query.size || 20)
-        .sort('-createDate')
-        .exec(function(err, groups) {
-            if (err) next(err);
-            else if (groups.length === 0) res.json(404, data);
-            else {
-            	data.discover = groups;
-            	res.json(data);
-            }
-        });
 };
