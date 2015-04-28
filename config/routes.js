@@ -354,6 +354,8 @@ module.exports = function(app, config) {
     app.get('/mobile/group', checkLoginStatus,controller.mobile.group);
     // Get groups (user related)
     app.get('/mobile/user/:user/groups', checkLoginStatus, controller.mobile.group);
+    // Get user info
+    app.get('/mobile/userinfo', checkLoginStatus, controller.mobile.userinfo);
 };
 
 checkLoginStatus = function(req, res, next) {
