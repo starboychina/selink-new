@@ -5,16 +5,19 @@ var mongoose = require('mongoose'),
     Station = mongoose.model('Station');
 
 module.exports = function(req, res, next) {
+    //req.body = req.query; //テスト
     delete req.body._id;
     if(req.body.bio){
         req.body.bioText =  (req.body.bio)? req.body.bio.replace(/<[^>]*>/g, ''):'';
     }
     if (req.body.nearestSt){
-        var station = findGroupByStationName(req.body.nearestSt,function(err, group){
+        var changeGroup = function(err, group){
             if (err) next(err);
             else {
                 if(group && group.id){
                     setGroup(req,group.id);
+                    group.participants.addToSet(req.params.id);
+                    group.save();
                     updateUser(req, res, next);
                 }else{
                     createGroup(req,function(err,group){
@@ -24,11 +27,27 @@ module.exports = function(req, res, next) {
                     return;
                 }
             }
+        }
+        deleteGroup(req,function(sname){
+            findGroupByStationName(sname,changeGroup);
         });
     }else{
         updateUser(req, res, next);
     }
 };
+var deleteGroup = function (req,callback){
+    var sname = req.body.nearestSt;
+    User.findById(req.params.id,"groups")
+        .populate('groups',{},{"type":"station","name":{"$ne":sname}})
+        .exec(function(err,user){
+            for (var i = user.groups.length - 1; i >= 0; i--) {
+                req.user.groups.pull(user.groups[i].id);
+                user.groups[i].participants.pull(user.id);
+                user.groups[i].save();
+            };
+            callback(sname);
+        })
+}
 var setGroup = function(req,groupid){
     if(!groupid){return ;}
     if(req.user.groups.indexOf(groupid) == -1){
@@ -46,28 +65,6 @@ var setGroup = function(req,groupid){
         req.body.groups = req.user.groups;
     }
 };
-var updateUser = function(req, res, next){
-    // update user info
-    User.findByIdAndUpdate(req.params.id, req.body, function(err, updatedUser) {
-
-        if (err) next(err);
-        else {
-            // index user in solr
-            solr.add(updatedUser.toSolr(), function(err, solrResult) {
-                if (err) next(err);
-                else {
-                    console.log(solrResult);
-                    solr.commit(function(err,res){
-                       if(err) console.log(err);
-                       if(res) console.log(res);
-                    });
-                }
-            });
-
-            res.send(updatedUser);
-        }
-    });
-}
 var findGroupByStationName = function(name,callback){
     var condition_station = {
         "name":name
@@ -89,7 +86,7 @@ var createGroup = function (req, callback){
         if (err) callback(err,{});
         else if(station){
             var group = {
-                "_owner":req.user.id,/////////
+                "_owner":req.user.id,/////////※管理者IDに設定するか　nullにするか。。。。。。
                 "participants":req.user.id,
                 "name":req.body.nearestSt,
                 "type": "station",
@@ -99,6 +96,28 @@ var createGroup = function (req, callback){
             Group.create(group, function(err,group){
                 callback(err,group);
             });
+        }
+    });
+}
+var updateUser = function(req, res, next){
+    // update user info
+    User.findByIdAndUpdate(req.params.id, req.body, function(err, updatedUser) {
+
+        if (err) next(err);
+        else {
+            // index user in solr
+            solr.add(updatedUser.toSolr(), function(err, solrResult) {
+                if (err) next(err);
+                else {
+                    console.log(solrResult);
+                    solr.commit(function(err,res){
+                       if(err) console.log(err);
+                       if(res) console.log(res);
+                    });
+                }
+            });
+
+            res.send(updatedUser);
         }
     });
 }
