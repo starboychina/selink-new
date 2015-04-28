@@ -51,7 +51,7 @@ _mygroup = function(req, res, user, next){
 	    query.or([
 	        {_owner: user.id},
 	        {_id: {$in: user.groups}}
-	    ]);
+	    ]).where( {'type':{'$ne':"station"}});
 
 	    query.select('_owner type name cover description participants posts events createDate')
 	        .where('logicDelete').equals(false)
@@ -74,7 +74,7 @@ _group_discover = function(req, res, user, next,mygroup) {
     // create query
     var query = Group.find();
     query.where('_id').nin(user.groups)
-            .where('type').ne('private');
+        .where( {'type':{'$ne':"station",'$ne':"private"}});
 
     // if request items before some time point
     if (req.query.before)

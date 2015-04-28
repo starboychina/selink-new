@@ -68,6 +68,7 @@ _group_index = function(req, res, user, next) {
 
     query.select('_owner type name cover description participants posts events createDate')
         .where('logicDelete').equals(false)
+        .where( {'type':{'$ne':"station"}})
         .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, groups) {
