@@ -36,11 +36,12 @@ var findgroups = function (req, res, next,callback){
 	var condition_group = {};
 	var condition_station = {};
 	for (var index in req.query) {
-		if ( /stations./.test(index)){
-			var key = index.replace(/stations./,"");
-			condition_station[key] = new RegExp('^'+req.query[index]+'$', "i");
+		//console.log(index);
+		if ( /station(s)?\./.test(index)){
+			var key = index.replace(/station(s)?\./,"");
+			condition_station[key] =  key=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
 		}else{
-			condition_group[index] = new RegExp('^'+req.query[index]+'$', "i");
+			condition_group[index] = index=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
 		}
 	};
 

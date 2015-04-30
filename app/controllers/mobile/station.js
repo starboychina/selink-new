@@ -2,16 +2,15 @@
 var mongoose = require('mongoose'),
 	Line = mongoose.model('Line');
 module.exports = function(req, res, next) {
-	req.body = req.query; //テスト
 
 	var condition_line = {};
 	var condition_station = {};
-	for (var index in req.body) {
-		if ( /stations./.test(index)){
-			var key = index.replace(/stations./,"");
-			condition_station[key] = new RegExp('^'+req.body[index]+'$', "i");
+	for (var index in req.query) {
+		if ( /station(s)?\./.test(index)){
+			var key = index.replace(/station(s)?\./,"");
+			condition_station[key] = key=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
 		}else{
-			condition_line[index] = new RegExp('^'+req.body[index]+'$', "i");
+			condition_line[index] = index=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
 		}
 	};
 
