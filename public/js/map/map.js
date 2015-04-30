@@ -412,7 +412,7 @@ function showGroups(detail_wp,station){
 
 	var id = "wp_group_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://groups/?station="+station.id})
+		.attr({"id":id,"href":"genbatomo://groups/?station="+station._id})
 		.css(defaultCss)
 		.css({"background":"rgba(255, 248, 178, 0.7)"})
 		.append(icon,'<br /> Group')
@@ -424,7 +424,7 @@ function showUsers(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-user");
 	var id = "wp_user_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://users/?station="+station.id})
+		.attr({"id":id,"href":"genbatomo://users/?station="+station._id})
 		.css(defaultCss)
 		.css({"background":"rgba(195, 209, 252, 0.7)"})
 		.append(icon,'<br /> User')
@@ -436,7 +436,7 @@ function showPosts(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-edit");
 	var id = "wp_post_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://posts/?station="+station.id})
+		.attr({"id":id,"href":"genbatomo://posts/?station="+station._id})
 		.css(defaultCss)
 		.css({"background":"rgba(242, 197, 186, 0.7)"})
 		.append(icon,'<br /> HOT')
@@ -448,7 +448,7 @@ function showPosts1(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-edit");
 	var id = "wp_post1_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://posts1/?station="+station.id})
+		.attr({"id":id,"href":"genbatomo://posts1/?station="+station._id})
 		.css(defaultCss)
 		.css({"background":"rgba(178, 223, 199, 0.7)"})
 		.append(icon,'<br /> 吐')
