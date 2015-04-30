@@ -328,6 +328,8 @@ var defaultCss = $.extend( defaultCssAnime, {
 			"background":"rgba(178, 223, 199, 0.7)",
 			"box-shadow": "5px 5px 10px #888888",
 			"z-index": "9",
+            "text-decoration": "none",
+            "color": "black",
 		});
 var defaultCssAnime = {
 			"width":"0",
