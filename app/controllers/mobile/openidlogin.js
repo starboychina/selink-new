@@ -60,17 +60,17 @@ var getuserInfo = function(req,res){
     });
 }
 var loginWithQQ = function (openid,token,callback){
-    var appid = "1103493465";
+    var appid = "1103821830";
     var url_check = "https://graph.qq.com/user/get_user_info?access_token="+token+"&oauth_consumer_key="+appid+"&openid="+openid+"&format=json";
     httpRequest(url_check,function(data){
-        console.log("qq: ", data);
+        //console.log("qq: ", data);
         callback(data.ret == 0);
     });
 }
 var loginWithWeChat = function(openid,token,callback){
     var url_check = "https://api.weixin.qq.com/sns/auth?openid="+openid+"&access_token="+token;
     httpRequest(url_check,function(data){
-        console.log("wx: ", data);
+        //console.log("wx: ", data);
         callback(data.errcode == 0);
     });
 }
