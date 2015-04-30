@@ -72,7 +72,7 @@ module.exports = function(req, res, next) {
                                 content: msg.content
                             });
                         });
-/*
+*/
                     res.json(msg);
                 }
             });
