@@ -56,8 +56,7 @@ module.exports = function(req, res, next) {
                                 
                             };
                         });
-
-
+/*
                     // send email to all recipients
                     User.find()
                         .select('email')
@@ -73,7 +72,7 @@ module.exports = function(req, res, next) {
                                 content: msg.content
                             });
                         });
-
+/*
                     res.json(msg);
                 }
             });
