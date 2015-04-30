@@ -66,7 +66,9 @@ _group_index = function(req, res, user, next) {
     if (req.query.before)
         query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
-    query.select('_owner type name cover description participants posts events createDate')
+    query
+        .select('_owner type name cover description participants posts events createDate station')
+        .populate('station')
         .where('logicDelete').equals(false)
         .where( {'type':{'$ne':"station"}})
         .limit(req.query.size || 20)
