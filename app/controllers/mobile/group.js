@@ -68,11 +68,11 @@ _findgroup = function(req, res, user, next){
                     groups = groups.map(function (group) {
                         group = group.toObject();
                         if( group.type == "station"){
-                            group.selection = "station";
+                            group.section = "0";//"station";
                         }else if(group._owner == user.id || user.groups.indexOf(group._id) != -1){
-                            group.selection = "mygroup";
+                            group.section = "1";//"mygroup";
                         }else{
-                            group.selection = "discover";
+                            group.section = "2";//"discover";
                         }
                         return group;
                     });
