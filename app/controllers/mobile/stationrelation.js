@@ -49,6 +49,7 @@ var findgroups = function (req, res, next,callback){
 		.select('_owner type name cover description participants posts events createDate station')
 		.populate('station',{},condition_station)
         .where('logicDelete').equals(false)
+        .where( {'type':{'$ne':"station"}})
         .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, groups) {
