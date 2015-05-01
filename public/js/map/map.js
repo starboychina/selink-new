@@ -426,13 +426,13 @@ function showUsers(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-user");
 	var id = "wp_user_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://users?station._id="+station._id})
+		.attr({"id":id,"href":"genbatomo://users?nearestSt="+station.name})
 		.css(defaultCss)
 		.css({"background":"rgba(195, 209, 252, 0.7)"})
 		.append(icon,'<br /> User')
 		.appendTo(detail_wp);
 
-	getDataCount(icon,id,"/mobile/stations/users?station._id="+station._id);
+	getDataCount(icon,id,"/mobile/stations/users?nearestSt="+station.name);
 }
 function showPosts(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-edit");
