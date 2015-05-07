@@ -1,5 +1,7 @@
 // Create new sub document
-var User = require('mongoose').model('User'),
+var mongoose = require('mongoose'),
+    User = mongoose.model('User'),
+    Activity = mongoose.model('Activity');
     https = require('https');
 
 module.exports = function(req, res, next) {
@@ -29,7 +31,7 @@ var getuserInfo = function(req,res){
         "openids.openid":req.body.openid,
         "openids.type":req.body.type
     };
-    User.findOne(param,{"_id":true},function(err,user){
+    User.findOne(param,{"_id":true,"friends":true},function(err,user){
         if (err) next(err);
         else if(user==null){
             res.json(404,req.body)
@@ -45,7 +47,6 @@ var getuserInfo = function(req,res){
             }, function(err, activity) {
                 if (err) next(err);
             });
-
             user.friends.forEach(function(room) {
 
                 sio.sockets.in(room).emit('user-login', {

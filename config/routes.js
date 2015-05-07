@@ -345,7 +345,7 @@ module.exports = function(app, config) {
     // Stations Info
     app.get('/mobile/stations/:sub', checkLoginStatus, controller.mobile.stationrelation);
     // openid
-    app.put('/mobile/user/openid', checkLoginStatus, controller.mobile.openid);
+    app.patch('/mobile/user/openid', checkLoginStatus, controller.mobile.openid);
     // login with openid 
     app.post('/mobile/user/openid', controller.mobile.openidlogin);
     // test
@@ -356,6 +356,8 @@ module.exports = function(app, config) {
     app.get('/mobile/user/:user/groups', checkLoginStatus, controller.mobile.group);
     // Get user info
     app.get('/mobile/userinfo', checkLoginStatus, controller.mobile.userinfo);
+    // Update user info (first-level property)
+    app.get('/test/users/:id', checkLoginStatus, controller.user.update);
     // Update user info (first-level property)
     app.get('/mobile/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
 };
