@@ -32,7 +32,7 @@ var getuserInfo = function(req,res){
     User.findOne(param,{"_id":true},function(err,user){
         if (err) next(err);
         else if(user==null){
-            res.json(401,req.body)
+            res.json(404,req.body)
         }
         else {
             // put user's id into session
