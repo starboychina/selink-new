@@ -11,25 +11,30 @@ module.exports = function(req, res, next) {
         User.findById(req.params.id, function(err, user) {
             if (err) next(err);
             else {
-                user.openids.forEach(function(openid) {
-                    if(openid.openid == req.body.openid && openid.type == req.body.type){
-                        req.params.subid = openid.id;
+                if (req.body.type == "wx"){req.body.type = "wechat";}
+                var param = {
+                    "openids.openid":req.body.openid,
+                    "openids.type":req.body.type,
+                    "_id":{"$ne":req.params.id},
+                };
+                User.find(param,{"_id":true},function(err,users){
+                    if (err) next(err);
+                    else if (users.length > 0) res.json(401, {});
+                    else{
+                        console.log(users);
+                        user.openids.forEach(function(openid) {
+                            //if(openid.openid == req.body.openid && openid.type == req.body.type){
+                            if(openid.type == req.body.type){
+                                req.params.subid = openid.id;
+                            }
+                        });
+                        if(req.params.subid){
+                            Update(req, res, next);
+                        }else{
+                            Create(req, res, next);
+                        }
                     }
                 });
-                if(req.params.subid){
-                    Update(req, res, next);
-                }else{
-			    	var param = {
-			    		"openids.openid":req.body.openid,
-			    		"openids.type":req.body.type
-			    	};
-                	User.find(param,{"_id":true},function(err,users){
-				    	if (err) next(err);
-				        else if (users.length > 0) res.json(401, {});
-				        else Create(req, res, next);
-				    });
-
-                }
             }
         });
     }else{
