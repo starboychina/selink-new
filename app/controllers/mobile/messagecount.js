@@ -14,6 +14,7 @@ module.exports = function(req, res, next) {
     	.where('_recipient').equals(req.user.id)
     	.where('opened').ne(req.user.id)
     	.where('logicDelete').ne(req.user.id)
+    	.sort('createDate')
 
     //.group(req.user.id)
         .exec(function(err, msgs) {
@@ -23,10 +24,15 @@ module.exports = function(req, res, next) {
             	for (var i = msgs.length - 1; i >= 0; i--) {
             		var msg = msgs[i];
             		if(countdata[msg._from]){
-            			countdata[msg._from] ++;
+            			countdata[msg._from].count ++;
             		}else{
-            			countdata[msg._from] = 1;
+            			countdata[msg._from] = {
+            				"count":1,
+            				"message":msg.content,
+            				"createDate":msg.createDate,
+            			};
             		}
+            		console.log(msg);
             	};
             	res.json(countdata);
             } 
