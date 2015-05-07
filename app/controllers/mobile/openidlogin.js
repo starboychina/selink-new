@@ -6,7 +6,7 @@ module.exports = function(req, res, next) {
     req.body = req.query; //テスト
     if (req.body.openid && req.body.access_token && req.body.type){
         var opendiLoginAction;
-        if (req.body.type == "wx"){
+        if (req.body.type == "wechat" || req.body.type == "wx"){
             opendiLoginAction = loginWithWeChat;
         }else if (req.body.type == "qq"){
             opendiLoginAction = loginWithQQ;
