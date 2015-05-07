@@ -357,7 +357,7 @@ module.exports = function(app, config) {
     // Get user info
     app.get('/mobile/userinfo', checkLoginStatus, controller.mobile.userinfo);
     // Update user info (first-level property)
-    app.get('/test/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
+    app.get('/mobile/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
 };
 
 checkLoginStatus = function(req, res, next) {
