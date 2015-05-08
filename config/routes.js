@@ -360,6 +360,8 @@ module.exports = function(app, config) {
     app.get('/test/users/:id', checkLoginStatus, controller.user.update);
     // Update user info (first-level property)
     app.get('/mobile/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
+    // Update user info (first-level property)
+    app.get('/mobile/user/openidinfo', checkLoginStatus, controller.mobile.openidinfo);
 };
 
 checkLoginStatus = function(req, res, next) {
