@@ -16,7 +16,7 @@ module.exports = function(req, res, next) {
             if( group._owner == req.user.id || group.participants.indexOf(req.user.id)){
                 createMessage(req, res, next,group);
             }else{
-                res.json(401,{})
+                res.json(403,{})
             }
         });
     }else{
