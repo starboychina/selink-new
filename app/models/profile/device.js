@@ -8,10 +8,6 @@ var Device = new Schema({
         trim: true,
         // validate: validate('len', 0, 20)
     },
-    uuid: {
-        type: String,
-        trim: true
-    },
     token: {
         type: String,
         trim: true
