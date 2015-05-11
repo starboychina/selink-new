@@ -23,7 +23,7 @@ module.exports = function(req, res, next) {
         createMessage(req, res, next);
     }
 };
-function createMessage(req, res, next,group){
+function createMessage(req, res, next, group){
     Message.create(req.body, function(err, message) {
 
         if (err) next(err);
@@ -39,7 +39,7 @@ function createMessage(req, res, next,group){
                 // send real time message
                 else {
 
-                    sendSockets(msg,group);
+                    sendSockets(req,msg,group);
                     sendPush(req,msg,group);
 
 /*
@@ -76,18 +76,22 @@ function createActivity(user,msgid,next){
         if (err) next(err);
     });
 }
-function sendSockets(msg,group){
+function sendSockets(req,msg,group){
     var recipient = (group) ? group.participants : msg._recipient;
+    if (!recipient){return;}
     recipient.forEach(function(room) {
-        sio.sockets.in(room).emit('message-new', msg);
+        if (req.user.id != room )
+            sio.sockets.in(room).emit('message-new', msg);
     });
 }
 function sendPush(req,msg,group){
     var recipient = (group) ? group.participants : msg._recipient;
+    if (!recipient){return;}
     // push
     User.find()
         //.select('email')
         .where('_id').in(recipient)
+        .where('_id').ne(req.user.id)
         .where('logicDelete').equals(false)
         .exec(function(err, users) {
             for (var i = users.length - 1; i >= 0; i--) {
