@@ -40,7 +40,7 @@ function createMessage(req, res, next,group){
                 else {
 
                     sendSockets(msg,group);
-                    sendPush(msg,group);
+                    sendPush(req,msg,group);
 
 /*
                     // send email to all recipients
@@ -82,7 +82,7 @@ function sendSockets(msg,group){
         sio.sockets.in(room).emit('message-new', msg);
     });
 }
-function sendPush(msg,group){
+function sendPush(req,msg,group){
     var recipient = (group) ? group.participants : msg._recipient;
     // push
     User.find()
