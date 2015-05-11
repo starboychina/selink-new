@@ -13,7 +13,7 @@ module.exports = function(req, res, next) {
 
     if (req.body.group){
         Group.findById(req.body.group,function(err, group){
-            if(group.participants.indexOf(req.user.id)){
+            if( group._owner == req.user.id || group.participants.indexOf(req.user.id)){
                 createMessage(req, res, next,group);
             }else{
                 res.json(401,{})
