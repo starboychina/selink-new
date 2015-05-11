@@ -8,7 +8,7 @@ var _ = require('underscore'),
     push = require('../../utils/push');
 
 module.exports = function(req, res, next) {
-    req.body = req.query; //テスト
+    //req.body = req.query; //テスト
     _.extend(req.body, {_from: req.user.id, _recipient: req.body.recipient});
 
     if (req.body.group){
