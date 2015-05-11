@@ -1,7 +1,8 @@
 // Create new sub document
 var User = require('mongoose').model('User'),
     Create = require('../user/createSubDocument'),
-    Update = require('../user/updateSubDocument');
+    Update = require('../user/updateSubDocument'),
+    Remove = require('../user/removeSubDocument');
 
 module.exports = function(req, res, next) {
     //req.body = req.query; テスト
@@ -17,7 +18,9 @@ module.exports = function(req, res, next) {
                         req.params.subid = device.id;
                     }
                 });
-                if(req.params.subid){
+                if(req.body.remove){
+                    Remove(req, res, next);
+                }else if(req.params.subid){
                     Update(req, res, next);
                 }else{
                     Create(req, res, next);
