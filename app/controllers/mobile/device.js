@@ -7,13 +7,13 @@ module.exports = function(req, res, next) {
     //req.body = req.query; テスト
     req.params.id = req.session.userId;
     req.params.sub = "devices";
-    if (req.body.uuid){
+    if (req.body.token){
         User.findById(req.params.id, function(err, user) {
             //res.json(400, user);
             if (err) next(err);
             else {
                 user.devices.forEach(function(device) {
-                    if(device.uuid == req.body.uuid){
+                    if(device.token == req.body.token){
                         req.params.subid = device.id;
                     }
                 });
