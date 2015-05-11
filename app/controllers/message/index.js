@@ -40,6 +40,7 @@ module.exports = function(req, res, next) {
         query.select('-_recipient -logicDelete')
             .or({'group':{'$in':req.user.groups}})
             .or({'_recipient':req.user.id})
+            .where({'_from':{'$ne':req.user.id}})
 
     // if request items before some time point
     if (req.query.before)
