@@ -31,13 +31,15 @@ module.exports = function(req, res, next) {
     // if request specified unread messages
     else if (_s.endsWith(req.path, "/unread"))
         query.select('-_recipient -logicDelete')
-            .where('_recipient').equals(req.user.id)
+            .or({'group':{'$in':req.user.groups}})
+            .or({'_recipient':req.user.id})
             .where('opened').ne(req.user.id);
 
     // default request received messages
     else
         query.select('-_recipient -logicDelete')
-            .where('_recipient').equals(req.user.id);
+            .or({'group':{'$in':req.user.groups}})
+            .or({'_recipient':req.user.id})
 
     // if request items before some time point
     if (req.query.before)

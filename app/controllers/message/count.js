@@ -20,12 +20,16 @@ module.exports = function(req, res, next) {
 
     // if request specified unread messages
     else if (_s.endsWith(req.path, "/unread/count"))
-        query.where('_recipient').equals(req.user.id)
-             .where('opened').ne(req.user.id);
+        query
+            .or({'group':{'$in':req.user.groups}})
+            .or({'_recipient':req.user.id})
+            .where('opened').ne(req.user.id);
 
     // default request received messages
     else
-        query.where('_recipient').equals(req.user.id);
+        query
+            .or({'group':{'$in':req.user.groups}})
+            .or({'_recipient':req.user.id})
 
     query.where('logicDelete').ne(req.user.id)
         .exec(function(err, count) {
