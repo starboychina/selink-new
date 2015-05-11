@@ -51,6 +51,11 @@ var Message = new Schema({
         ref: 'User'
     }],
 
+    // message group
+    group: {
+        type: Schema.Types.ObjectId,
+        ref: 'Group'
+    },
     // Logical Delete flag
     logicDelete: [{
         type: Schema.Types.ObjectId,
