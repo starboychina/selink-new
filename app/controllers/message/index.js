@@ -33,7 +33,8 @@ module.exports = function(req, res, next) {
         query.select('-_recipient -logicDelete')
             .or({'group':{'$in':req.user.groups}})
             .or({'_recipient':req.user.id})
-            .where('opened').ne(req.user.id);
+            .where('opened').ne(req.user.id)
+            .where({'_from':{'$ne':req.user.id}})
 
     // default request received messages
     else

@@ -23,13 +23,15 @@ module.exports = function(req, res, next) {
         query
             .or({'group':{'$in':req.user.groups}})
             .or({'_recipient':req.user.id})
-            .where('opened').ne(req.user.id);
+            .where('opened').ne(req.user.id)
+            .where({'_from':{'$ne':req.user.id}})
 
     // default request received messages
     else
         query
             .or({'group':{'$in':req.user.groups}})
             .or({'_recipient':req.user.id})
+            .where({'_from':{'$ne':req.user.id}})
 
     query.where('logicDelete').ne(req.user.id)
         .exec(function(err, count) {
