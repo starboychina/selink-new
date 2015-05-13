@@ -65,7 +65,7 @@ exports.resetPassword = function(recipient) {
 };
 
 exports.friendInvitation = function(recipient, sender) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -99,7 +99,7 @@ exports.friendInvitation = function(recipient, sender) {
 };
 
 exports.friendApprove = function(recipient, sender) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -133,7 +133,7 @@ exports.friendApprove = function(recipient, sender) {
 };
 
 exports.groupInvitation = function(recipients, sender, group) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -183,7 +183,7 @@ exports.groupInvitation = function(recipients, sender, group) {
 };
 
 exports.groupJoined = function(recipient, sender, group) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -218,7 +218,7 @@ exports.groupJoined = function(recipient, sender, group) {
 };
 
 exports.groupApplied = function(recipient, sender, group) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -253,7 +253,7 @@ exports.groupApplied = function(recipient, sender, group) {
 };
 
 exports.groupApproved = function(recipient, sender, group) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -288,7 +288,7 @@ exports.groupApproved = function(recipient, sender, group) {
 };
 
 exports.newPost = function(recipients, sender, post, group) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -339,7 +339,7 @@ exports.newPost = function(recipients, sender, post, group) {
 };
 
 exports.postLiked = function(recipient, sender, post) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -373,7 +373,7 @@ exports.postLiked = function(recipient, sender, post) {
 };
 
 exports.postBookmarked = function(recipient, sender, post) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -407,7 +407,7 @@ exports.postBookmarked = function(recipient, sender, post) {
 };
 
 exports.postCommented = function(recipient, sender, comment, post) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -442,7 +442,7 @@ exports.postCommented = function(recipient, sender, comment, post) {
 };
 
 exports.commentReplied = function(recipient, sender, comment, reply, post) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -478,7 +478,7 @@ exports.commentReplied = function(recipient, sender, comment, reply, post) {
 };
 
 exports.commentLiked = function(recipient, sender, comment, post) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -513,7 +513,7 @@ exports.commentLiked = function(recipient, sender, comment, post) {
 };
 
 exports.newJob = function(recipients, job) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -561,7 +561,7 @@ exports.newJob = function(recipients, job) {
 };
 
 exports.newMessage = function(recipients, message) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -609,7 +609,7 @@ exports.newMessage = function(recipients, message) {
 };
 
 exports.newEvent = function(recipients, event) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -658,7 +658,7 @@ exports.newEvent = function(recipients, event) {
 
 
 exports.newAnnouncement = function(recipients, announcement) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
@@ -706,7 +706,7 @@ exports.newAnnouncement = function(recipients, announcement) {
 };
 
 exports.newUser = function(recipients, user) {
-
+    return;
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);
