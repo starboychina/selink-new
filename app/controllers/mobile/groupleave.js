@@ -21,7 +21,8 @@ module.exports = function(req, res, next) {
                 updateGroup: function(callback) {
 
                 	group.participants.pull(req.user.id);
-                	group.announcelist.pull(req.user.id);
+                    group.announcelist.pull(req.user.id);
+                    group.stickylist.pull(req.user.id);
 
                 	if(req.user.id == group._owner){
                 		if (group.participants.length > 0){

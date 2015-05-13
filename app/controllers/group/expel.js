@@ -38,6 +38,7 @@ module.exports = function(req, res, next) {
                     req.body.expeled.forEach(function(userId) {
                         group.participants.pull(userId);
                         group.announcelist.pull(userId);
+                        group.stickylist.pull(userId);
                     });
 
                     group.save(callback);
