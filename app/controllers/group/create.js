@@ -37,11 +37,14 @@ module.exports = function(req, res, next) {
 
             req.body._owner = req.user.id;
             req.body.participants = req.user.id;
+            req.body.announcelist = req.body.participants;
             if (!req.body.station && req.user.nearestSt){
                 //station
                 Station.findOne({"name":req.user.nearestSt},function(err,station){
                     if (err) callback(err);
-                    req.body.station = station.id;
+                    if (station){
+                        req.body.station = station.id;
+                    }
                     Group.create(req.body, callback);
                 });
             }else{

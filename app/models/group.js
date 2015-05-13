@@ -44,6 +44,16 @@ var Group = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
+    // Group Participants announce
+    announcelist: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    // Group Participants announce
+    stickylist: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
 
     // Invited Participants
     invited: [{

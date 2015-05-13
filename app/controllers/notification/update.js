@@ -521,7 +521,7 @@ accept = function(req, res, next, notification) {
 
             Group.findByIdAndUpdate(notification.targetGroup, {
                 '$pull': {invited: req.user.id},
-                '$addToSet': {participants: req.user.id},
+                '$addToSet': {participants: req.user.id,announcelist: req.user.id},
             }, callback);
         },
 
