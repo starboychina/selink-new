@@ -37,7 +37,7 @@ module.exports = function(req, res, next) {
 
                 // remove the group from expeled member's group list
                 updateUser: function(callback) {
-                	req.user.groups.pull(group.id)
+                	req.user.groups.pull(group.id);
                 	req.user.save(callback);
                 },
 

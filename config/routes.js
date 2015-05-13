@@ -364,6 +364,8 @@ module.exports = function(app, config) {
     app.get('/mobile/user/openidinfo', checkLoginStatus, controller.mobile.openidinfo);
     //leave
     app.patch('/mobile/groups/:group/leave', checkLoginStatus, controller.mobile.groupleave);
+    //announce
+    app.patch('/mobile/groups/:group/announce/:announce', checkLoginStatus, controller.mobile.groupannounce);
 };
 
 checkLoginStatus = function(req, res, next) {
