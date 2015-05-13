@@ -46,8 +46,13 @@ module.exports = function(req, res, next) {
 
                     // remove user's id from group's invited list, in case he had been invited
                     group.invited.pull(req.user._id);
+                    if (group.participants.length == 0){
+                        group._owner = req.user.id;
+                        group.logicDelete = false;
+                    }
                     // add user id to group participants
                     group.participants.addToSet(req.user.id);
+                    group.announcelist.addToSet(req.user.id);
                     // update group
                     group.save(callback);
                 },

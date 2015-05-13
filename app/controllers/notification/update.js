@@ -518,11 +518,20 @@ accept = function(req, res, next, notification) {
         // move user's id from group's invited list
         // to the participants list
         updateGroup: function(callback) {
+            var group = Group.findById(notification.targetGroup,function(err,group){
+                if (err) next(err);
+                else{
+                    group.invited.pull(req.user.id);
 
-            Group.findByIdAndUpdate(notification.targetGroup, {
-                '$pull': {invited: req.user.id},
-                '$addToSet': {participants: req.user.id,announcelist: req.user.id},
-            }, callback);
+                    if (group.participants.length == 0){
+                        group._owner = req.user.id;
+                        group.logicDelete = false;
+                    }
+                    group.participants.addToSet(req.user.id);
+                    group.announcelist.addToSet(req.user.id);
+                    group.save(callback);
+                }
+            });
         },
 
         // mark the notification as confirmed

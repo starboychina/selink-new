@@ -362,6 +362,8 @@ module.exports = function(app, config) {
     app.get('/mobile/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
     // Update user info (first-level property)
     app.get('/mobile/user/openidinfo', checkLoginStatus, controller.mobile.openidinfo);
+    //leave
+    app.patch('/mobile/groups/:group/leave', checkLoginStatus, controller.mobile.groupleave);
 };
 
 checkLoginStatus = function(req, res, next) {
