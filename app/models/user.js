@@ -15,6 +15,11 @@ var Skill = require('./profile/skill'),
 
 var User = new Schema({
     // Primary email
+    tomoid: {
+        type: String,
+        trim: true
+    },
+    // Primary email
     email: {
         type: String,
         trim: true
@@ -394,10 +399,10 @@ User.methods.toSolr = function() {
         return qualification.name;
     });
     
-    var devices = _.map(this.devices, function(device) {
-        var payload = device.weight;
-        return device.name + "|" + payload;
-    });
+    // var devices = _.map(this.devices, function(device) {
+    //     var payload = device.weight;
+    //     return device.name + "|" + payload;
+    // });
 
     return {
         type: 'User',
@@ -414,7 +419,7 @@ User.methods.toSolr = function() {
         address: this.address,
         nearestSt: this.nearestSt,
         language: languages,
-        device: devices,
+        // device: devices,
         skill: skills,
         education: educations,
         employment: employments,

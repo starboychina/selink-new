@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 module.exports = function(req, res, next) {
 
     // do nothing if login info are not enough
-    if (!req.body.email || !req.body.password)
+    if ( (!req.body.tomoid && !req.body.tomoid) || !req.body.password)
         res.json(400, {});
 
     // look up user info

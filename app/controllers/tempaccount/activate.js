@@ -28,6 +28,7 @@ module.exports = function(req, res, next) {
             // create the new user
             User.create({
                 email: tempAccount.email,
+                tomoid: tempAccount.email,
                 password: tempAccount.password,
                 firstName: tempAccount.firstName,
                 lastName: tempAccount.lastName,

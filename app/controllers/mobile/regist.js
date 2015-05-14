@@ -10,14 +10,28 @@ var reg_email = /^[a-zA-Z0-9\.\+\-\_]+@[a-zA-Z0-9]+[a-zA-Z0-9\.\-\_]+[a-zA-Z]+$/
 module.exports = function(req, res, next) {
     //req.body = req.query//テスト用
 
-    if(!req.body.email||!req.body.password||!reg_email.test(req.body.email)){
+    if( (!req.body.tomoid && !req.body.email) ||!req.body.password){
         res.json(400, {});//不正リクエスト
         return;
     }
-
+    if (!req.body.tomoid){
+        req.body.tomoid = req.body.email
+    }
+    var userinfo = {
+                tomoid: req.body.tomoid,
+                password: req.body.password,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                secEmail: req.body.email,
+                type: 'engineer',
+                provider: 'local'
+            };
+    if (req.body.email && reg_email.test(req.body.email)){
+        userinfo.email = req.body.email;
+    }
     // try to find a account by the user applicated account ID
     User.findOne({
-        email: req.body.email
+        tomoid: req.body.tomoid
     }, function(err, user) {
         // handle error
         if (err) {
@@ -30,15 +44,7 @@ module.exports = function(req, res, next) {
         // for valid account ID
         else {
             // create the new user
-            User.create({
-                email: req.body.email,
-                password: req.body.password,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                secEmail: req.body.email,
-                type: 'engineer',
-                provider: 'local'
-            }, function(err, user) {
+            User.create(userinfo, function(err, user) {
                 // handle error
                 if (err) next(err);
                 else {
