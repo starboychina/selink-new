@@ -45,11 +45,13 @@ var findgroups = function (req, res, next,callback){
 		}
 	};
 
-	var query = Group.find(condition_group)
-		.select('_owner type name cover description participants posts events createDate station')
+	var query = Group.find(condition_group);
+    if (!callback){
+    	query.where( {'type':{'$ne':"station"}});
+    }
+	query.select('_owner type name cover description participants posts events createDate station')
 		.populate('station',{},condition_station)
         .where('logicDelete').equals(false)
-        .where( {'type':{'$ne':"station"}})
         .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, groups) {
