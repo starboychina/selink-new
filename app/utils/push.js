@@ -18,10 +18,8 @@ module.exports = function(sender,users,alertMessage,onlinefunc){
 	}
 
     User.find()
-        //.select('email')
         .where('_id').in(users)
         .where('_id').ne(sender)
-        //.where('mailSetting.newPost').equals(true)
         .where('logicDelete').equals(false)
         .exec(function(err, recipients) {
         	if (!err){
