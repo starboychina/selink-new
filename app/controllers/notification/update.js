@@ -6,7 +6,7 @@ var async = require('async'),
     Group = mongoose.model('Group'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
-    push = require('../../utils/push');
+    Push = require('../../utils/push');
 
 module.exports = function(req, res, next) {
 
@@ -128,39 +128,26 @@ approve = function(req, res, next, notification) {
                 _from: req.user.id,
                 type: 'friend-approved'
             }, function(err, noty) {
-
                 if (err) callback(err);
                 else {
-
                     // push
-                    User.findById(notification._from,function(err, user){
-                        if(sio.sockets.clients(user.id).length < 1 ){
-                            for (var j = user.devices.length - 1; j >= 0; j--) {
-                                if(user.devices[j].token){
-                                    var token = user.devices[j].token;
-                                    var badge = 1;
-                                    var alertMessage = req.user.firstName + " " +req.user.lastName + "さんはあなたの友達リクエストを承認しました";
-                                    var payload = {'messageFrom': 'Caroline'};
-                                    push(token,alertMessage,payload,badge);
-                                }
-                            };
-                        }else{
-                            // send real time message to target user
-                            sio.sockets.in(notification._from).emit('friend-approved', {
-                                _id: noty._id,
-                                _from: {
-                                    _id: req.user.id,
-                                    type: req.user.type,
-                                    firstName: req.user.firstName,
-                                    lastName: req.user.lastName,
-                                    title: req.user.title,
-                                    cover: req.user.cover,
-                                    photo: req.user.photo
-                                },
-                                type: 'friend-approved',
-                                createDate: new Date()
-                            });
-                        }
+                    var alertMessage = req.user.firstName + " " +req.user.lastName + "さんはあなたの友達リクエストを承認しました";
+                    Push(req.user.id,notification._from,alertMessage,function(){
+                        // send real time message to target user
+                        sio.sockets.in(notification._from).emit('friend-approved', {
+                            _id: noty._id,
+                            _from: {
+                                _id: req.user.id,
+                                type: req.user.type,
+                                firstName: req.user.firstName,
+                                lastName: req.user.lastName,
+                                title: req.user.title,
+                                cover: req.user.cover,
+                                photo: req.user.photo
+                            },
+                            type: 'friend-approved',
+                            createDate: new Date()
+                        });
                     });
 
                     callback(null);

@@ -1,5 +1,6 @@
 var apns = require('apn'),
     path = require('path'),
+    User = require('mongoose').model('User'),
 	rootPath = path.normalize(__dirname + '/../../');
 var options = {
     cert: rootPath + 'resource/push/cert.pem',                 /* Certificate file path */
@@ -10,15 +11,51 @@ var options = {
     	console.log("err " + err);
     } ,    /* Callback when error occurs function(err,notification) */
 }; 
-module.exports = function(token,alertMessage,payload,badge){
-	var apnsConnection = new apns.Connection(options);
-	var device = new apns.Device(token);
-	var note = new apns.Notification();
-	note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-	note.badge = badge;
-	note.sound = "ping.aiff";
-	note.alert = alertMessage;
-	note.payload = payload;
-	note.device = device;
-	apnsConnection.sendNotification(note);
+module.exports = function(sender,users,alertMessage,onlinefunc){
+	if (!users){return;}
+	if (typeof users == 'string' || users instanceof String || !users.length){
+		users = [users];
+	}
+
+    User.find()
+        //.select('email')
+        .where('_id').in(users)
+        .where('_id').ne(sender)
+        //.where('mailSetting.newPost').equals(true)
+        .where('logicDelete').equals(false)
+        .exec(function(err, recipients) {
+        	if (!err){
+        		send(recipients,alertMessage,onlinefunc);
+        	}
+        });
+}
+
+function send(users,alertMessage,onlinefunc){
+	for (var i = users.length - 1; i >= 0; i--) {
+    	var user = users[i];
+    	//console.log(user);
+        if(sio.sockets.clients(user.id).length < 1 ){
+        	var devices = user.devices;
+            for (var j = devices.length - 1; j >= 0; j--) {
+            	var device = devices[j];
+                if(device.token){
+                    //push
+					var apnsConnection = new apns.Connection(options);
+					var device = new apns.Device(device.token);
+					var note = new apns.Notification();
+					note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+					note.badge = 1;
+					note.sound = "ping.aiff";
+					note.alert = alertMessage;
+					note.payload = {'messageFrom': 'Caroline'};
+					note.device = device;
+					apnsConnection.sendNotification(note);
+                }
+            };
+        }else if (onlinefunc){
+    		//console.log("onlinefunc");
+        	onlinefunc(user);
+        }
+        
+    };
 }

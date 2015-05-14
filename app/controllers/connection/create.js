@@ -17,7 +17,7 @@ var async = require('async'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
     Mailer = require('../../mailer/mailer.js'),
-    push = require('../../utils/push');
+    Push = require('../../utils/push');
 
 module.exports = function(req, res, next) {
 
@@ -53,36 +53,24 @@ module.exports = function(req, res, next) {
 
                 if (err) callback(err);
                 else {
-                    // push
-                    User.findById(req.body.id,function(err, user){
-                        if(sio.sockets.clients(user.id).length < 1 ){
-                            for (var j = user.devices.length - 1; j >= 0; j--) {
-                                if(user.devices[j].token){
-                                    var token = user.devices[j].token;
-                                    var badge = 1;
-                                    var alertMessage = req.user.firstName + " " + req.user.lastName + "さんから友達になるリクエストがありました";
-                                    var payload = {'messageFrom': 'Caroline'};
-                                    push(token,alertMessage,payload,badge);
-                                }
-                            };
-                        }else{
-                            // send real time message to target user
-                            sio.sockets.in(req.body.id).emit('friend-invited', {
-                                _id: notification._id,
-                                _from: {
-                                    _id: req.user.id,
-                                    type: req.user.type,
-                                    firstName: req.user.firstName,
-                                    lastName: req.user.lastName,
-                                    title: req.user.title,
-                                    cover: req.user.cover,
-                                    photo: req.user.photo
-                                },
-                                type: 'friend-invited',
-                                createDate: new Date()
-                            });
-                        }
-                    });
+                    var alertMessage = req.user.firstName + " " + req.user.lastName + "さんから友達になるリクエストがありました";
+                    Push(req.user.id,req.body.id,alertMessage,function(user){
+                        // send real time message to target user
+                        sio.sockets.in(req.body.id).emit('friend-invited', {
+                            _id: notification._id,
+                            _from: {
+                                _id: req.user.id,
+                                type: req.user.type,
+                                firstName: req.user.firstName,
+                                lastName: req.user.lastName,
+                                title: req.user.title,
+                                cover: req.user.cover,
+                                photo: req.user.photo
+                            },
+                            type: 'friend-invited',
+                            createDate: new Date()
+                        });
+                    })
 
                     callback(null);
                 }

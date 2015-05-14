@@ -5,7 +5,7 @@ var _ = require('underscore'),
     Message = mongoose.model('Message'),
     Group = mongoose.model('Group'),
     Mailer = require('../../mailer/mailer.js'),
-    push = require('../../utils/push');
+    Push = require('../../utils/push');
 
 module.exports = function(req, res, next) {
     //req.body = req.query; //テスト
@@ -36,29 +36,15 @@ function createMessage(req, res, next, group){
             message.populate({path:'_from', select: 'type firstName lastName title cover photo createDate'}, function(err, msg) {
 
                 if(err) next(err);
-                // send real time message
                 else {
-
-                    sendSockets(req,msg,group);
-                    sendPush(req,msg,group);
-
-/*
-                    // send email to all recipients
-                    User.find()
-                        .select('email')
-                        .where('_id').in(msg._recipient)
-                        .where('logicDelete').equals(false)
-                        .exec(function(err, recipients) {
-                            // send new-message mail
-                            Mailer.newMessage(recipients, {
-                                _id: msg._id,
-                                authorName: req.user.firstName + ' ' + req.user.lastName,
-                                authorPhoto: req.user.photo,
-                                subject: msg.subject,
-                                content: msg.content
-                            });
-                        });
-*/
+                    // send real time message
+                    var recipient = (group) ? group.announcelist : msg._recipient;
+                    if (!recipient){return;}
+                    var alertMessage = req.user.firstName + " " + req.user.lastName + " : " +msg.content;
+                    Push(req.user.id,recipient,alertMessage,function(user){
+                        if (req.user.id != user.id )
+                            sio.sockets.in(user.id).emit('message-new', msg);
+                    });
                     res.json(msg);
                 }
             });
@@ -75,42 +61,4 @@ function createActivity(user,msgid,next){
     }, function(err) {
         if (err) next(err);
     });
-}
-function sendSockets(req,msg,group){
-    var recipient = (group) ? group.participants : msg._recipient;
-    if (!recipient){return;}
-    recipient.forEach(function(room) {
-        if (req.user.id != room )
-            sio.sockets.in(room).emit('message-new', msg);
-    });
-}
-function sendPush(req,msg,group){
-    var recipient = (group) ? group.participants : msg._recipient;
-    if (!recipient){return;}
-    // push
-    User.find()
-        //.select('email')
-        .where('_id').in(recipient)
-        .where('_id').ne(req.user.id)
-        .where('logicDelete').equals(false)
-        .exec(function(err, users) {
-            for (var i = users.length - 1; i >= 0; i--) {
-                if(!isUserOnline(users[i].id)){
-                    for (var j = users[i].devices.length - 1; j >= 0; j--) {
-                        if(users[i].devices[j].token){
-                            var token = users[i].devices[j].token;
-                            var badge = 1;
-                            var alertMessage = req.user.firstName + " " + req.user.lastName + " : " +msg.content;
-                            var payload = {'messageFrom': 'Caroline'};
-                            push(token,alertMessage,payload,badge);
-                        }
-                    };
-                }
-                
-            };
-        });
-}
-function isUserOnline(user){
-    var c = sio.sockets.clients(user);
-    return c.length > 0;
 }

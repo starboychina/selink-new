@@ -28,7 +28,8 @@ var _ = require('underscore'),
     gm = require('gm'),
     s3 = require('../../utils/aws').s3,
     transcoder = require('../../utils/aws').transcoder,
-    Mailer = require('../../mailer/mailer.js');
+    Mailer = require('../../mailer/mailer.js'),
+    Push = require('../../utils/push');
 
 var populateField = {
     '_owner': 'type firstName lastName title cover photo',
@@ -252,17 +253,18 @@ module.exports = function(req, res, next) {
                 // ----------------------------------------------
 
                 // change the notification receiver to group members + friends
-                group.participants.forEach(function(participant) {
+                group.announcelist.forEach(function(participant) {
                     // note that I use user's '_id', cause the participant is an ObjectId (object).
                     // remember that the 'id' is the string representation of '_id'
                     if (!_.isEqual(participant, req.user._id))
                         notifiedUser.addToSet(participant);
                 });
             }
-
-            // send real time message to friends
-            notifiedUser.forEach(function(room) {
-                sio.sockets.in(room).emit('post-new', {
+            // send email to all friends
+            var alertMessage = req.user.firstName + ' ' + req.user.lastName + ' ー 新しい記事';
+            Push(req.user.id,notifiedUser,alertMessage,function(user){
+                // send real time message to friends
+                sio.sockets.in(user.id).emit('post-new', {
                     _id: notification.id,
                     _from: owner,
                     type: 'post-new',
@@ -271,20 +273,6 @@ module.exports = function(req, res, next) {
                     createDate: new Date()
                 });
             });
-
-            // send email to all friends
-            User.find()
-                .select('email')
-                .where('_id').in(notifiedUser)
-                .where('mailSetting.newPost').equals(true)
-                .where('logicDelete').equals(false)
-                .exec(function(err, recipients) {
-
-                    if (err) callback(err);
-                    // send new-post mail
-                    else if (recipients) Mailer.newPost(recipients, req.user, post, group);
-                });
-
             // the last result is the created post
             callback(null, postObj);
         }

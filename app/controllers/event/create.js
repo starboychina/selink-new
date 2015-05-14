@@ -38,7 +38,7 @@ module.exports = function(req, res, next) {
                         // TODO: send email to group participants
                         User.find()
                             .select('email')
-                            .where('_id').in(group.participants)
+                            .where('_id').in(group.announcelist)
                             .where('logicDelete').equals(false)
                             .exec(function(err, users) {
                                 // send new-post mail
@@ -64,7 +64,7 @@ module.exports = function(req, res, next) {
                             if (err) next(err);
                             else {
 
-                                group.participants.forEach(function(room) {
+                                group.announcelist.forEach(function(room) {
                                     sio.sockets.in(room).emit('group-event-new', event);
                                 });
                             }
