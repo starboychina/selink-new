@@ -396,10 +396,10 @@ var iconMark = $("<i></i>").addClass("fa").css({
 var dataTemp = Array();
 //データ数を取得	
 function getDataCount(view,id,url){
-	if(dataTemp[id]){
-		view.text(dataTemp[id]);
-		return dataTemp[id];
-	}
+	// if(dataTemp[id]){
+	// 	view.text(dataTemp[id]);
+	// 	return dataTemp[id];
+	// }
 	$.getJSON( url, function( data ) {
 		dataTemp[id] = data.length == 0 ?"0":data.length;
 		view.text(data.length);
