@@ -147,10 +147,16 @@ module.exports = function(req, res, next) {
 
                 // save the post id in group profile
                 updateGroup: function(callback) {
-
-                    if (req.body.group)
+                    var condition = {};
+                    if (req.body.station){
+                        condition.station = req.body.station;
+                    }
+                    if (req.body.group){
+                        condition._id = req.body.group;
+                    }
+                    if (condition.length>0)
                         // save the post id in group profile
-                        Group.findByIdAndUpdate(req.body.group, {$addToSet: {posts: post.id}}, callback);
+                        Group.findOneAndUpdate(condition, {$addToSet: {posts: post.id}}, callback);
                     else
                         callback(null);
                 },

@@ -357,7 +357,7 @@ module.exports = function(app, config) {
     // Get user info
     app.get('/mobile/userinfo', checkLoginStatus, controller.mobile.userinfo);
     // Update user info (first-level property)
-    app.get('/test/users/:id', checkLoginStatus, controller.user.update);
+    app.get('/test', controller.mobile.test);
     // Update user info (first-level property)
     app.get('/mobile/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
     // Update user info (first-level property)
