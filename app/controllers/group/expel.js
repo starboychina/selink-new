@@ -20,7 +20,10 @@ var async = require('async'),
     Mailer = require('../../mailer/mailer.js');
 
 module.exports = function(req, res, next) {
-
+    if (!req.body.expeled){
+        res.json(400,{});
+        return;
+    }
     async.waterfall([
 
         // find the group
@@ -35,16 +38,13 @@ module.exports = function(req, res, next) {
 
                 // update the 'participants' field
                 updateGroup: function(callback) {
-                    if(req.body.expeled){
-                        req.body.expeled.forEach(function(userId) {
-                            group.participants.pull(userId);
-                            group.announcelist.pull(userId);
-                            group.stickylist.pull(userId);
-                        });
-                        group.save(callback);
-                    }else{
-                        //nothing to do 
-                    }
+                    req.body.expeled.forEach(function(userId) {
+                        group.participants.pull(userId);
+                        group.announcelist.pull(userId);
+                        group.stickylist.pull(userId);
+                    });
+
+                    group.save(callback);
                 },
 
                 // remove the group from expeled member's group list
