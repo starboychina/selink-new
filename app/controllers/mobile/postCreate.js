@@ -148,13 +148,15 @@ module.exports = function(req, res, next) {
                 // save the post id in group profile
                 updateGroup: function(callback) {
                     var condition = {};
-                    if (req.body.station){
+                    if (req.body.station){//自己参加的车站 其他车站没有权限发帖(自己参加的车站 一定有相应的组 否则 组可能不存在)
                         condition.station = req.body.station;
                         condition.type = "station";
 
                         Group.findOne(condition,function(err,group){
-                            post.group = group.id;
-                            post.save();
+                            if(group){
+                                post.group = group.id;
+                                post.save();
+                            }
                         })
                     }
                     if (req.body.group){

@@ -134,7 +134,11 @@ var User = new Schema({
         trim: true,
         // validate: validate('len', 0, 30)
     },
-
+    //mystation
+    stations: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Station'
+    }],
     // Self Introduction
     bio: {
         type: String,
