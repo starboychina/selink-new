@@ -35,14 +35,16 @@ module.exports = function(req, res, next) {
 
                 // update the 'participants' field
                 updateGroup: function(callback) {
-
-                    req.body.expeled.forEach(function(userId) {
-                        group.participants.pull(userId);
-                        group.announcelist.pull(userId);
-                        group.stickylist.pull(userId);
-                    });
-
-                    group.save(callback);
+                    if(req.body.expeled){
+                        req.body.expeled.forEach(function(userId) {
+                            group.participants.pull(userId);
+                            group.announcelist.pull(userId);
+                            group.stickylist.pull(userId);
+                        });
+                        group.save(callback);
+                    }else{
+                        //nothing to do 
+                    }
                 },
 
                 // remove the group from expeled member's group list
