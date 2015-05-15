@@ -151,6 +151,11 @@ module.exports = function(req, res, next) {
                     if (req.body.station){
                         condition.station = req.body.station;
                         condition.type = "station";
+
+                        Group.findOne(condition,function(err,group){
+                            post.group = group.id;
+                            post.save();
+                        })
                     }
                     if (req.body.group){
                         condition._id = req.body.group;
