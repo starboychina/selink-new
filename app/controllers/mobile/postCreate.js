@@ -149,10 +149,11 @@ module.exports = function(req, res, next) {
                 updateGroup: function(callback) {
                     var condition = {};
                     if (req.body.station){
-                        condition["station"] = req.body.station;
+                        condition.station = req.body.station;
+                        condition.type = "station";
                     }
                     if (req.body.group){
-                        condition["_id"] = req.body.group;
+                        condition._id = req.body.group;
                     }
                     if (condition.length>0)
                         // save the post id in group profile
