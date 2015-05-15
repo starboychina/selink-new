@@ -32,5 +32,16 @@ function setsubdoc (group,req, res, next){
 		}
 	}
     group.save();
+
+    group = group.toObject();
+    if( group.type == "station"){
+        group.section = "0";//"station";
+    }else if(group._owner == req.user.id || req.user.groups.indexOf(group._id) != -1){
+        group.section = "1";//"mygroup";
+    }else{
+        group.section = "2";//"discover";
+    }
+    group.isSticky = group.stickylist.indexOf(req.user.id) == -1 ? false:true; 
+    
     res.json(group);
 }
