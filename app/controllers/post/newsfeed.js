@@ -43,6 +43,11 @@ module.exports = function(req, res, next) {
             if (err) next(err);
             else if (posts.length === 0) res.json(404, {});
             else {
+                posts = posts.map(function (post) {
+                    post = post.toObject();
+                    post.newsfeed = "1";
+                    return post;
+                });
                 res.json(posts);
             }
         });

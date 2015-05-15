@@ -57,7 +57,7 @@ _findgroup = function(req, res, user, next){
         if (req.query.before)
             query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
-	    query.select('_owner type name cover description participants posts events createDate')
+	    query.select('_owner type name cover description participants announcelist stickylist posts events createDate')
 	        .where('logicDelete').equals(false)
             .limit(req.query.size || 20)
 	        .sort('-createDate')
@@ -74,6 +74,7 @@ _findgroup = function(req, res, user, next){
                         }else{
                             group.section = "2";//"discover";
                         }
+                        group.isSticky = group.stickylist.indexOf(user.id) == -1 ? false:true; 
                         return group;
                     });
                     res.json(groups);
