@@ -1,6 +1,7 @@
 var async = require('async'),
     mongoose = require('mongoose'),
     Group = mongoose.model('Group'),
+    modelExpand = require('../../utils/modelExpand'),
     User = mongoose.model('User');
 
 module.exports = function(req, res, next) {
@@ -54,7 +55,10 @@ module.exports = function(req, res, next) {
 
         if (err) next(err);
         // return the updated group
-        else res.json(group);
+        else {
+            group = modelExpand.group(group,req.user);
+            res.json(group);
+        }
     });
 
 };
