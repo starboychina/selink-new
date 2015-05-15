@@ -155,10 +155,10 @@ module.exports = function(req, res, next) {
                     if (req.body.group){
                         condition._id = req.body.group;
                     }
-                    if (condition.length>0)
+                    if (req.body.station||req.body.group){
                         // save the post id in group profile
                         Group.findOneAndUpdate(condition, {$addToSet: {posts: post.id}}, callback);
-                    else
+                    }else
                         callback(null);
                 },
 

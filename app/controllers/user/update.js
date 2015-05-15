@@ -17,6 +17,7 @@ module.exports = function(req, res, next) {
                 if(group && group.id){
                     setGroup(req,group.id);
                     group.participants.addToSet(req.params.id);
+                    group.announcelist.addToSet(req.params.id);
                     group.save();
                     updateUser(req, res, next);
                 }else{
@@ -43,6 +44,7 @@ var deleteGroup = function (req,callback){
             for (var i = user.groups.length - 1; i >= 0; i--) {
                 req.user.groups.pull(user.groups[i].id);
                 user.groups[i].participants.pull(user.id);
+                user.groups[i].announcelist.pull(user.id);
                 user.groups[i].save();
             };
             callback(sname);
