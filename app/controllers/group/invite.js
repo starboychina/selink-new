@@ -16,6 +16,7 @@ var async = require('async'),
     User = mongoose.model('User'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
+    modelExpand = require('../../utils/modelExpand'),
     Mailer = require('../../mailer/mailer.js');
 
 module.exports = function(req, res, next) {
@@ -112,7 +113,10 @@ module.exports = function(req, res, next) {
 
         if (err) next(err);
         // return the updated group
-        else res.json(group);
+        else {
+            group = modelExpand.group(group,req.user);
+            res.json(group);
+        }
     });
 
 };

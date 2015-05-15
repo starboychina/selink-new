@@ -20,6 +20,7 @@ var async = require('async'),
     Activity = mongoose.model('Activity'),
     Notification = mongoose.model('Notification'),
     Station = mongoose.model('Station'),
+    modelExpand = require('../../utils/modelExpand'),
     Mailer = require('../../mailer/mailer.js');
 
 var populateField = {
@@ -170,6 +171,9 @@ module.exports = function(req, res, next) {
 
         if (err) next(err);
         // return the created group
-        else res.json(group);
+        else {
+            group = modelExpand.group(group,req.user);
+            res.json(group);
+        }
     });
 };

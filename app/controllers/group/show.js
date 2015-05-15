@@ -2,7 +2,8 @@
 // ---------------------------------------------
 // Retrun user profile info except password
 
-var Group = require('mongoose').model('Group');
+var Group = require('mongoose').model('Group'),
+    modelExpand = require('../../utils/modelExpand');
 
 var populateField = {
     _owner: 'type firstName lastName title cover photo',
@@ -20,6 +21,9 @@ module.exports = function(req, res, next) {
         .populate('_owner', populateField['_owner'])
         .exec(function(err, group) {
             if (err) next(err);
-            else res.json(group);
+            else {
+                group = modelExpand.group(group,req.user);
+                res.json(group);
+            }
         });
 };
