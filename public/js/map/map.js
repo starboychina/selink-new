@@ -312,8 +312,8 @@ function showDetail(el,station){
 
 	showGroups(detail_wp,station);
 	showUsers(detail_wp,station);
-	showPosts(detail_wp,station);
-	showPosts1(detail_wp,station);
+	showPostsOfGroup(detail_wp,station);
+	showPostsOfStation(detail_wp,station);
 
 	setAnime(station._id);
 }
@@ -434,26 +434,26 @@ function showUsers(detail_wp,station){
 
 	getDataCount(icon,id,"/mobile/stations/users?nearestSt="+station.name);
 }
-function showPosts(detail_wp,station){
+function showPostsOfGroup(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-edit");
-	var id = "wp_post_"+station._id;
+	var id = "wp_post_group_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://posts?station._id="+station._id})
+		.attr({"id":id,"href":"genbatomo://posts?grouptype=group&station._id="+station._id})
 		.css(defaultCss)
 		.css({"background":"rgba(242, 197, 186, 0.7)"})
 		.append(icon,'<br /> HOT')
 		.appendTo(detail_wp);
 
-	getDataCount(icon,id,"/mobile/stations/posts?station._id="+station._id);
+	getDataCount(icon,id,"/mobile/stations/posts?grouptype=group&station._id="+station._id);
 }
-function showPosts1(detail_wp,station){
+function showPostsOfStation(detail_wp,station){
 	var icon = iconMark.clone().addClass("fa-edit");
-	var id = "wp_post1_"+station._id;
+	var id = "wp_post_station_"+station._id;
 	var view_users = ($("#"+id).size()>0) ? $("#"+id) :$("<a />")
-		.attr({"id":id,"href":"genbatomo://posts1?station._id="+station._id})
+		.attr({"id":id,"href":"genbatomo://posts?grouptype=station&station._id="+station._id})
 		.css(defaultCss)
 		.css({"background":"rgba(178, 223, 199, 0.7)"})
 		.append(icon,'<br /> 吐')
 		.appendTo(detail_wp);
-	getDataCount(icon,id,"/mobile/stations/posts?station._id="+station._id);
+	getDataCount(icon,id,"/mobile/stations/posts?grouptype=station&station._id="+station._id);
 }

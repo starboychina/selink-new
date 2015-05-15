@@ -35,6 +35,8 @@ var findgroups = function (req, res, next,callback){
 
 	var condition_group = {};
 	var condition_station = {};
+	var grouptype = req.query.grouptype;
+	delete req.query.grouptype;
 	for (var index in req.query) {
 		//console.log(index);
 		if ( /station(s)?\./.test(index)){
@@ -46,9 +48,13 @@ var findgroups = function (req, res, next,callback){
 	};
 
 	var query = Group.find(condition_group);
-    if (!callback){
-    	query.where( {'type':{'$ne':"station"}});
-    }
+
+	if(grouptype == "station"){
+		query.where('type').equals("station");
+	}else {//if(grouptype == "group"){
+		query.where( {'type':{'$ne':"station"}});
+	}
+
 	query.select('_owner type name cover description participants posts events createDate station')
 		.populate('station',{},condition_station)
         .where('logicDelete').equals(false)
