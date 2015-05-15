@@ -17,6 +17,7 @@ var _s = require('underscore.string'),
     moment = require('moment'),
     mongoose = require('mongoose'),
     Group = mongoose.model('Group'),
+    modelExpand = require('../../utils/modelExpand'),
     User = mongoose.model('User');
 
 module.exports = function(req, res, next) {
@@ -77,18 +78,7 @@ _group_index = function(req, res, user, next) {
             if (err) next(err);
             else if (groups.length === 0) res.json(404, {});
             else {
-                groups = groups.map(function (group) {
-                        group = group.toObject();
-                        if( group.type == "station"){
-                            group.section = "0";//"station";
-                        }else if(group._owner == user.id || user.groups.indexOf(group._id) != -1){
-                            group.section = "1";//"mygroup";
-                        }else{
-                            group.section = "2";//"discover";
-                        }
-                        group.isSticky = group.stickylist.indexOf(user.id) == -1 ? false:true; 
-                        return group;
-                    });
+                groups = modelExpand.groups(groups,user);
                 res.json(groups);
             }
         });
