@@ -15,9 +15,12 @@ var groupEx =  function(group,user,isWithLastPost){
     }
     group.isSticky = isSticky; 
     if(isWithLastPost){
-        var post = group.posts[group.posts.length-1]
-        group.lastPostDate = post.createDate; 
-        group.lastPost = post; 
+        var post = group.posts[group.posts.length-1];
+        if (post) {
+            console.log(post)
+            group.lastPostDate = post.createDate; 
+            group.lastPost = post; 
+        }
         delete group.posts;
     }
     return group;
