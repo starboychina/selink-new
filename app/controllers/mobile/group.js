@@ -60,7 +60,7 @@ _findgroup = function(req, res, user, next){
 
 	    query.select('_owner type name cover description participants announcelist stickylist posts events createDate station')
             .populate('station')
-            .populate('posts','createDate _owner images video imagesformobile')
+            .populate('posts')
 	        .where('logicDelete').equals(false)
             .limit(req.query.size || 20)
 	        .sort('-createDate')
@@ -68,7 +68,7 @@ _findgroup = function(req, res, user, next){
 	            if (err) next(err);
 	            else if (groups.length === 0) _group_discover(req, res, user, next,{});
 	            else{
-                    groups = modelExpand.groups(groups,user);
+                    groups = modelExpand.groups(groups,user,true);
                     res.json(groups);
                 } 
 	        });
