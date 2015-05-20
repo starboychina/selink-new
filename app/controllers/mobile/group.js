@@ -58,7 +58,9 @@ _findgroup = function(req, res, user, next){
         if (req.query.before)
             query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
-	    query.select('_owner type name cover description participants announcelist stickylist posts events createDate')
+	    query.select('_owner type name cover description participants announcelist stickylist posts events createDate station')
+            .populate('station')
+            .populate('posts','createDate _owner')
 	        .where('logicDelete').equals(false)
             .limit(req.query.size || 20)
 	        .sort('-createDate')
