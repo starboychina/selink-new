@@ -28,6 +28,16 @@ module.exports = function(sender,users,alertMessage,onlinefunc){
         });
 }
 
+module.exports.all = function(sender,alertMessage,onlinefunc){
+    User.find()
+        .where('_id').ne(sender)
+        .where('logicDelete').equals(false)
+        .exec(function(err, recipients) {
+            if (!err){
+                send(recipients,alertMessage,onlinefunc);
+            }
+        });
+}
 function send(users,alertMessage,onlinefunc){
 	for (var i = users.length - 1; i >= 0; i--) {
     	var user = users[i];
