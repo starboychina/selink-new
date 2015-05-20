@@ -60,7 +60,7 @@ _findgroup = function(req, res, user, next){
 
 	    query.select('_owner type name cover description participants announcelist stickylist posts events createDate station')
             .populate('station')
-            .populate('posts','createDate _owner')
+            .populate('posts','createDate _owner images video')
 	        .where('logicDelete').equals(false)
             .limit(req.query.size || 20)
 	        .sort('-createDate')
