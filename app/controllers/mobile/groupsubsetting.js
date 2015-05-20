@@ -34,7 +34,7 @@ function setsubdoc (group,req, res, next){
 	}
     group.save();
 
-    group = group = modelExpand.group(group,req.user);
+    group = modelExpand.group(group,req.user);
     
     res.json(group);
 }
