@@ -19,6 +19,11 @@ body.no-skin.navbar-fixed
         i.ace-icon.fa.fa-clock-o.bigger-130
         span.datetime #{createDate}
     hr
+    for image in images_mobile
+      .col-sm-12.col-md-8
+        img.nav-user-photo(src='#{image.name}')
+    else
+      .clearfix
     .col-sm-12.col-md-8.post-content #{content}
     .clearfix
     hr
