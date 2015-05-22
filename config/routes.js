@@ -366,6 +366,8 @@ module.exports = function(app, config) {
     app.patch('/mobile/groups/:group/leave', checkLoginStatus, controller.mobile.groupleave);
     //announce
     app.patch('/mobile/groups/:group/:subkey/:subvalue', checkLoginStatus, controller.mobile.groupsubsetting);
+
+    app.get('/mobile/share/post/:id', controller.mobile.sharePost);
 };
 
 checkLoginStatus = function(req, res, next) {
