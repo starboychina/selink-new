@@ -368,6 +368,8 @@ module.exports = function(app, config) {
     app.patch('/mobile/groups/:group/:subkey/:subvalue', checkLoginStatus, controller.mobile.groupsubsetting);
 
     app.get('/mobile/share/post/:id', controller.mobile.sharePost);
+    // announcement 
+    app.get('/mobile/announcements/:id', checkLoginStatus, controller.mobile.announcements);
 };
 
 checkLoginStatus = function(req, res, next) {
