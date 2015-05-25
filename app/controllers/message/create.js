@@ -43,7 +43,7 @@ function createMessage(req, res, next, group){
                     var alertMessage = req.user.firstName + " " + req.user.lastName + " : " ;
                     var reg_content = /^\[画像\].*$/i;
 
-                    if (reg_content.text(msg.content)){
+                    if (reg_content.test(msg.content)){
                         alertMessage += "[画像]";
                     }else{
                         alertMessage += msg.content;
