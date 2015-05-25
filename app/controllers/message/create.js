@@ -40,7 +40,14 @@ function createMessage(req, res, next, group){
                     // send real time message
                     var recipient = (group) ? group.announcelist : msg._recipient;
                     if (!recipient){return;}
-                    var alertMessage = req.user.firstName + " " + req.user.lastName + " : " +msg.content;
+                    var alertMessage = req.user.firstName + " " + req.user.lastName + " : " ;
+                    var reg_content = /^\[画像\].*$/i;
+
+                    if (reg_content.text(msg.content)){
+                        alertMessage += "[画像]";
+                    }else{
+                        alertMessage += msg.content;
+                    }
                     Push(req.user.id,recipient,alertMessage,function(user){
                         if (req.user.id != user.id )
                             sio.sockets.in(user.id).emit('message-new', msg);
