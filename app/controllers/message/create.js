@@ -41,10 +41,10 @@ function createMessage(req, res, next, group){
                     var recipient = (group) ? group.announcelist : msg._recipient;
                     if (!recipient){return;}
                     var alertMessage = req.user.firstName + " " + req.user.lastName + " : " ;
-                    var reg_content = /^\[画像\].*$/i;
+                    var reg_content = /^(\[(音声|画像|動画)\]).*$/i;
 
                     if (reg_content.test(msg.content)){
-                        alertMessage += "[画像]";
+                        alertMessage += msg.content.replace(reg_content,"$1");
                     }else{
                         alertMessage += msg.content;
                     }
