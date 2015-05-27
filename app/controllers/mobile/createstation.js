@@ -129789,12 +129789,14 @@ module.exports = function(req, res, next) {
         var temp = {};
         temp.name = d.FIELD4;//line name
         temp.kana = d.FIELD5;//line name
-        var s = lookup(stations,d.FIELD2);
+        var s = lookup(stations,d.FIELD2,d.FIELD6);
         if(! s){
           s = {
                 _id : mongoose.Types.ObjectId(),
                 name:d.FIELD2,
                 kana:d.FIELD3,
+                pref:d.FIELD6,
+                pref_name:getPrefName(d.FIELD6),
                 zipcode:d.FIELD7,
                 address:d.FIELD8,
                 lon:d.FIELD9,
@@ -129840,10 +129842,63 @@ module.exports = function(req, res, next) {
     res.json(400, stations);
     return;
 };
-function lookup( arr,name ) {
+function lookup( arr,name ,pref) {
     for(var i = 0, len = arr.length; i < len; i++) {
-        if( arr[ i ].name === name )
+        if( arr[ i ].name === name && arr[ i ].pref === pref)
             return arr[ i ];
     }
     return false;
+}
+function getPrefName(pref){
+    var data = {
+        1  : "北海道",
+        2  : "青森県",
+        3  : "岩手県",
+        4  : "宮城県",
+        5  : "秋田県",
+        6  : "山形県",
+        7  : "福島県",
+        8  : "茨城県",
+        9  : "栃木県",
+        10 : "群馬県",
+        11 : "埼玉県",
+        12 : "千葉県",
+        13 : "東京都", 
+        14 : "神奈川県",   
+        15 : "新潟県", 
+        16 : "富山県",
+        17 : "石川県", 
+        18 : "福井県", 
+        19 : "山梨県", 
+        20 : "長野県",
+        21 : "岐阜県", 
+        22 : "静岡県", 
+        23 : "愛知県", 
+        24 : "三重県",
+        25 : "滋賀県", 
+        26 : "京都府", 
+        27 : "大阪府", 
+        28 : "兵庫県",
+        29 : "奈良県", 
+        30 : "和歌山県",    
+        31 : "鳥取県", 
+        32 : "島根県",
+        33 : "岡山県", 
+        34 : "広島県", 
+        35 : "山口県", 
+        36 : "徳島県",
+        37 : "香川県", 
+        38 : "愛媛県", 
+        39 : "高知県" ,
+        40 : "福岡県",
+        41 : "佐賀県", 
+        42 : "長崎県", 
+        43 : "熊本県" ,
+        44 : "大分県",
+        45 : "宮崎県", 
+        46 : "鹿児島県",    
+        47 : "沖縄県", 
+        99 : "その他",
+    };
+    return data[pref];
 }

@@ -20,6 +20,10 @@ var Station = new Schema({
         type: String,
         trim: true
     },
+    pref_name: {
+        type: String,
+        trim: true
+    },
     address: {
         type: String,
         trim: true
