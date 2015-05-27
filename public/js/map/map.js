@@ -256,7 +256,7 @@ var markerOption = {
 $(function(){
 	$("#map").height($(document).height());
 
-	$.getJSON( "/mobile/stations?name=JR山手線", function( data ) {
+	$.getJSON( "/mobile/lines?name=JR山手線", function( data ) {
 		var markers = [];
 	    for (var i = 0; i < data.length; i++) {
 	    	for (var j = data[i].stations.length - 1; j >= 0; j--) { 

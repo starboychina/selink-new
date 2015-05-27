@@ -340,6 +340,8 @@ module.exports = function(app, config) {
     app.post('/mobile/posts', checkLoginStatus, controller.mobile.postCreate);
     // Google Map
     app.get('/mobile/map', checkLoginStatus, controller.mobile.googlemap);
+    // Lines
+    app.get('/mobile/lines', checkLoginStatus, controller.mobile.line);
     // Stations
     app.get('/mobile/stations', checkLoginStatus, controller.mobile.station);
     // Stations Info
@@ -349,7 +351,7 @@ module.exports = function(app, config) {
     // login with openid 
     app.post('/mobile/user/openid', controller.mobile.openidlogin);
     // test
-    app.get('/mobile/station', controller.mobile.createstation);
+    app.get('/mobile/createstation', controller.mobile.createstation);
     // test
     app.get('/mobile/group', checkLoginStatus,controller.mobile.group);
     // Get groups (user related)

@@ -1,29 +1,19 @@
 // Create new sub document
 var mongoose = require('mongoose'),
-	Line = mongoose.model('Line');
+	Station = mongoose.model('Station');
 module.exports = function(req, res, next) {
 
-	var condition_line = {};
 	var condition_station = {};
 	for (var index in req.query) {
-		if ( /station(s)?\./.test(index)){
-			var key = index.replace(/station(s)?\./,"");
-			condition_station[key] = key=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
-		}else{
-			condition_line[index] = index=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
-		}
+		condition_station[index] = index=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
 	};
 
-	var query = Line.find(condition_line);
-		query.populate('stations',{},condition_station)
-		        .exec(function(err, lines) {
+	var query = Station.find(condition_station);
+		query.exec(function(err, stations) {
 		            if (err) next(err);
-		            else if (lines.length === 0) res.json(404, {});
+		            else if (stations.length === 0) res.json(404, {});
 		            else {
-		            	 lines = lines.filter(function(line){
-						     return line.stations.length;
-						   })
-    					res.json(200, lines);
+    					res.json(200, stations);
 		            }
 		        });
     //res.json(400, "ok");
