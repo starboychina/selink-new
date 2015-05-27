@@ -11,9 +11,6 @@ var Line = new Schema({
         type: String,
         trim: true
     },
-    pref: {
-        type: Number,
-    },
     stations: [{
         type: Schema.Types.ObjectId,
         ref: 'Station'
