@@ -129835,8 +129835,8 @@ module.exports = function(req, res, next) {
         }
         
     };
-    Line.create(linedata);
-    Station.create(stations);
+    //Line.create(linedata);
+    //Station.create(stations);
     res.json(400, stations);
     return;
 };
