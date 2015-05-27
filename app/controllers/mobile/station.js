@@ -19,13 +19,14 @@ function gethotStations(req, res, next){
 	         psize: {$size: "$participants"}
 	    }});
 	aggregate.append({ $match: { type: 'station' }} );
-	aggregate.append({ $sort : { 'psize' : -1,'_id' : 1}});
+	aggregate.append({ $sort : { 'psize' : -1}});
     aggregate.exec(function(err, groups) {
     	var stationids = new Array();
     	for (var i = groups.length - 1; i >= 0; i--) {
     		stationids.push(groups[i].station);
     	};
     	Station.find({_id:{"$in":stationids}})
+    			.sort('-_id')
 		    	.limit(req.query.size || 20)
 		    	.exec(function(err, stations) {
 			        if (err) next(err);
