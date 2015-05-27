@@ -10,44 +10,51 @@ module.exports = function(req, res, next) {
     if(req.body.bio){
         req.body.bioText =  (req.body.bio)? req.body.bio.replace(/<[^>]*>/g, ''):'';
     }
-    if (req.body.nearestSt){
-        var changeGroup = function(err, group){
+    if (req.body.stations){
+        var changeGroup = function(err, groups){
             if (err) next(err);
             else {
-                if(group && group.id){
+                var groupids = new Array();
+                for (var i = groups.length - 1; i >= 0; i--) {
+                    var group = groups[i];
+                    groupids.push(group.id);
                     setGroup(req,group.id);
                     group.participants.addToSet(req.params.id);
                     group.announcelist.addToSet(req.params.id);
                     group.save();
                     updateUser(req, res, next);
-                }else{
-                    createGroup(req,function(err,group){
-                        setGroup(req,group.id);
-                        updateUser(req, res, next);
-                    });
-                    return;
-                }
+                };
+                for (var i = req.body.stations.length - 1; i >= 0; i--) {
+                    var sid = req.body.stations[i];
+                    if(groupids.indexOf(sid)==-1){
+                        createGroup(req,sid,function(err,group){
+                            setGroup(req,group.id);
+                            updateUser(req, res, next);
+                        });
+                    }
+                };
             }
         }
-        deleteGroup(req,function(sname){
-            findGroupByStationName(sname,changeGroup);
+        deleteGroup(req,function(stasionids){
+            findGroupByStationIds(stasionids,changeGroup);
         });
     }else{
         updateUser(req, res, next);
     }
 };
 var deleteGroup = function (req,callback){
-    var sname = req.body.nearestSt;
+    var stasionids = req.body.req.body.stations;
     User.findById(req.params.id,"groups")
-        .populate('groups',{},{"type":"station","name":{"$ne":sname}})
+        .populate('groups',{},{"type":"station","_id":{"$ne":stasionids}})
         .exec(function(err,user){
             for (var i = user.groups.length - 1; i >= 0; i--) {
                 req.user.groups.pull(user.groups[i].id);
                 user.groups[i].participants.pull(user.id);
                 user.groups[i].announcelist.pull(user.id);
+                user.groups[i].stickylist.pull(user.id);
                 user.groups[i].save();
             };
-            callback(sname);
+            callback(stasionids);
         })
 }
 var setGroup = function(req,groupid){
@@ -67,32 +74,24 @@ var setGroup = function(req,groupid){
         req.body.groups = req.user.groups;
     }
 };
-var findGroupByStationName = function(name,callback){
-    var condition_station = {
-        "name":name
-    };
-    var condition_group = {
-        "name":name,
-        "type":"station"
+var findGroupByStationIds = function(stasionids,callback){
+    var condition = {
+        "station._id":{"$in":stasionids},
+        "station.type":"station"
     };
 
-    Group.findOne(condition_group)
-        .populate('station',{},condition_station)
-        .exec(callback);
+    Group.find(condition).exec(callback);
 };
-var createGroup = function (req, callback){
-    var condition_station = {
-        "name":req.body.nearestSt
-    };
-    Station.findOne(condition_station,function(err,station){
+var createGroup = function (req,sid, callback){
+    Station.findById(sid,function(err,station){
         if (err) callback(err,{});
         else if(station){
             var group = {
                 "_owner":req.user.id,/////////※管理者IDに設定するか　nullにするか。。。。。。
                 "participants":req.user.id,
-                "name":req.body.nearestSt,
+                "name":station.name,
                 "type": "station",
-                "description": req.body.nearestSt,
+                "description": station.name,
                 "station":station.id,
             }
             Group.create(group, function(err,group){
