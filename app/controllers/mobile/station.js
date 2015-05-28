@@ -11,7 +11,7 @@ module.exports = function(req, res, next) {
 	}
 };
 function gethotStations(req, res, next){
-
+	var hotsize = 2;
 	var aggregate = Group.aggregate();
 	aggregate.append({$project: {
 	         station: 1,
@@ -20,6 +20,7 @@ function gethotStations(req, res, next){
 	    }});
 	aggregate.append({ $match: { type: 'station' }} );
 	aggregate.append({ $sort : { 'psize' : -1}});
+	aggregate.append({ $limit : hotsize });
     aggregate.exec(function(err, groups) {
     	var stationids = new Array();
     	for (var i = groups.length - 1; i >= 0; i--) {
@@ -27,7 +28,7 @@ function gethotStations(req, res, next){
     	};
     	Station.find({_id:{"$in":stationids}})
     			.sort('-_id')
-		    	.limit(req.query.size || 20)
+		    	.limit( hotsize )
 		    	.exec(function(err, stations) {
 			        if (err) next(err);
 			        else if (stations.length === 0) res.json(404, {});
