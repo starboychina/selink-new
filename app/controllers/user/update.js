@@ -14,10 +14,10 @@ module.exports = function(req, res, next) {
         var changeGroup = function(err, groups){
             if (err) next(err);
             else {
-                var groupids = new Array();
+                var stationids = new Array();
                 for (var i = groups.length - 1; i >= 0; i--) {
                     var group = groups[i];
-                    groupids.push(group.id);
+                    stationids.push(group.station);
                     setGroup(req,group.id);
                     group.participants.addToSet(req.params.id);
                     group.announcelist.addToSet(req.params.id);
@@ -26,7 +26,7 @@ module.exports = function(req, res, next) {
                 };
                 for (var i = req.body.stations.length - 1; i >= 0; i--) {
                     var sid = req.body.stations[i];
-                    if(groupids.indexOf(sid)==-1){
+                    if(stationids.indexOf(sid)==-1){
                         createGroup(req,sid,function(err,group){
                             setGroup(req,group.id);
                             updateUser(req, res, next);
