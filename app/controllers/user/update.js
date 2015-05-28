@@ -14,25 +14,29 @@ module.exports = function(req, res, next) {
         var changeGroup = function(err, groups){
             if (err) next(err);
             else {
-                var stationids = new Array();
+                var stationids = req.body.stations.slice(0);//clone
                 for (var i = groups.length - 1; i >= 0; i--) {
                     var group = groups[i];
-                    stationids.push(group.station);
+                    var group_station = group.station.toString();
+                    var index = stationids.indexOf(group_station);
+                    stationids.splice(index,1);
+
                     setGroup(req,group.id);
                     group.participants.addToSet(req.params.id);
                     group.announcelist.addToSet(req.params.id);
                     group.save();
-                    updateUser(req, res, next);
                 };
-                for (var i = req.body.stations.length - 1; i >= 0; i--) {
-                    var sid = req.body.stations[i];
-                    if(stationids.indexOf(sid)==-1){
-                        createGroup(req,sid,function(err,group){
+                if(stationids.length > 0){
+                    createGroups(req,stationids,function(err,groups){
+                        for (var i = groups.length - 1; i >= 0; i--) {
+                            var group = groups[i];
                             setGroup(req,group.id);
-                            updateUser(req, res, next);
-                        });
-                    }
-                };
+                        };
+                        updateUser(req, res, next);
+                    });
+                }else{
+                    updateUser(req, res, next);
+                }
             }
         }
         deleteGroup(req,function(stasionids){
@@ -44,16 +48,19 @@ module.exports = function(req, res, next) {
 };
 var deleteGroup = function (req,callback){
     var stasionids = req.body.stations;
+    var condition_group = {"type":"station","station":{"$nin":stasionids}};
     User.findById(req.params.id,"groups")
-        .populate('groups',{},{"type":"station","_id":{"$ne":stasionids}})
+        .populate('groups',{},condition_group)
         .exec(function(err,user){
-            for (var i = user.groups.length - 1; i >= 0; i--) {
-                req.user.groups.pull(user.groups[i].id);
-                user.groups[i].participants.pull(user.id);
-                user.groups[i].announcelist.pull(user.id);
-                user.groups[i].stickylist.pull(user.id);
-                user.groups[i].save();
-            };
+            if(user){
+                for (var i = user.groups.length - 1; i >= 0; i--) {
+                    req.user.groups.pull(user.groups[i].id);
+                    user.groups[i].participants.pull(user.id);
+                    user.groups[i].announcelist.pull(user.id);
+                    user.groups[i].stickylist.pull(user.id);
+                    user.groups[i].save();
+                };
+            }
             callback(stasionids);
         })
 }
@@ -81,20 +88,33 @@ var findGroupByStationIds = function(stasionids,callback){
     };
     Group.find(condition).exec(callback);
 };
-var createGroup = function (req,sid, callback){
-    Station.findById(sid,function(err,station){
+var createGroups = function (req,sids, callback){
+    Station.find({"_id":{"$in":sids}},function(err,stations){
         if (err) callback(err,{});
-        else if(station){
-            var group = {
-                "_owner":req.user.id,/////////※管理者IDに設定するか　nullにするか。。。。。。
-                "participants":req.user.id,
-                "name":station.name,
-                "type": "station",
-                "description": station.name,
-                "station":station.id,
-            }
-            Group.create(group, function(err,group){
-                callback(err,group);
+        else if (stations.length < 1 ) callback(err,{});
+        else{
+            var groups = new Array();
+            for (var i = stations.length - 1; i >= 0; i--) {
+                var station = stations[i];
+                var group = {
+                    "_owner":req.user.id,/////////※管理者IDに設定するか　nullにするか。。。。。。
+                    "participants":req.user.id,
+                    "name":station.name,
+                    "type": "station",
+                    "description": station.name,
+                    "station":station.id,
+                };
+                groups.push(group);
+            };
+            Group.create(groups, function (err) {
+                if (err)  callback(err,{});
+                else {
+                    var gs = new Array();
+                    for (var i=1; i<arguments.length; ++i) {
+                        gs.push(arguments[i]);
+                    }
+                    callback(err,gs);
+                }
             });
         }
     });
