@@ -45,7 +45,7 @@ module.exports = function(req, res, next) {
 var deleteGroup = function (req,callback){
     var stasionids = req.body.stations;
     User.findById(req.params.id,"groups")
-        .populate('groups',{},{"type":"station","_id":{"$in":stasionids}})
+        .populate('groups',{},{"type":"station","_id":{"$ne":stasionids}})
         .exec(function(err,user){
             for (var i = user.groups.length - 1; i >= 0; i--) {
                 req.user.groups.pull(user.groups[i].id);
