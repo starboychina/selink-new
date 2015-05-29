@@ -10,7 +10,10 @@ module.exports = function(req, res, next) {
     if(req.body.bio){
         req.body.bioText =  (req.body.bio)? req.body.bio.replace(/<[^>]*>/g, ''):'';
     }
-    if (req.body.stations){
+    if (req.body.stations && req.body.stations.length>0){
+        if(Object.prototype.toString.call(req.body.stations) !== '[object Array]'){
+            req.body.stations = [];
+        }
         var changeGroup = function(err, groups){
             if (err) next(err);
             else {
@@ -48,21 +51,29 @@ module.exports = function(req, res, next) {
 };
 var deleteGroup = function (req,callback){
     var stasionids = req.body.stations;
-    var condition_group = {"type":"station","station":{"$nin":stasionids}};
-    User.findById(req.params.id,"groups")
-        .populate('groups',{},condition_group)
-        .exec(function(err,user){
-            if(user){
-                for (var i = user.groups.length - 1; i >= 0; i--) {
-                    req.user.groups.pull(user.groups[i].id);
-                    user.groups[i].participants.pull(user.id);
-                    user.groups[i].announcelist.pull(user.id);
-                    user.groups[i].stickylist.pull(user.id);
-                    user.groups[i].save();
-                };
-            }
+    var condition_group = {
+        "type":"station",
+        "participants":req.user.id
+    };
+    if (req.body.stations.length>0){
+        condition_group.station = {"$nin":stasionids};
+    }
+    Group.find(condition_group,function(err,groups){
+        if(groups){
+            for (var i = groups.length - 1; i >= 0; i--) {
+                req.user.groups.pull(groups[i].id);
+                groups[i].participants.pull(req.user.id);
+                groups[i].announcelist.pull(req.user.id);
+                groups[i].stickylist.pull(req.user.id);
+                groups[i].save();
+            };
+            req.user.save(function(err, updatedUser) {
+                callback(stasionids);
+            })
+        }else{
             callback(stasionids);
-        })
+        }
+    })
 }
 var setGroup = function(req,groupid){
     if(!groupid){return ;}
