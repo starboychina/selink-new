@@ -11,7 +11,7 @@ module.exports = function(req, res, next) {
 	}
 };
 function gethotStations(req, res, next){
-	var hotsize = 2;
+	var hotsize = 5;
 	var aggregate = Group.aggregate();
 	aggregate.append({$project: {
 	         station: 1,
