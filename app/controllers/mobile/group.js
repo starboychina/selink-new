@@ -44,33 +44,29 @@ module.exports = function(req, res, next) {
     }
 };
 _findgroup = function(req, res, user, next){
-	if (req.query.before){
-		_group_discover(req, res, user, next,{});
-	}else{
-	    // create query
-	    var query = Group.find();
-	    query.or([
-	        {_owner: user.id,'type':{'$ne':"station"}},
-	        {_id: {$in: user.groups}},
-            {'type':{'$ne':"private",'$ne':"station"}}
-	    ]);
+    // create query
+    var query = Group.find();
+    query.or([
+        {_owner: user.id,'type':{'$ne':"station"}},
+        {_id: {$in: user.groups}},
+        {'type':{'$ne':"private",'$ne':"station"}}
+    ]);
 
-        if (req.query.before)
-            query.where('createDate').lt(moment.unix(req.query.before).toDate());
+    if (req.query.before)
+        query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
-	    query.select('_owner type name cover description participants announcelist stickylist posts events createDate station')
-            .populate('station')
-            .populate('posts')
-	        .where('logicDelete').equals(false)
-            .limit(req.query.size || 20)
-	        .sort('-createDate')
-	        .exec(function(err, groups) {
-	            if (err) next(err);
-	            else if (groups.length === 0) _group_discover(req, res, user, next,{});
-	            else{
-                    groups = modelExpand.groups(groups,user,true);
-                    res.json(groups);
-                } 
-	        });
-	}
+    query.select('_owner type name cover description participants announcelist stickylist posts events createDate station')
+        .populate('station')
+        .populate('posts')
+        .where('logicDelete').equals(false)
+        .limit(req.query.size || 20)
+        .sort('-createDate')
+        .exec(function(err, groups) {
+            if (err) next(err);
+            else if (!groups||groups.length === 0) res.json(404,{});
+            else{
+                groups = modelExpand.groups(groups,user,true);
+                res.json(groups);
+            } 
+        });
 };
