@@ -2,7 +2,7 @@
 var center = new google.maps.LatLng(35.645736,139.747575);
 
 var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
+      zoom: 16,
       maxZoom:17,
       minZoom:12,
       center: center,
