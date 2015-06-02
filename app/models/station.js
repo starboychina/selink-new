@@ -28,14 +28,6 @@ var Station = new Schema({
         type: String,
         trim: true
     },
-    lon: {
-        type: String,
-        trim: true
-    },
-    lat: {
-        type: String,
-        trim: true
-    },
     location:{
         type: [Number],
         index: '2d'
@@ -49,5 +41,13 @@ var Station = new Schema({
         type: Number
     }
 });
+Station.virtual('lon').get(function () {
+    return this.location[1];
+});
+Station.virtual('lat').get(function () {
+    return this.location[0];
+});
+Station.set('toJSON', { virtuals: true });
+Station.set('toObject', { virtuals: true });
 
 mongoose.model('Station', Station);

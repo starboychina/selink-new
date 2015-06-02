@@ -245,7 +245,12 @@ var map = new google.maps.Map(document.getElementById('map'), {
             }
         ]
 });
+var mapdata = new Array();
 
+google.maps.event.addListener(map, 'center_changed', function() {
+    var position = map.getCenter();
+    getMarkers(position.A,position.F);
+});
 var markerOption = {
 	map: map,
 	//draggable: true,
@@ -255,25 +260,32 @@ var markerOption = {
 
 $(function(){
 	$("#map").height($(document).height());
-
-	$.getJSON( "/mobile/lines?name=JR山手線", function( data ) {
-		var markers = [];
-	    for (var i = 0; i < data.length; i++) {
-	    	for (var j = data[i].stations.length - 1; j >= 0; j--) { 
-	    		var station = data[i].stations[j];
-	    		var latLng = new google.maps.LatLng(station.lat,station.lon);
-
-	    		var marker = $.extend( true, markerOption, {
-		    		position: latLng,
-					content: setMarkerView(station)
-		    	} );
-		    	markers.push(new RichMarker(marker));
-	    	};
-	    }
-	    var mcOptions = {gridSize: 80, maxZoom: 17};
-	    var markerCluster = new MarkerClusterer(map, markers,mcOptions);
-	});
+    getMarkers(35.645736,139.747575);//田町
 });
+var loading = false;
+function getMarkers(lat,lon){
+    if(loading){return;}
+    loading = true;
+    $.getJSON( "/mobile/stations?near[lat]="+lat+"&near[lon]="+lon, function( data ) {
+        var markers = [];
+        for (var j = data.length - 1; j >= 0; j--) { 
+            var station = data[j];
+            if(mapdata.indexOf(station.id) != -1){continue;}
+            mapdata.push(station.id);
+            var latLng = new google.maps.LatLng(station.location[0],station.location[1]);
+
+            var marker = $.extend( true, markerOption, {
+                position: latLng,
+                content: setMarkerView(station)
+            } );
+            markers.push(new RichMarker(marker));
+        };
+
+        var mcOptions = {gridSize: 80, maxZoom: 17};
+        var markerCluster = new MarkerClusterer(map, markers,mcOptions);
+        loading = false;
+    });
+}
 //地図のmarker
 function setMarkerView(station){
 	//console.log(station );

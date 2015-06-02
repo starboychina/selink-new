@@ -6,6 +6,8 @@ module.exports = function(req, res, next) {
 	if(Object.keys(req.query).length == 0){
 		gethotStations(req, res, next);
 		return;
+	}else if(req.query.near){
+		getNearStations(req, res, next);
 	}else{
 		getStations(req, res, next);
 	}
@@ -51,4 +53,13 @@ function getStations(req, res, next){
 			res.json(200, stations);
         }
     });
+}
+function getNearStations(req, res, next) {
+	var size = req.query.size || 20;
+    Station.find({"location":{$near:[req.query.near.lat,req.query.near.lon]}})
+	    	.limit( size )
+	    	.exec(function(err,station){
+		        console.log(err)
+		        res.json(station);
+		    });
 }
