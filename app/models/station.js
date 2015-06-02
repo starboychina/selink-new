@@ -36,6 +36,10 @@ var Station = new Schema({
         type: String,
         trim: true
     },
+    location:{
+        type: [Number],
+        index: '2d'
+    },
     weight: {
         type: Number,
         min: 0,

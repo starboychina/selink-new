@@ -129780,68 +129780,7 @@ var stationdata = [
 //     "FIELD16":9930118
 //   }
 // ];
-module.exports = function(req, res, next) {
-    var modeldata = {};
-    var stations = Array();
-    for (var i = stationdata.length - 1; i >= 0; i--) {
-        var d = stationdata[i];
-        /////////////temp data
-        var temp = {};
-        temp.name = d.FIELD4;//line name
-        temp.kana = d.FIELD5;//line name
-        var s = lookup(stations,d.FIELD2,d.FIELD6);
-        if(! s){
-          s = {
-                _id : mongoose.Types.ObjectId(),
-                name:d.FIELD2,
-                kana:d.FIELD3,
-                pref:d.FIELD6,
-                pref_name:getPrefName(d.FIELD6),
-                zipcode:d.FIELD7,
-                address:d.FIELD8,
-                lon:d.FIELD9,
-                lat:d.FIELD10,
-            };
-          stations.push(s);
-        }
-        temp.station = s;
 
-
-        if(modeldata[temp.name]){
-            modeldata[temp.name].push(temp);
-        }else{
-            modeldata[temp.name] = [temp];
-        }
-    };
-    var linedata = {};
-    for (var i in modeldata) {
-        var d = modeldata[i];
-        var temp = {};
-        temp.name = i;
-        //console.log(d[0]);
-        if(d.length >0 && d[0].kana){
-          temp.kana = d[0].kana;
-        }
-        temp.pref = 13;
-        for (var i = d.length - 1; i >= 0; i--) {
-            if(temp.stations){
-                temp.stations.push(d[i].station._id)
-            }else{
-                temp.stations = [d[i].station._id];
-            }
-        };
-        if(linedata.length >0){
-            linedata.push(temp);
-        }else{
-            linedata = [temp];
-        }
-        
-    };
-    //Line.create(linedata);
-    //Station.create(stations);
-    res.json(400, stations);
-    return;
-};
 function lookup( arr,name ,pref) {
     for(var i = 0, len = arr.length; i < len; i++) {
         if( arr[ i ].name === name && arr[ i ].pref === pref)
@@ -129902,3 +129841,76 @@ function getPrefName(pref){
     };
     return data[pref];
 }
+var update = function(req, res, next) {
+    req.body = req.query; //テスト
+    Station.find({},function(err,stations){
+        for (var i = stations.length - 1; i >= 0; i--) {
+            stations[i].location = [stations[i].lat,stations[i].lon];
+            stations[i].save();
+        };
+        res.json("ok");
+    });
+};
+var insert = function(req, res, next) {
+    var modeldata = {};
+    var stations = Array();
+    for (var i = stationdata.length - 1; i >= 0; i--) {
+        var d = stationdata[i];
+        /////////////temp data
+        var temp = {};
+        temp.name = d.FIELD4;//line name
+        temp.kana = d.FIELD5;//line name
+        var s = lookup(stations,d.FIELD2,d.FIELD6);
+        if(! s){
+          s = {
+                _id : mongoose.Types.ObjectId(),
+                name:d.FIELD2,
+                kana:d.FIELD3,
+                pref:d.FIELD6,
+                pref_name:getPrefName(d.FIELD6),
+                zipcode:d.FIELD7,
+                address:d.FIELD8,
+                location:[d.FIELD10,d.FIELD9],
+            };
+          stations.push(s);
+        }
+        temp.station = s;
+
+
+        if(modeldata[temp.name]){
+            modeldata[temp.name].push(temp);
+        }else{
+            modeldata[temp.name] = [temp];
+        }
+    };
+    var linedata = {};
+    for (var i in modeldata) {
+        var d = modeldata[i];
+        var temp = {};
+        temp.name = i;
+        //console.log(d[0]);
+        if(d.length >0 && d[0].kana){
+          temp.kana = d[0].kana;
+        }
+        temp.pref = 13;
+        for (var i = d.length - 1; i >= 0; i--) {
+            if(temp.stations){
+                temp.stations.push(d[i].station._id)
+            }else{
+                temp.stations = [d[i].station._id];
+            }
+        };
+        if(linedata.length >0){
+            linedata.push(temp);
+        }else{
+            linedata = [temp];
+        }
+        
+    };
+    //Line.create(linedata);
+    //Station.create(stations);
+    res.json(400, stations);
+    return;
+};
+
+module.exports = update;
