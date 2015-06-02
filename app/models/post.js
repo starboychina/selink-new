@@ -85,6 +85,15 @@ var Post = new Schema({
         trim: true,
     },
 
+    latitude {
+        type: String,
+        trim: true,
+    },
+
+    longitude {
+        type: String,
+        trim: true,
+    },
     // Setting
     setting: {
 

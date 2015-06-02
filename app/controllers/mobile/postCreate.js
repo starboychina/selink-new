@@ -121,6 +121,11 @@ module.exports = function(req, res, next) {
                 }
                 post.imagesformobile = imagesformobile
             }
+            if (req.body.latitude && req.body.longitude){
+                post.latitude = req.body.latitude;
+                post.longitude = req.body.longitude;
+                ////other location info (station name ......)
+            }
 
             if (req.body.video) {
                 post.video = req.body.video.name;
