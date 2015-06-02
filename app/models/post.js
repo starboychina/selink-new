@@ -85,12 +85,12 @@ var Post = new Schema({
         trim: true,
     },
 
-    latitude {
+    latitude :{
         type: String,
         trim: true,
     },
 
-    longitude {
+    longitude :{
         type: String,
         trim: true,
     },
