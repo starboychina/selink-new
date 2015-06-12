@@ -78,6 +78,11 @@ var Group = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Event'
     }],
+    // tag
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Tag'
+    }],
     //Station
     station: {
         type: Schema.Types.ObjectId,

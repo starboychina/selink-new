@@ -72,6 +72,11 @@ var Post = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Group'
     },
+    // tag
+    tags: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Tag'
+    }],
 
     // Comments
     comments: [Comment],
