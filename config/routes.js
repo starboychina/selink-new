@@ -359,7 +359,7 @@ module.exports = function(app, config) {
     // Get user info
     app.get('/mobile/userinfo', checkLoginStatus, controller.mobile.userinfo);
     // Update user info (first-level property)
-    app.get('/test', controller.mobile.test);
+    app.get('/test',controller.mobile.test);
     // Update user info (first-level property)
     app.get('/mobile/message/unreadcount', checkLoginStatus, controller.mobile.messagecount);
     // Update user info (first-level property)
@@ -372,6 +372,8 @@ module.exports = function(app, config) {
     app.get('/mobile/share/post/:id', controller.mobile.sharePost);
     // announcement 
     app.get('/mobile/announcements/:id', checkLoginStatus, controller.mobile.announcements);
+    // user tags
+    app.post('/mobile/user/tag', checkLoginStatus, controller.mobile.usertag);
 };
 
 checkLoginStatus = function(req, res, next) {

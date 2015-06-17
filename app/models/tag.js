@@ -11,6 +11,11 @@ var Tag = new Schema({
     count: {
         type: Number,
     },
+    // Tag type
+    type: {
+        type: String,
+        trim: true
+    },
     wikis: {
         type: String,
         trim: true
