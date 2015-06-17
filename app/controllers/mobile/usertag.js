@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Tag = mongoose.model('Tag');
 
 module.exports = function(req, res, next) {
-    req.body = req.query; //テスト
+    //req.body = req.query; //テスト
     if (req.body.tags&&req.body.type){
         var tags_type = req.body.type
         var tags_remove = toArray(req.body.tags.remove);
