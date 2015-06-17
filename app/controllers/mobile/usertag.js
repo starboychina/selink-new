@@ -12,8 +12,10 @@ module.exports = function(req, res, next) {
 
         removeTags(req,tags_remove,function(){
             addTags(req,tags_add,function(){
-                res.json(tags_add);
                 req.user.save();
+                req.user.populate({path:'tags'}, function(err, user) {
+                    res.json(user);
+                });
             });
         });
         //res.json(tags_remove);
