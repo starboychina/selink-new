@@ -7,11 +7,10 @@ module.exports = function(req, res, next) {
     //req.body = req.query; //テスト
     if (req.body.tags&&req.body.type){
         var tags_type = req.body.type
-        var tags_remove = toArray(req.body.tags.remove);
-        var tags_add = toArray(req.body.tags.add);
+        var tags = toArray(req.body.tags);
 
-        removeTags(req,tags_remove,function(){
-            addTags(req,tags_add,function(){
+        removeTags(req,function(){
+            addTags(req,tags,function(){
                 req.user.save();
                 req.user.populate({path:'tags'}, function(err, user) {
                     res.json(user);
@@ -24,8 +23,8 @@ module.exports = function(req, res, next) {
     }
 };
 //タグを削除
-function removeTags(req,tags_remove,callback){
-    Tag.find({"name":{"$in":tags_remove},"type":req.body.type},function(err,tags){  
+function removeTags(req,callback){
+    Tag.find({"type":req.body.type},function(err,tags){  
         for (var i = tags.length - 1; i >= 0; i--) {
             req.user.tags.pull(tags[i].id);
         };
@@ -37,6 +36,8 @@ function addTags(req,tags_add,callback){
     Tag.find({"name":{"$in":tags_add},"type":req.body.type},function(err,tags){  
         for (var i = tags.length - 1; i >= 0; i--) {
             //tags_add.pull(tags[i].name);
+            tags[i].count++;
+            tags[i].save();
             removeObject(tags_add,tags[i].name);
             req.user.tags.addToSet(tags[i].id);
         };
