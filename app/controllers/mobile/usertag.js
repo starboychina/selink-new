@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 module.exports = function(req, res, next) {
     //req.body = req.query; //テスト
-    if (req.body.tags&&req.body.type){
+    if (req.body.type){
         var tags_type = req.body.type
         var tags = toArray(req.body.tags);
 
