@@ -5,9 +5,15 @@ module.exports = function(req, res, next) {
     // page number
     var page = req.query.page || 0;
     var condition = {};
-    if(req.query.type){
-        condition.type = req.query.type;
-    }
+
+    for (var index in req.query) {
+        //console.log(index);
+        if ( "name" == index){
+            condition[index] = new RegExp('^'+req.query[index]+'$', "i");
+        }else{
+            condition[index] = req.query[index];
+        }
+    };
 
     Tag.find(condition)
         .where('logicDelete').equals(false)
