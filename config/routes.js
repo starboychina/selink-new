@@ -351,8 +351,6 @@ module.exports = function(app, config) {
     // login with openid 
     app.post('/mobile/user/openid', controller.mobile.openidlogin);
     // test
-    app.get('/mobile/createstation', controller.mobile.createstation);
-    // test
     app.get('/mobile/group', checkLoginStatus,controller.mobile.group);
     // Get groups (user related)
     app.get('/mobile/user/:user/groups', checkLoginStatus, controller.mobile.group);
@@ -374,6 +372,10 @@ module.exports = function(app, config) {
     app.get('/mobile/announcements/:id', checkLoginStatus, controller.mobile.announcements);
     // user tags
     app.post('/mobile/user/tag', checkLoginStatus, controller.mobile.usertag);
+    // test
+    app.get('/mobile/createstation', controller.mobile.createstation);
+    // test
+    app.get('/mobile/createtags', controller.mobile.createtags);
 };
 
 checkLoginStatus = function(req, res, next) {
