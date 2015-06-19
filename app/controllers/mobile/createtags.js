@@ -63,11 +63,12 @@ module.exports = function(req, res, next) {
     var interest = [
         "旅行",
     ];
-    insertTags(hometown,"hometown");
-    insertTags(workplace,"workplace");
-    insertTags(university,"university");
-    insertTags(language,"language");
-    insertTags(interest,"interest");
+    // insertTags(hometown,"hometown");
+    // insertTags(workplace,"workplace");
+    // insertTags(university,"university");
+    // insertTags(language,"language");
+    // insertTags(interest,"interest");
+    res.json(hometown);
 };
 
 function insertTags(input,type){
