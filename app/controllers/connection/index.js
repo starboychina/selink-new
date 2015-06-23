@@ -70,7 +70,7 @@ _connection_index = function(req, res, user, next) {
     if (req.query.before)
         query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
-    query.select('type firstName lastName title cover bio photo employments educations createDate')
+    query.select('type firstName lastName title cover bio photo employments educations tags createDate')
         .populate('tags')
         .where('logicDelete').equals(false)
         .limit(req.query.size || 20)
