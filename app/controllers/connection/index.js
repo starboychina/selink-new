@@ -71,6 +71,7 @@ _connection_index = function(req, res, user, next) {
         query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
     query.select('type firstName lastName title cover bio photo employments educations createDate')
+        .populate('tags')
         .where('logicDelete').equals(false)
         .limit(req.query.size || 20)
         .sort('-createDate')
