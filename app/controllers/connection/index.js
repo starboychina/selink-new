@@ -59,8 +59,12 @@ _connection_index = function(req, res, user, next) {
         query.where('_id').ne(user._id).nin(user.friends);
 
     // if request "discover" connection type
-    else if (_s.endsWith(req.path, "/discover"))
+    else if (_s.endsWith(req.path, "/discover")){
         query.where('_id').ne(user._id).nin(user.friends.concat(user.invited));
+        if (req.query.withtag == 1){
+            query.where('tags').in(user.tags);
+        }
+    }
 
     // defaultly, find "friends"
     else
