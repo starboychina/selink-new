@@ -62,7 +62,7 @@ var User = new Schema({
     nickName: {
       type: String,
       trim: true,
-    }
+    },
 
     // Photo
     photo: {
