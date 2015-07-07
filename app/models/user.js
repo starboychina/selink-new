@@ -14,11 +14,13 @@ var Skill = require('./profile/skill'),
     Openid = require('./profile/openid');
 
 var User = new Schema({
-    // Primary email
+
+    // Tomo Id
     tomoid: {
         type: String,
         trim: true
     },
+
     // Primary email
     email: {
         type: String,
@@ -56,6 +58,11 @@ var User = new Schema({
         trim: true,
         // validate: validate('len', 0, 20)
     },
+
+    nickName: {
+      type: String,
+      trim: true,
+    }
 
     // Photo
     photo: {
@@ -407,7 +414,7 @@ User.methods.toSolr = function() {
     var qualifications = _.map(this.qualifications, function(qualification) {
         return qualification.name;
     });
-    
+
     // var devices = _.map(this.devices, function(device) {
     //     var payload = device.weight;
     //     return device.name + "|" + payload;
