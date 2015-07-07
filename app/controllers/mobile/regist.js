@@ -9,7 +9,7 @@ var reg_email = /^[a-zA-Z0-9\.\+\-\_]+@[a-zA-Z0-9]+[a-zA-Z0-9\.\-\_]+[a-zA-Z]+$/
 
 module.exports = function(req, res, next) {
 
-    if(!req.body.openid || !req.body.access_token){
+    if(!req.body.openid){
         res.json(400, {});
         return;
     }
