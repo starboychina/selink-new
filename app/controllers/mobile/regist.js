@@ -9,6 +9,8 @@ var reg_email = /^[a-zA-Z0-9\.\+\-\_]+@[a-zA-Z0-9]+[a-zA-Z0-9\.\-\_]+[a-zA-Z]+$/
 
 module.exports = function(req, res, next) {
 
+    console.log(req.body);
+
     if(!req.body.openid){
         res.json(400, {});
         return;
@@ -30,6 +32,7 @@ module.exports = function(req, res, next) {
         // handle error
         if (err) next(err);
         else {
+
             // send notification to administrator
             User.find()
                 .select('email')
@@ -42,6 +45,7 @@ module.exports = function(req, res, next) {
                         name: user.firstName + ' ' + user.lastName
                     });
                 });
+
             // log activity
             Activity.create({
                 _owner: user._id,
@@ -61,6 +65,7 @@ module.exports = function(req, res, next) {
                     });
                 }
             });
+
             // put user's id into session
             req.session.userId = user.id;//auto login
             res.json({"_id":user.id});
