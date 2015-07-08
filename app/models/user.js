@@ -1,7 +1,7 @@
 var _ = require('underscore'),
     _s = require('underscore.string'),
     mongoose = require('mongoose'),
-    validate = require('mongoose-validator').validate,
+    validate = require('mongoose-validator').validatorjs,
     Schema = mongoose.Schema;
 
 // Sub documents
