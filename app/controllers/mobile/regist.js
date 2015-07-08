@@ -9,8 +9,6 @@ var reg_email = /^[a-zA-Z0-9\.\+\-\_]+@[a-zA-Z0-9]+[a-zA-Z0-9\.\-\_]+[a-zA-Z]+$/
 
 module.exports = function(req, res, next) {
 
-    console.log(req.body);
-
     if(!req.body.openid){
         res.json(400, {});
         return;
@@ -19,6 +17,8 @@ module.exports = function(req, res, next) {
     var userinfo = {
         tomoid: req.body.tomoid,
         nickName: req.body.nickName,
+        photo: req.body.headimgurl,
+        gender: req.body.sex,
         openids: [{
           type: "wechat",
           openid: req.body.openid
