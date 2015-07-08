@@ -16,7 +16,7 @@ module.exports = function(req, res, next) {
 
     var userinfo = {
         tomoid: req.body.tomoid,
-        nickName: req.body.nickName,
+        nickName: req.body.nickname,
         photo: req.body.headimgurl,
         gender: req.body.sex,
         openids: [{
