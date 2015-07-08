@@ -373,6 +373,8 @@ var User = new Schema({
 
 // Create photo reference point to s3
 User.virtual('photo_ref').get(function () {
+    if (this.photo && validate.isURL(this.photo))
+        return this.photo;
     if (this.photo)
         return _s.join('/', config.s3.host, config.s3.bucket, 'users', this._id, 'photo', this.photo);
     else
