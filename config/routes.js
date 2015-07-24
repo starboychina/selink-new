@@ -103,7 +103,7 @@ module.exports = function(app, config) {
 
     // Create post
     app.post('/posts', checkLoginStatus, controller.post.create);
-    
+
     app.put('/media', checkLoginStatus, controller.post.upload);
 
     // Update post
@@ -348,7 +348,7 @@ module.exports = function(app, config) {
     app.get('/mobile/stations/:sub', checkLoginStatus, controller.mobile.stationrelation);
     // openid
     app.patch('/mobile/user/openid', checkLoginStatus, controller.mobile.openid);
-    // login with openid 
+    // login with openid
     app.post('/mobile/user/openid', controller.mobile.openidlogin);
     // test
     app.get('/mobile/group', checkLoginStatus,controller.mobile.group);
@@ -368,7 +368,7 @@ module.exports = function(app, config) {
     app.patch('/mobile/groups/:group/:subkey/:subvalue', checkLoginStatus, controller.mobile.groupsubsetting);
 
     app.get('/mobile/share/post/:id', controller.mobile.sharePost);
-    // announcement 
+    // announcement
     app.get('/mobile/announcements/:id', checkLoginStatus, controller.mobile.announcements);
     // user tags
     app.post('/mobile/user/tag', checkLoginStatus, controller.mobile.usertag);
@@ -376,6 +376,8 @@ module.exports = function(app, config) {
     app.get('/mobile/createstation', controller.mobile.createstation);
     // test
     app.get('/mobile/createtags', controller.mobile.createtags);
+
+    app.get('/mobile/user/testLogin', controller.mobile.testLogin)
 };
 
 checkLoginStatus = function(req, res, next) {
