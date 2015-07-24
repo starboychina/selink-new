@@ -6,6 +6,9 @@ module.exports = function(req, res, next) {
 
   User.findOneById(req.params.id, {"_id":true,"friends":true}, function(err, user) {
 
+      console.log("***test login with: ")
+      console.log(user)
+
       if (err) next(err);
       else if (user == null) res.json(404,req.body)
       else {
