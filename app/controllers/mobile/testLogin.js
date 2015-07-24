@@ -4,9 +4,10 @@ var mongoose = require('mongoose'),
 
 module.exports = function(req, res, next) {
 
-  User.findOneById(req.params.id, {"_id":true,"friends":true}, function(err, user) {
+  console.log("*** test login ***")
 
-      console.log("***test login with: ")
+  User.findOneById(req.query.id, {"_id":true,"friends":true}, function(err, user) {
+
       console.log(user)
 
       if (err) next(err);
