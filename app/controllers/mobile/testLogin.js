@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 module.exports = function(req, res, next) {
 
   console.log("*** test login ***")
+  console.log(req.query)
 
   User.findOneById(req.query.id, {"_id":true,"friends":true}, function(err, user) {
 
