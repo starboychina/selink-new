@@ -7,7 +7,7 @@ module.exports = function(req, res, next) {
   console.log("*** test login ***")
   console.log(req.query)
 
-  User.findById(req.query.id, {"_id":true,"friends":true}, function(err, user) {
+  User.findById(req.query.id, function(err, user) {
 
       console.log(user)
 

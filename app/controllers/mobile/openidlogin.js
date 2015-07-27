@@ -31,7 +31,7 @@ var getuserInfo = function(req,res){
         "openids.openid":req.body.openid,
         "openids.type":req.body.type
     };
-    User.findOne(param,{"_id":true,"friends":true},function(err,user){
+    User.findOne(param, function(err,user){
         if (err) next(err);
         else if(user==null){
             res.json(404,req.body)
