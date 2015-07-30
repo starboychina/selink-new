@@ -141,6 +141,12 @@ var User = new Schema({
         trim: true,
         // validate: validate('len', 0, 30)
     },
+    
+    coordinate:{
+        type: [Number],
+        index: '2d'
+    },
+
     //mystation
     stations: [{
         type: Schema.Types.ObjectId,

@@ -11,8 +11,8 @@ var moment = require('moment'),
     Post = require('mongoose').model('Post');
 
 var populateField = {
-    '_owner': 'type firstName lastName title cover photo',
-    'comments._owner': 'type firstName lastName title cover photo',
+    '_owner': 'type nickName firstName lastName title cover photo',
+    'comments._owner': 'type nickName firstName lastName title cover photo',
     'group': 'name cover description'
 };
 

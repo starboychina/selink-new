@@ -90,15 +90,11 @@ var Post = new Schema({
         trim: true,
     },
 
-    latitude :{
-        type: String,
-        trim: true,
+    coordinate:{
+        type: [Number],
+        index: '2d'
     },
 
-    longitude :{
-        type: String,
-        trim: true,
-    },
     // Setting
     setting: {
 
