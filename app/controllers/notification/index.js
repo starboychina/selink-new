@@ -43,7 +43,7 @@ var populateField = {
 module.exports = function(req, res, next) {
 
     // create query
-    var query = Notification.find();
+    var query = Notification.find(req.query);
 
     // notifications are relate with current user
     query.where('_owner').equals(req.user.id);
