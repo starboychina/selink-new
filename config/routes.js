@@ -377,7 +377,9 @@ module.exports = function(app, config) {
     // test
     app.get('/mobile/createtags', controller.mobile.createtags);
 
-    app.get('/mobile/user/testLogin', controller.mobile.testLogin)
+    app.get('/mobile/user/testLogin', controller.mobile.testLogin);
+
+    app.get('/mobile/user/invited', checkLoginStatus, controller.mobile.userinvited);
 };
 
 checkLoginStatus = function(req, res, next) {
