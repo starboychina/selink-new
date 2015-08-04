@@ -25,6 +25,9 @@ module.exports = function(req, res, next) {
 };
 
 var finduser = function(req, res, next){
+	for (var index in req.query) {
+		req.query[index] = index=="_id"? req.query[index]: new RegExp('^'+req.query[index]+'$', "i");
+	}
 	User.find(req.query,function(err,users){
     	if(err){res.json(404, {});}
     	res.json(200, users);
