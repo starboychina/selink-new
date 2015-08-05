@@ -32,12 +32,15 @@ module.exports = function(req, res, next) {
     if (req.query.before)
         query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
+    if (req.query.after)
+        query.where('createDate').gt(moment.unix(req.query.after).toDate());
+
     query.select('-removedComments -logicDelete')
         .populate('_owner', populateField['_owner'])
         .populate('group', populateField['group'])
         .populate('comments._owner', populateField['comments._owner'])
         .where('logicDelete').equals(false)
-        .limit(req.query.size || 20)
+        .limit(req.query.size || 10)
         .sort('-createDate')
         .exec(function(err, posts) {
             if (err) next(err);
