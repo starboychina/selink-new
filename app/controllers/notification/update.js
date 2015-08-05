@@ -244,7 +244,7 @@ decline = function(req, res, next, notification) {
                                     var badge = 1;
                                     var alertMessage = req.user.firstName + " " +req.user.lastName + "さんはあなたの友達リクエストを拒否しました";
                                     var payload = {'messageFrom': 'Caroline'};
-                                    push(token,alertMessage,payload,badge);
+                                    Push(token,alertMessage,payload,badge);
                                 }
                             };
                         }else{
