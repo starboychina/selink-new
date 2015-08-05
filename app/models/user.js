@@ -389,6 +389,8 @@ User.virtual('photo_ref').get(function () {
 
 // Create cover reference point to s3
 User.virtual('cover_ref').get(function () {
+    if (this.cover && validate.isURL(this.cover))
+        return this.cover;
     if (this.cover)
         return _s.join('/', config.s3.host, config.s3.bucket, 'users', this._id, 'cover', this.cover);
     else
