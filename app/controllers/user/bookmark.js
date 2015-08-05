@@ -12,8 +12,8 @@ module.exports = function(req, res, next) {
     Post.find()
         .where('logicDelete').equals(false)
         .where('bookmark').equals(req.user.id)
-        .populate('_owner', 'type firstName lastName title cover photo createDate')
-        .populate('comments._owner', 'type firstName lastName title cover photo createDate')
+        .populate('_owner', 'type nickName firstName lastName title cover photo createDate')
+        .populate('comments._owner', 'type nickName firstName lastName title cover photo createDate')
         .populate('group', 'name cover description')
         .sort('-createDate')
         .skip(10*page)  // skip n page

@@ -18,8 +18,8 @@ var moment = require('moment'),
     Group = mongoose.model('Group');
 
 var populateField = {
-    '_owner': 'type firstName lastName title cover photo',
-    'comments._owner': 'type firstName lastName title cover photo',
+    '_owner': 'type nickName firstName lastName title cover photo',
+    'comments._owner': 'type nickName firstName lastName title cover photo',
     'group': 'name cover description'
 };
 
