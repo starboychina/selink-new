@@ -9,3 +9,5 @@ resource/push/cert.pem
 bin/selink
 
 config/global.js
+
+config/global.js
