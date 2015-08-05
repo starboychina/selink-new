@@ -12,9 +12,9 @@ module.exports = function(req, res, next) {
 
     Post.findById(req.params.post)
         .where('logicDelete').equals(false)
-        .populate('_owner', 'type firstName lastName title cover photo createDate')
+        .populate('_owner', 'type nikcName firstName lastName title cover photo createDate')
         .populate('group', 'name cover description')
-        .populate('comments._owner', 'type firstName lastName title cover photo createDate')
+        .populate('comments._owner', 'type nickName firstName lastName title cover photo createDate')
         .exec(function(err, post) {
             if (err) next(err);
             else res.json(post);
