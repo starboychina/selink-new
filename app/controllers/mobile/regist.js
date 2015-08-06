@@ -68,7 +68,7 @@ module.exports = function(req, res, next) {
 
             // put user's id into session
             req.session.userId = user.id;//auto login
-            res.json({"_id":user.id});
+            res.json(user);
         }
     });
 
