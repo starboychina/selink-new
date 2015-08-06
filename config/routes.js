@@ -219,6 +219,9 @@ module.exports = function(app, config) {
     // Messages
     // ----------------------------------------------------------------------
 
+    // Chat for tomo
+    app.get('/chat/:user', checkLoginStatus, controller.message.chat);
+
     // Get current user's messages
     app.get('/messages', checkLoginStatus, controller.message.index);
     // Get current user's message number
