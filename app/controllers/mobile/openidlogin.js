@@ -63,18 +63,18 @@ var getuserInfo = function(req,res){
 
             // create query
             Notification.count()
-                .where('_owner').equals(req.user.id)
+                .where('_owner').equals(user.id)
                 .where('type').equals('friend-invited')
-                .where('confirmed').ne(req.user.id)
+                .where('confirmed').ne(user.id)
                 .where('logicDelete').equals(false)
                 .exec(function(err, notiCount) {
                     if (err) next(err);
                     else {
 
                         Message.count()
-                            .where('_recipient').equals(req.user.id)
-                            .where('opened').ne(req.user.id)
-                            .where('logicDelete').ne(req.user.id)
+                            .where('_recipient').equals(user.id)
+                            .where('opened').ne(user.id)
+                            .where('logicDelete').ne(user.id)
                             .exec(function(err, msgCount) {
                                 if (err) next(err);
                                 else {
