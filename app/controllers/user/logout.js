@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
 	if (req.body.token){
 		req.user.devices.forEach(function(device) {
             if(device.token == req.body.token){
-            	eq.user.devices.pull(device);
+            	req.user.devices.pull(device);
             }
         });
 	}
