@@ -1,6 +1,8 @@
 // Create new sub document
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
+    Notification = mongoose.model('Notification'),
+    Message = mongoose.model('Message');
     Activity = mongoose.model('Activity');
     https = require('https');
 
@@ -26,11 +28,14 @@ module.exports = function(req, res, next) {
     }
     res.json(401, {});
 };
+
 var getuserInfo = function(req,res){
+
     var param = {
         "openids.openid":req.body.openid,
         "openids.type":req.body.type
     };
+
     User.findOne(param, function(err,user){
         if (err) next(err);
         else if(user==null){
@@ -47,16 +52,40 @@ var getuserInfo = function(req,res){
             }, function(err, activity) {
                 if (err) next(err);
             });
-            user.friends.forEach(function(room) {
 
+            user.friends.forEach(function(room) {
                 sio.sockets.in(room).emit('user-login', {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     photo_ref: user.photo_ref
                 });
             });
-            // send success signal
-            res.json(200,user);
+
+            // create query
+            Notification.count()
+                .where('_owner').equals(req.user.id)
+                .where('type').equals('friend-invited')
+                .where('confirmed').ne(req.user.id)
+                .where('logicDelete').equals(false)
+                .exec(function(err, notiCount) {
+                    if (err) next(err);
+                    else {
+
+                        Message.count()
+                            .where('_recipient').equals(req.user.id)
+                            .where('opened').ne(req.user.id)
+                            .where('logicDelete').ne(req.user.id)
+                            .exec(function(err, msgCount) {
+                                if (err) next(err);
+                                else {
+
+                                    user = user.toObject();
+                                    user.notificationCount = notiCount + msgCount
+                                    res.json(200, user)
+                                }
+                            });
+                    }
+                });
         }
     });
 }
