@@ -32,26 +32,21 @@ module.exports = function(req, res, next) {
     if (req.query.before)
         query.where('createDate').lt(moment.unix(req.query.before).toDate());
 
-    if (req.query.after)
+    if (req.query.after) {
+        console.log(moment.unix(req.query.after).toDate())
         query.where('createDate').gt(moment.unix(req.query.after).toDate());
+    }
 
     query.select('-removedComments -logicDelete')
         .populate('_owner', populateField['_owner'])
         .populate('group', populateField['group'])
         .populate('comments._owner', populateField['comments._owner'])
         .where('logicDelete').equals(false)
-        .limit(req.query.size || 10)
+        .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, posts) {
             if (err) next(err);
             else if (posts.length === 0) res.json(404, {});
-            else {
-                posts = posts.map(function (post) {
-                    post = post.toObject();
-                    post.newsfeed = "1";
-                    return post;
-                });
-                res.json(posts);
-            }
+            else res.json(posts);
         });
 };
