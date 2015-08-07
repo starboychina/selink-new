@@ -12,7 +12,11 @@ module.exports = function(req, res, next) {
     });
 
 	if (req.body.token){
+        console.log(req.user.devices)
 		req.user.devices.forEach(function(device) {
+
+            console.log(device)
+            console.log(token)
             if(device.token == req.body.token){
             	req.user.devices.pull(device);
             }
