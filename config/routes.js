@@ -222,7 +222,7 @@ module.exports = function(app, config) {
     // Chat for tomo
     app.get('/chat/:user', checkLoginStatus, controller.message.chat);
     // Open chat message for tomo
-    app.get('/chat/:user/open', checkLoginStatus, controller.message.open);
+    app.put('/chat/:user/open', checkLoginStatus, controller.message.open);
 
     // Get current user's messages
     app.get('/messages', checkLoginStatus, controller.message.index);
