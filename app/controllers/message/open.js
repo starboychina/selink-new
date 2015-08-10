@@ -7,7 +7,7 @@ module.exports = function(req, res, next) {
         .where('_recipient').equals(req.user.id)
         .where('logicDelete').ne(req.user.id)
         .setOptions({ multi: true })
-        .update({ opened: {$addToSet: req.user.id} }, function(err, messages) {
+        .update({ $addToSet: {opened: req.user.id} }, function(err, messages) {
 
             console.log(arguments)
 
