@@ -97,6 +97,7 @@ _connection_index = function(req, res, user, next) {
                       else {
                         user = user.toObject();
                         user.lastMessage = message;
+                        return user;
                       }
                   });
               })
