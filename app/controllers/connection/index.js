@@ -100,6 +100,9 @@ _connection_index = function(req, res, user, next) {
                       }
                   });
               })
+
+              console.log(users)
+
               res.json(users);
             }
         });
