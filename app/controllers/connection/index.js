@@ -83,7 +83,24 @@ _connection_index = function(req, res, user, next) {
         .exec(function(err, users) {
             if (err) next(err);
             else if (users.length === 0) res.json(404, {});
-            else res.json(users);
+            else {
+              users.map(function(user) {
+                Messages.findOne()
+                  .select('content createDate')
+                  .where('_from').in([req.user.id, req.params.user])
+                  .where('_recipient').in([req.user.id, req.params.user])
+                  .where('logicDelete').ne(req.user.id)
+                  .sort('-createDate')
+                  .exec(function(err, message) {
+                      if (err) next(err);
+                      else {
+                        user = user.toObject();
+                        user.lastMessage = message;
+                      }
+                  });
+              })
+              res.json(users);
+            }
         });
 
 };
