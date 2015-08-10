@@ -85,26 +85,49 @@ _connection_index = function(req, res, user, next) {
             if (err) next(err);
             else if (users.length === 0) res.json(404, {});
             else {
-              users.map(function(user) {
-                Message.findOne()
-                  .select('content createDate')
-                  .where('_from').in([req.user.id, req.params.user])
-                  .where('_recipient').in([req.user.id, req.params.user])
-                  .where('logicDelete').ne(req.user.id)
-                  .sort('-createDate')
-                  .exec(function(err, message) {
-                      if (err) next(err);
-                      else {
-                        user = user.toObject();
-                        user.lastMessage = message;
-                        return user;
-                      }
-                  });
-              })
 
-              console.log(users)
+                async.map(users, function(user){
+                    Message.findOne()
+                        .select('content createDate')
+                        .where('_from').in([req.user.id, user.id])
+                        .where('_recipient').in([req.user.id, user.id])
+                        .where('logicDelete').ne(req.user.id)
+                        .sort('-createDate')
+                        .exec(function(err, message) {
+                            if (err) next(err);
+                            else {
+                                user = user.toObject();
+                                user.lastMessage = message;
+                            }
+                        });
+                }, function(err, users) {
+                    if (err) next(err);
+                    else {
+                        console.log(users)
+                        res.json(users);
+                    }
+                });
 
-              res.json(users);
+
+              // users.map(function(user) {
+              //     Message.findOne()
+              //         .select('content createDate')
+              //         .where('_from').in([req.user.id, user.id])
+              //         .where('_recipient').in([req.user.id, user.id])
+              //         .where('logicDelete').ne(req.user.id)
+              //         .sort('-createDate')
+              //         .exec(function(err, message) {
+              //             if (err) next(err);
+              //             else {
+              //                 user = user.toObject();
+              //                 user.lastMessage = message;
+              //             }
+              //         });
+              // })
+              //
+              // console.log(users)
+              //
+              // res.json(users);
             }
         });
 
