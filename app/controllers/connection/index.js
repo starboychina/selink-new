@@ -17,6 +17,7 @@
 var _s = require('underscore.string'),
     async = require('async'),
     moment = require('moment'),
+    Message = require('mongoose').model('Message'),
     User = require('mongoose').model('User');
 
 module.exports = function(req, res, next) {
