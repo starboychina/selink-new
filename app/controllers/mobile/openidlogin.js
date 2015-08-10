@@ -74,7 +74,7 @@ var getuserInfo = function(req,res){
                     else {
 
                         Message.find()
-                            .select('from createDate')
+                            .select('_from createDate')
                             .where('_recipient').equals(user.id)
                             .where('opened').ne(user.id)
                             .where('logicDelete').ne(user.id)
