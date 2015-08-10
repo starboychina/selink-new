@@ -86,7 +86,7 @@ _connection_index = function(req, res, user, next) {
             else if (users.length === 0) res.json(404, {});
             else {
               users.map(function(user) {
-                Messages.findOne()
+                Message.findOne()
                   .select('content createDate')
                   .where('_from').in([req.user.id, req.params.user])
                   .where('_recipient').in([req.user.id, req.params.user])
