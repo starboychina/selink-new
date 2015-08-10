@@ -50,9 +50,9 @@ module.exports = function(req, res, next) {
             			Key: 'users/' + req.user.id + '/post/' + image.name,
             			Bucket: config.s3.bucket
 				    };
-				    if (image.size == undefined || image.size.width == undefined  || image.size.height == undefined ){
-				    	res.json(404, {"error":"the size is not set"});
-				    }
+				    // if (image.size == undefined || image.size.width == undefined  || image.size.height == undefined ){
+				    // 	res.json(404, {"error":"the size is not set"});
+				    // }
 					s3.headObject(params, function (err, metadata) {  
 					  //if (err && err.statusCode === 404) {
             			if (err){
@@ -121,9 +121,8 @@ module.exports = function(req, res, next) {
                 }
                 post.imagesformobile = imagesformobile
             }
-            if (req.body.latitude && req.body.longitude){
-                post.latitude = req.body.latitude;
-                post.longitude = req.body.longitude;
+            if (req.body.coordinate){
+                post.coordinate = req.body.coordinate;
                 ////other location info (station name ......)
             }
 
