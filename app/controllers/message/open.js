@@ -3,10 +3,8 @@ var moment = require('moment'),
 
 module.exports = function(req, res, next) {
 
-    console.log('############# open')
-
     Message.where('_from').equals(req.params.user)
-        .where('_recipient').equals(req.params.user)
+        .where('_recipient').equals(req.user.id)
         .where('logicDelete').ne(req.user.id)
         .setOptions({ multi: true })
         .update({ opened: {$addToSet: req.user.id} }, function(err, messages) {
