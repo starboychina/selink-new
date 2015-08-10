@@ -68,7 +68,7 @@ var getuserInfo = function(req,res){
                 .where('type').equals('friend-invited')
                 .where('confirmed').ne(user.id)
                 .where('logicDelete').equals(false)
-                .populate('_from', 'nickName, photo')
+                .populate('_from', 'nickName photo')
                 .exec(function(err, friendInvitations) {
                     if (err) next(err);
                     else {
@@ -85,8 +85,6 @@ var getuserInfo = function(req,res){
                                     user = user.toObject();
                                     user.friendInvitations = friendInvitations
                                     user.newMessages = newMessages
-
-                                    console.log(user)
 
                                     res.json(200, user)
                                 }
