@@ -2,8 +2,8 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Notification = mongoose.model('Notification'),
-    Message = mongoose.model('Message');
-    Activity = mongoose.model('Activity');
+    Message = mongoose.model('Message'),
+    Activity = mongoose.model('Activity'),
     https = require('https');
 
 module.exports = function(req, res, next) {
