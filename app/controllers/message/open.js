@@ -8,9 +8,6 @@ module.exports = function(req, res, next) {
         .where('logicDelete').ne(req.user.id)
         .setOptions({ multi: true })
         .update({ $addToSet: {opened: req.user.id} }, function(err, messages) {
-
-            console.log(arguments)
-
             if (err) next(err);
             else res.json();
         });

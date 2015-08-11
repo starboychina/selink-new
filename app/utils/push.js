@@ -10,7 +10,7 @@ var options = {
     errorCallback: function(err, notification){
     	console.log("err " + err);
     } ,    /* Callback when error occurs function(err,notification) */
-}; 
+};
 module.exports = function(sender,users,alertMessage,onlinefunc){
 	if (!users){return;}
 	if (typeof users == 'string' || users instanceof String || !users.length){
@@ -38,6 +38,7 @@ module.exports.all = function(sender,alertMessage,onlinefunc){
             }
         });
 }
+
 function send(users,alertMessage,onlinefunc){
 	for (var i = users.length - 1; i >= 0; i--) {
     	var user = users[i];
@@ -64,6 +65,6 @@ function send(users,alertMessage,onlinefunc){
     		//console.log("onlinefunc");
         	onlinefunc(user);
         }
-        
+
     };
 }
