@@ -61,7 +61,7 @@ module.exports = function(req, res, next) {
                             _from: {
                                 _id: req.user.id,
                                 nickName: req.user.nickName,
-                                photo: req.user.photo
+                                photo: req.user.photo_ref
                             },
                             type: 'friend-invited',
                             createDate: new Date()
