@@ -144,7 +144,8 @@ approve = function(req, res, next, notification) {
                                 lastName: req.user.lastName,
                                 title: req.user.title,
                                 cover: req.user.cover,
-                                photo: req.user.photo
+                                photo: req.user.photo,
+                                photo_ref: req.user.photo_ref
                             },
                             type: 'friend-approved',
                             createDate: new Date()
