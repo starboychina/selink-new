@@ -139,6 +139,7 @@ approve = function(req, res, next, notification) {
                             _from: {
                                 _id: req.user.id,
                                 type: req.user.type,
+                                nickName: req.user.nickName,
                                 firstName: req.user.firstName,
                                 lastName: req.user.lastName,
                                 title: req.user.title,
