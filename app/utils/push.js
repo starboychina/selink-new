@@ -41,13 +41,14 @@ module.exports.all = function(sender,alertMessage,onlinefunc){
 
 function send(users,alertMessage,onlinefunc){
 
-  console.log('########## send to: ')
-  console.log(users)
-
 	for (var i = users.length - 1; i >= 0; i--) {
     	var user = users[i];
     	//console.log(user);
         if(sio.sockets.clients(user.id).length < 1 ){
+
+          console.log('##################### send to user')
+          console.log(user)
+
         	var devices = user.devices;
             for (var j = devices.length - 1; j >= 0; j--) {
             	var device = devices[j];
@@ -56,16 +57,16 @@ function send(users,alertMessage,onlinefunc){
                   console.log('########## send to token:' + device.token)
 
                     //push
-					var apnsConnection = new apns.Connection(options);
-					var device = new apns.Device(device.token);
-					var note = new apns.Notification();
-					note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-					note.badge = 1;
-					note.sound = "ping.aiff";
-					note.alert = alertMessage;
-					note.payload = {'messageFrom': 'Caroline'};
-					note.device = device;
-					apnsConnection.sendNotification(note);
+        					var apnsConnection = new apns.Connection(options);
+        					var device = new apns.Device(device.token);
+        					var note = new apns.Notification();
+        					note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+        					note.badge = 1;
+        					note.sound = "ping.aiff";
+        					note.alert = alertMessage;
+        					note.payload = {'messageFrom': 'Caroline'};
+        					note.device = device;
+        					apnsConnection.sendNotification(note);
                 }
             };
         }else if (onlinefunc){
