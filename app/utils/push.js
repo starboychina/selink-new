@@ -48,6 +48,9 @@ function send(users,alertMessage,onlinefunc){
             for (var j = devices.length - 1; j >= 0; j--) {
             	var device = devices[j];
                 if(device.token){
+
+                  console.log('########## send to token:' + device.token)
+
                     //push
 					var apnsConnection = new apns.Connection(options);
 					var device = new apns.Device(device.token);
