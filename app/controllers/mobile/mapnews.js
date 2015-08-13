@@ -25,7 +25,7 @@ module.exports = function(req, res, next) {
         .populate('_owner', populateField['_owner'])
         .populate('group', populateField['group'])
         .populate('comments._owner', populateField['comments._owner'])
-        .limit(req.query.size || 20)
+        // .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, posts) {
             if (err) next(err);
