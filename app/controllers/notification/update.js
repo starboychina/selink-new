@@ -131,7 +131,7 @@ approve = function(req, res, next, notification) {
                 if (err) callback(err);
                 else {
                     // push
-                    var alertMessage = req.user.firstName + " " +req.user.lastName + "さんはあなたの友達リクエストを承認しました";
+                    var alertMessage = req.user.firstName + " " +req.user.lastName + "已成为您的好友";
                     Push(req.user.id,notification._from,alertMessage,function(){
                         // send real time message to target user
                         sio.sockets.in(notification._from).emit('friend-approved', {
@@ -242,7 +242,7 @@ decline = function(req, res, next, notification) {
                                 if(user.devices[j].token){
                                     var token = user.devices[j].token;
                                     var badge = 1;
-                                    var alertMessage = req.user.firstName + " " +req.user.lastName + "さんはあなたの友達リクエストを拒否しました";
+                                    var alertMessage = req.user.firstName + " " +req.user.lastName + "拒绝了您的好友邀请";
                                     var payload = {'messageFrom': 'Caroline'};
                                     Push(token,alertMessage,payload,badge);
                                 }
@@ -384,7 +384,7 @@ approveApplication = function(req, res, next, notification) {
                 });
 
             // return the updated notification
-            res.json(results.updateNotification[0]);   
+            res.json(results.updateNotification[0]);
         }
     });
 };
@@ -486,7 +486,7 @@ declineApplication = function(req, res, next, notification) {
             // });
 
             // return the updated notification
-            res.json(results.updateNotification[0]);   
+            res.json(results.updateNotification[0]);
         }
     });
 };
@@ -523,7 +523,7 @@ accept = function(req, res, next, notification) {
 
         // mark the notification as confirmed
         updateNotification: function(callback) {
-            
+
             notification.result = req.body.result;
             notification.confirmed.addToSet(req.user.id);
             notification.save(callback);

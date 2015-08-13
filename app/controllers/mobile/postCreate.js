@@ -53,13 +53,13 @@ module.exports = function(req, res, next) {
 				    // if (image.size == undefined || image.size.width == undefined  || image.size.height == undefined ){
 				    // 	res.json(404, {"error":"the size is not set"});
 				    // }
-					s3.headObject(params, function (err, metadata) {  
+					s3.headObject(params, function (err, metadata) {
 					  //if (err && err.statusCode === 404) {
             			if (err){
             				res.json(404, err.code);
 					  		//callback({"error":404});
-            			} 
-            			else {  
+            			}
+            			else {
             				image.type = metadata.ContentType;
             				callback(null, null);
             			}
@@ -259,7 +259,7 @@ module.exports = function(req, res, next) {
                 });
             }
             // send email to all friends
-            var alertMessage = req.user.firstName + ' ' + req.user.lastName + ' ー 新しい記事';
+            var alertMessage = req.user.firstName + ' ' + req.user.lastName + '：' + postObj.contentText;
             Push(req.user.id,notifiedUser,alertMessage,function(user){
                 // send real time message to friends
                 sio.sockets.in(user.id).emit('post-new', {
