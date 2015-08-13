@@ -43,10 +43,13 @@ function send(users,alertMessage,onlinefunc){
 
 	for (var i = users.length - 1; i >= 0; i--) {
     	var user = users[i];
-    	//console.log(user);
+
+        console.log('*********************')
+        console.log(sio.sockets.clients())
+
         if(sio.sockets.clients(user.id).length < 1 ){
 
-          console.log('##################### send to user')
+          console.log('##################### send to user:')
           console.log(user)
 
         	var devices = user.devices;
