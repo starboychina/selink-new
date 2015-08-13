@@ -260,6 +260,7 @@ module.exports = function(req, res, next) {
             }
             // send email to all friends
             var alertMessage = req.user.firstName + ' ' + req.user.lastName + '：' + postObj.contentText;
+            
             Push(req.user.id,notifiedUser,alertMessage,function(user){
                 // send real time message to friends
                 sio.sockets.in(user.id).emit('post-new', {
