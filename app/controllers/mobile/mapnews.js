@@ -1,12 +1,3 @@
-// NewsFeed
-// ---------------------------------------------
-// Return the latest 20 posts of current user's friends and groups, in descending order of create date.
-// ---------------------------------------------
-// Parameter:
-//   1. before: A Unix time stamp used as start point of retrive     default: none
-//   2. size  : record number of query                               default: 20
-// ---------------------------------------------
-
 var moment = require('moment'),
     Post = require('mongoose').model('Post');
 
@@ -28,19 +19,12 @@ module.exports = function(req, res, next) {
     //     {group: {$in: req.user.groups}}
     // ]);
 
-    // if request items before some time point
-    if (req.query.before)
-        query.where('createDate').lt(moment.unix(req.query.before).toDate());
-
-    if (req.query.after) {
-        query.where('createDate').gt(moment.unix(req.query.after).toDate());
-    }
-
     query.select('-removedComments -logicDelete')
+        .where('logicDelete').equals(false)
+        .where('coordinate').exists(true)
         .populate('_owner', populateField['_owner'])
         .populate('group', populateField['group'])
         .populate('comments._owner', populateField['comments._owner'])
-        .where('logicDelete').equals(false)
         .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, posts) {

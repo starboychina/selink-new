@@ -69,6 +69,7 @@ module.exports = function(app, config) {
 
     // Get news
     app.get('/newsfeed', checkLoginStatus, controller.post.newsfeed);
+    app.get('/mapnews', checkLoginStatus, controller.mobile.mapnews);
 
     // Bookmarked item
     app.get('/bookmark', checkLoginStatus, controller.user.bookmark);
