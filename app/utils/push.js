@@ -40,6 +40,10 @@ module.exports.all = function(sender,alertMessage,onlinefunc){
 }
 
 function send(users,alertMessage,onlinefunc){
+
+  console.log('########## send to: ')
+  console.log(users)
+
 	for (var i = users.length - 1; i >= 0; i--) {
     	var user = users[i];
     	//console.log(user);
