@@ -53,7 +53,7 @@ module.exports = function(req, res, next) {
 
                 if (err) callback(err);
                 else {
-                    var alertMessage = req.user.firstName + " " + req.user.lastName + " 请求成为您的好友";
+                    var alertMessage = req.user.nickName + " 请求成为您的好友";
                     Push(req.user.id,req.body.id,alertMessage,function(user){
                         // send real time message to target user
                         sio.sockets.in(req.body.id).emit('friend-invited', {
