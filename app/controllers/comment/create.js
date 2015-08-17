@@ -156,7 +156,7 @@ module.exports = function(req, res, next) {
                   id: post.id
                 };
 
-                Push(req.user.id, commentNotification._owner._id, payload, alertMessage, function(user){
+                Push(req.user.id, commentNotification._owner, payload, alertMessage, function(user){
                     // send real time message
                     sio.sockets.in(commentNotification._owner).emit('post-commented', {
                         _id: commentNotification.id,
@@ -186,7 +186,7 @@ module.exports = function(req, res, next) {
 
                 var alertMessage = req.user.nickName + ' 回复了您的评论.';
 
-                Push(req.user.id,replyNotification._owner._id,alertMessage,function(user){
+                Push(req.user.id, replyNotification._owner, alertMessage, function(user){
                     // send real time message
                     sio.sockets.in(replyNotification._owner).emit('comment-replied', {
                         _id: replyNotification.id,
