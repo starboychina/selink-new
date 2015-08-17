@@ -47,9 +47,6 @@ module.exports = function(req, res, next) {
             if (err) next(err);
             else if (posts.length === 0) res.json(404, {});
             else {
-              console.log('#######################')
-              console.log(posts)
-              console.log('#######################')
               res.json(posts);
             }
         });

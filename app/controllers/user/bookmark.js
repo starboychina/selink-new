@@ -20,6 +20,7 @@ module.exports = function(req, res, next) {
         .limit(10)
         .exec(function(err, posts) {
             if (err) next(err);
+            else if (posts.length === 0) res.json(404, {});
             else {
 
                 Job.find()
