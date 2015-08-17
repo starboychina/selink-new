@@ -384,6 +384,7 @@ module.exports = function(app, config) {
     app.get('/mobile/createtags', controller.mobile.createtags);
 
     app.get('/mobile/user/testLogin', controller.mobile.testLogin);
+    app.get('/mobile/user/testLogout', controller.mobile.testLogout);
 
     app.get('/mobile/user/invited', checkLoginStatus, controller.mobile.userinvited);
 };
