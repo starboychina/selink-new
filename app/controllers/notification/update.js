@@ -132,7 +132,12 @@ approve = function(req, res, next, notification) {
                 else {
                     // push
                     var alertMessage = req.user.nickName + "已成为您的好友";
-                    Push(req.user.id,notification._from,alertMessage,function(){
+                    var payload = {
+                      type: 'friend-approved',
+                      id: req.user.id
+                    };
+
+                    Push(req.user.id, notification._from, payload, alertMessage, function(){
                         // send real time message to target user
                         sio.sockets.in(notification._from).emit('friend-approved', {
                             _id: noty._id,
@@ -237,36 +242,60 @@ decline = function(req, res, next, notification) {
                 if (err) callback(err);
                 else {
 
-                    // push
-                    User.findById(notification._from,function(err, user){
-                        if(sio.sockets.clients(user.id).length < 1 ){
-                            for (var j = user.devices.length - 1; j >= 0; j--) {
-                                if(user.devices[j].token){
-                                    var token = user.devices[j].token;
-                                    var badge = 1;
-                                    var alertMessage = req.user.nickName + "拒绝了您的好友邀请";
-                                    var payload = {'messageFrom': 'Caroline'};
-                                    Push(token,alertMessage,payload,badge);
-                                }
-                            };
-                        }else{
-                            // send real time message to target user
-                            sio.sockets.in(notification._from).emit('friend-declined', {
-                                _id: noty._id,
-                                _from: {
-                                    _id: req.user.id,
-                                    type: req.user.type,
-                                    firstName: req.user.firstName,
-                                    lastName: req.user.lastName,
-                                    title: req.user.title,
-                                    cover: req.user.cover,
-                                    photo: req.user.photo
-                                },
-                                type: 'friend-declined',
-                                createDate: new Date()
-                            });
-                        }
+                    var alertMessage = req.user.nickName + "拒绝了您的好友邀请";
+                    var payload = {
+                      type: 'friend-declined',
+                      id: req.user.id
+                    };
+
+                    Push(req.user.id, notification._from, payload, alertMessage, function(){
+                        // send real time message to target user
+                        sio.sockets.in(notification._from).emit('friend-declined', {
+                            _id: noty._id,
+                            _from: {
+                                _id: req.user.id,
+                                type: req.user.type,
+                                firstName: req.user.firstName,
+                                lastName: req.user.lastName,
+                                title: req.user.title,
+                                cover: req.user.cover,
+                                photo: req.user.photo
+                            },
+                            type: 'friend-declined',
+                            createDate: new Date()
+                        });
                     });
+
+                    // // push
+                    // User.findById(notification._from,function(err, user){
+                    //     if(sio.sockets.clients(user.id).length < 1 ){
+                    //         for (var j = user.devices.length - 1; j >= 0; j--) {
+                    //             if(user.devices[j].token){
+                    //                 var token = user.devices[j].token;
+                    //                 var badge = 1;
+                    //                 var alertMessage = req.user.nickName + "拒绝了您的好友邀请";
+                    //                 var payload = {'messageFrom': 'Caroline'};
+                    //                 Push(token,alertMessage,payload,badge);
+                    //             }
+                    //         };
+                    //     }else{
+                    //         // send real time message to target user
+                    //         sio.sockets.in(notification._from).emit('friend-declined', {
+                    //             _id: noty._id,
+                    //             _from: {
+                    //                 _id: req.user.id,
+                    //                 type: req.user.type,
+                    //                 firstName: req.user.firstName,
+                    //                 lastName: req.user.lastName,
+                    //                 title: req.user.title,
+                    //                 cover: req.user.cover,
+                    //                 photo: req.user.photo
+                    //             },
+                    //             type: 'friend-declined',
+                    //             createDate: new Date()
+                    //         });
+                    //     }
+                    // });
 
                     callback(null);
                 }

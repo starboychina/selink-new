@@ -150,9 +150,13 @@ module.exports = function(req, res, next) {
             // send message about comment
             if (commentNotification) {
 
-                var alertMessage = req.user.nickName + ' 回复了您的帖子.';
+                var alertMessage = req.user.nickName + ' 评论了您的帖子.';
+                var payload = {
+                  type: 'post-commented',
+                  id: post.id
+                };
 
-                Push(req.user.id,commentNotification._owner._id,alertMessage,function(user){
+                Push(req.user.id, commentNotification._owner._id, payload, alertMessage, function(user){
                     // send real time message
                     sio.sockets.in(commentNotification._owner).emit('post-commented', {
                         _id: commentNotification.id,

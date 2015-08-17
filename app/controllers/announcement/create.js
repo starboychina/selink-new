@@ -16,8 +16,13 @@ module.exports = function(req, res, next) {
             announcement.populate('_owner', 'firstName lastName photo', function(err, announcement){
                 if (err) next(err);
                 else {
-                    var alertMessage = '現場TOMOからのお知らせ';
-                    Push.all(req.user.id,alertMessage,function(user){
+                    var alertMessage = '系统通知';
+                    var payload = {
+                      type: 'announcement',
+                      id: announcement.id
+                    };
+
+                    Push.all(req.user.id, payload, alertMessage, function(user){
                         // send real time message to friends
                         sio.sockets.in(user.id).emit('new-announcement', {
                             _id: announcement.id,

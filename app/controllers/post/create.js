@@ -92,7 +92,7 @@ module.exports = function(req, res, next) {
                         ContentType: req.body.video.type
                     }, function(err, data) {
                         if (err) callback(err);
-                        else 
+                        else
                             transcoder.createJob({
                                 Input: {
                                     Key: 'users/' + req.user.id + '/input/' + videoName,
@@ -260,18 +260,14 @@ module.exports = function(req, res, next) {
                         notifiedUser.addToSet(participant);
                 });
             }
-            // send email to all friends
-            var alertMessage = req.user.firstName + ' ' + req.user.lastName + ' ー 新しい記事';
-            Push(req.user.id,notifiedUser,alertMessage,function(user){
-                // send real time message to friends
-                sio.sockets.in(user.id).emit('post-new', {
-                    _id: notification.id,
-                    _from: owner,
-                    type: 'post-new',
-                    targetPost: post,
-                    targetGroup: group,
-                    createDate: new Date()
-                });
+            // send real time message to friends
+            sio.sockets.in(user.id).emit('post-new', {
+                _id: notification.id,
+                _from: owner,
+                type: 'post-new',
+                targetPost: post,
+                targetGroup: group,
+                createDate: new Date()
             });
             // the last result is the created post
             callback(null, postObj);

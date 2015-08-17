@@ -11,7 +11,15 @@ var options = {
     	console.log("err " + err);
     } ,    /* Callback when error occurs function(err,notification) */
 };
-module.exports = function(sender,users,alertMessage,onlinefunc){
+
+/*
+  payload = {
+    type: String,  // post-new, message-new, post-commented, friend-invited, friend-approved, friend-declined, announcement
+    id: String     // PostId,   SenderId,    PostId,         SenderId,       SenderId,        SenderId,        AnnouncementId
+  }
+*/
+
+module.exports = function(sender, users, payload, alertMessage, onlinefunc){
 	if (!users){return;}
 	if (typeof users == 'string' || users instanceof String || !users.length){
 		users = [users];
@@ -23,23 +31,23 @@ module.exports = function(sender,users,alertMessage,onlinefunc){
         .where('logicDelete').equals(false)
         .exec(function(err, recipients) {
         	if (!err){
-        		send(recipients,alertMessage,onlinefunc);
+        		send(recipients, payload, alertMessage, onlinefunc);
         	}
         });
 }
 
-module.exports.all = function(sender,alertMessage,onlinefunc){
+module.exports.all = function(sender, payload, alertMessage, onlinefunc){
     User.find()
         .where('_id').ne(sender)
         .where('logicDelete').equals(false)
         .exec(function(err, recipients) {
             if (!err){
-                send(recipients,alertMessage,onlinefunc);
+                send(recipients, payload, alertMessage, onlinefunc);
             }
         });
 }
 
-function send(users,alertMessage,onlinefunc){
+function send(users, payload, alertMessage, onlinefunc){
 
 	for (var i = users.length - 1; i >= 0; i--) {
     	var user = users[i];
@@ -59,7 +67,7 @@ function send(users,alertMessage,onlinefunc){
         					note.badge = 1;
         					note.sound = "ping.aiff";
         					note.alert = alertMessage;
-        					note.payload = {'messageFrom': 'Caroline'};
+        					note.payload = payload;
         					note.device = device;
         					apnsConnection.sendNotification(note);
                 }

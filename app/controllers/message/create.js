@@ -40,7 +40,7 @@ function createMessage(req, res, next, group){
                     // send real time message
                     var recipient = (group) ? group.announcelist : msg._recipient;
                     if (!recipient){return;}
-                    var alertMessage = req.user.firstName + " " + req.user.lastName + " : " ;
+                    var alertMessage = req.user.nickName + " : " ;
                     var reg_content = /^(\[(音声|画像|動画)\]).*$/i;
 
                     if (reg_content.test(msg.content)){
@@ -48,7 +48,13 @@ function createMessage(req, res, next, group){
                     }else{
                         alertMessage += msg.content;
                     }
-                    Push(req.user.id,recipient,alertMessage,function(user){
+
+                    var payload = {
+                      type: 'message-new',
+                      id: req.user.id
+                    };
+
+                    Push(req.user.id, recipient, payload, alertMessage, function(user){
                         if (req.user.id != user.id )
                             sio.sockets.in(user.id).emit('message-new', msg);
                     });
