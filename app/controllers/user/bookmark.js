@@ -32,6 +32,7 @@ module.exports = function(req, res, next) {
                     .limit(10)
                     .exec(function(err, jobs) {
                         if (err) next(err);
+                        else if (jobs.length === 0) res.json(404, {});
                         else res.json(_.union(jobs, posts));
                     });
             }
