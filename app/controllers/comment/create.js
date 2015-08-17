@@ -137,7 +137,7 @@ module.exports = function(req, res, next) {
                     _id: req.user.id,
                     type: req.user.type,
                     firstName: req.user.firstName,
-                    lastName: req.user.lastName,,
+                    lastName: req.user.lastName,
                     nickName: req.user.nickName,
                     title: req.user.title,
                     cover: req.user.cover,
