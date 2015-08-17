@@ -136,7 +136,7 @@ module.exports = function(req, res, next){
 
                 var alertMessage = req.user.nickName + ' 赞了您的帖子.';
 
-                Push(req.user.id,post._owner._id,alertMessage,function(user){
+                // Push(req.user.id,post._owner._id,alertMessage,function(user){
                     // send real time message
                     sio.sockets.in(post._owner._id).emit('post-liked', {
                         _id: notification.id,
@@ -155,7 +155,7 @@ module.exports = function(req, res, next){
                         type: 'post-liked',
                         createDate: new Date()
                     });
-                });
+                // });
 
                 // send email
                 User.findOne()
