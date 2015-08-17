@@ -261,13 +261,15 @@ module.exports = function(req, res, next) {
                 });
             }
             // send real time message to friends
-            sio.sockets.in(user.id).emit('post-new', {
-                _id: notification.id,
-                _from: owner,
-                type: 'post-new',
-                targetPost: post,
-                targetGroup: group,
-                createDate: new Date()
+            notifiedUser.forEach(function(room) {
+                sio.sockets.in(room).emit('post-new', {
+                    _id: notification.id,
+                    _from: owner,
+                    type: 'post-new',
+                    targetPost: post,
+                    targetGroup: group,
+                    createDate: new Date()
+                });
             });
             // the last result is the created post
             callback(null, postObj);
