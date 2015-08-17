@@ -19,6 +19,8 @@ module.exports = function(req, res, next) {
         .skip(10*page)  // skip n page
         .limit(10)
         .exec(function(err, posts) {
+            console.log("################");
+            console.log(posts);
             if (err) next(err);
             else if (posts.length === 0) res.json(404, {});
             else {
