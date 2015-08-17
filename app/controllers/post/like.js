@@ -133,21 +133,27 @@ module.exports = function(req, res, next){
 
             if (notification) {
 
-                // send real time message
-                sio.sockets.in(post._owner._id).emit('post-liked', {
-                    _id: notification.id,
-                    _from: {
-                        _id: req.user.id,
-                        type: req.user.type,
-                        firstName: req.user.firstName,
-                        lastName: req.user.lastName,
-                        title: req.user.title,
-                        cover: req.user.cover,
-                        photo: req.user.photo
-                    },
-                    targetPost: post,
-                    type: 'post-liked',
-                    createDate: new Date()
+                var alertMessage = req.user.nickName + ' 赞了您的帖子.';
+
+                Push(req.user.id,post._owner._id,alertMessage,function(user){
+                    // send real time message
+                    sio.sockets.in(post._owner._id).emit('post-liked', {
+                        _id: notification.id,
+                        _from: {
+                            _id: req.user.id,
+                            type: req.user.type,
+                            firstName: req.user.firstName,
+                            lastName: req.user.lastName,
+                            nickName: req.user.nickName,
+                            title: req.user.title,
+                            cover: req.user.cover,
+                            photo: req.user.photo,
+                            photo_ref: req.user.photo_ref
+                        },
+                        targetPost: post,
+                        type: 'post-liked',
+                        createDate: new Date()
+                    });
                 });
 
                 // send email

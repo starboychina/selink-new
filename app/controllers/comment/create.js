@@ -136,10 +136,12 @@ module.exports = function(req, res, next) {
                     _id: req.user.id,
                     type: req.user.type,
                     firstName: req.user.firstName,
-                    lastName: req.user.lastName,
+                    lastName: req.user.lastName,,
+                    nickName: req.user.nickName,
                     title: req.user.title,
                     cover: req.user.cover,
-                    photo: req.user.photo
+                    photo: req.user.photo,
+                    photo_ref: req.user.photo_ref
                 };
 
             commentObj._owner = commentOwner;
@@ -147,14 +149,18 @@ module.exports = function(req, res, next) {
             // send message about comment
             if (commentNotification) {
 
-                // send real time message
-                sio.sockets.in(commentNotification._owner).emit('post-commented', {
-                    _id: commentNotification.id,
-                    _from: commentOwner,
-                    type: 'post-commented',
-                    targetPost: post,
-                    targetComment: comment.id,
-                    createDate: new Date()
+                var alertMessage = req.user.nickName + ' 回复了您的帖子.';
+
+                Push(req.user.id,commentNotification._owner._id,alertMessage,function(user){
+                    // send real time message
+                    sio.sockets.in(commentNotification._owner).emit('post-commented', {
+                        _id: commentNotification.id,
+                        _from: commentOwner,
+                        type: 'post-commented',
+                        targetPost: post,
+                        targetComment: comment.id,
+                        createDate: new Date()
+                    });
                 });
 
                 // send email
@@ -173,15 +179,19 @@ module.exports = function(req, res, next) {
             // send message about reply
             if (replyNotification) {
 
-                // send real time message
-                sio.sockets.in(replyNotification._owner).emit('comment-replied', {
-                    _id: replyNotification.id,
-                    _from: commentOwner,
-                    type: 'comment-replied',
-                    targetPost: post,
-                    targetComment: comment.id,
-                    targetReplyTo: replyTo.id,
-                    createDate: new Date()
+                var alertMessage = req.user.nickName + ' 回复了您的评论.';
+
+                Push(req.user.id,replyNotification._owner._id,alertMessage,function(user){
+                    // send real time message
+                    sio.sockets.in(replyNotification._owner).emit('comment-replied', {
+                        _id: replyNotification.id,
+                        _from: commentOwner,
+                        type: 'comment-replied',
+                        targetPost: post,
+                        targetComment: comment.id,
+                        targetReplyTo: replyTo.id,
+                        createDate: new Date()
+                    });
                 });
 
                 // send email
