@@ -11,7 +11,7 @@ module.exports = function(req, res, next) {
   User.findById(req.body.tomoid, function(err, user) {
 
       if (err) next(err);
-      else if (user == null) autoRegist
+      else if (user == null) autoRegist(req, res, next)
       else {
           expandUserObject(user);
       }
