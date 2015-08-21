@@ -383,6 +383,8 @@ module.exports = function(app, config) {
     // test
     app.get('/mobile/createtags', controller.mobile.createtags);
 
+    app.post('/mobile/guest/login', controller.mobile.guestLogin);
+
     app.get('/mobile/user/testLogin', controller.mobile.testLogin);
     app.get('/mobile/user/testLogout', controller.mobile.testLogout);
 
