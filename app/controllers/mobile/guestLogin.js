@@ -7,19 +7,22 @@ var Mailer = require('../../mailer/mailer.js'),
 
 module.exports = function(req, res, next) {
 
-  User.findById(req.body.tomoid, function(err, user) {
+  if(!req.body.tomoid){
+      res.json(400, {});
+      return;
+  }
 
+  User.findOne(req.body, function(err, user) {
       if (err) next(err);
-      else if (user == null) autoRegist(req, res, next)
+      else if (user == null) autoRegist(req, res, next);
       else {
-          expandUserObject(user);
+          expandUserObject(req, res, next, user);
       }
   });
 
 };
 
 var autoRegist = function(req, res, next){
-
     var userinfo = {
         tomoid: req.body.tomoid,
         nickName: "匿名",
@@ -66,12 +69,12 @@ var autoRegist = function(req, res, next){
                 }
             });
 
-            expandUserObject(user);
+            expandUserObject(req, res, next, user);
         }
     });
 }
 
-var expandUserObject = function(user){
+var expandUserObject = function(req, res, next, user){
   // put user's id into session
   req.session.userId = user.id;
   // create query
