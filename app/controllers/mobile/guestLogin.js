@@ -1,9 +1,8 @@
-// Create new sub document
 var Mailer = require('../../mailer/mailer.js'),
     mongoose = require('mongoose'),
     User = mongoose.model('User'),
     Notification = mongoose.model('Notification'),
-    Message = mongoose.model('Message')
+    Message = mongoose.model('Message'),
     Activity = mongoose.model('Activity');
 
 module.exports = function(req, res, next) {
