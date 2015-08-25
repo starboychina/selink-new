@@ -8,7 +8,16 @@ module.exports = function(req, res, next) {
     // page number
     var page = req.query.page || 0;
 
-    Post.find()
+    var query = Post.find();
+    
+    if (req.query.before)
+        query.where('createDate').lt(moment.unix(req.query.before).toDate());
+
+    if (req.query.after) {
+        query.where('createDate').gt(moment.unix(req.query.after).toDate());
+    }
+
+    query
         .where('logicDelete').equals(false)
         .where('bookmark').equals(req.user.id)
         .populate('_owner', 'type nickName firstName lastName title cover photo createDate')
