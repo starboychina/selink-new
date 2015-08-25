@@ -21,19 +21,19 @@ module.exports = function(req, res, next) {
             if (err) next(err);
             else if (posts.length === 0) res.json(404, {});
             else {
-
-                Job.find()
-                    .where('logicDelete').equals(false)
-                    .where('bookmark').equals(req.user.id)
-                    .populate('_owner', 'type firstName lastName title cover photo createDate')
-                    .sort('-createDate')
-                    .skip(10*page)  // skip n page
-                    .limit(10)
-                    .exec(function(err, jobs) {
-                        if (err) next(err);
-                        else if (jobs.length === 0) res.json(404, {});
-                        else res.json(_.union(jobs, posts));
-                    });
+                res.json(posts);
+                // Job.find()
+                //     .where('logicDelete').equals(false)
+                //     .where('bookmark').equals(req.user.id)
+                //     .populate('_owner', 'type firstName lastName title cover photo createDate')
+                //     .sort('-createDate')
+                //     .skip(10*page)  // skip n page
+                //     .limit(10)
+                //     .exec(function(err, jobs) {
+                //         if (err) next(err);
+                //         else if (jobs.length === 0) res.json(404, {});
+                //         else res.json(_.union(jobs, posts));
+                //     });
             }
         });
 };
