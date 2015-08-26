@@ -59,7 +59,7 @@ module.exports = function(req, res, next) {
         .populate('targetJob')
         .populate('targetMessage')
         .populate('targetGroup')   // there is no targetComment, cause comment was embedded in post
-        .limit(req.query.size || 20)
+        // .limit(req.query.size || 20)
         .sort('-createDate')
         .exec(function(err, notifications) {
             if (err) next(err);
