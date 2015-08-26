@@ -30,6 +30,7 @@ module.exports = function(req, res, next) {
                 email: tempAccount.email,
                 tomoid: tempAccount.email,
                 password: tempAccount.password,
+                nickName: tempAccount.nickName,
                 firstName: tempAccount.firstName,
                 lastName: tempAccount.lastName,
                 secEmail: tempAccount.email,
