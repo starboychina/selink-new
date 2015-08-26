@@ -18,9 +18,9 @@ exports.accountActive = function(recipient) {
                 if (err) console.log(err);
                 else {
                     transport.sendMail({
-                        from: 'SELink <noreply@selink.jp>',
+                        from: '現場Tomo <noreply@tomo.e-business.co.jp>',
                         to: recipient.email,
-                        subject: 'SELinkへようこそ！',
+                        subject: '欢迎来到現場Tomo！',
                         html: html,
                         text: text
                     }, function(err, responseStatus) {
