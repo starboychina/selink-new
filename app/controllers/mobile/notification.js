@@ -42,7 +42,7 @@ var populateField = {
 module.exports = function(req, res, next) {
 
     // create query
-    var query = Notification.find({"type":{"$in":["post-bookmarked","post-liked"]}}});
+    var query = Notification.find({"type":{"$in":["post-bookmarked","post-liked"]}});
 
     // notifications are relate with current user
     query.where('_owner').equals(req.user.id);
