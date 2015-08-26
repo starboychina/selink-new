@@ -1,6 +1,8 @@
 // User login
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),
+    Notification = mongoose.model('Notification'),
+    Message = mongoose.model('Message'),
     Activity = mongoose.model('Activity');
 
 module.exports = function(req, res, next) {
@@ -31,7 +33,6 @@ module.exports = function(req, res, next) {
             });
 
             user.friends.forEach(function(room) {
-
                 sio.sockets.in(room).emit('user-login', {
                     firstName: user.firstName,
                     lastName: user.lastName,
@@ -39,8 +40,35 @@ module.exports = function(req, res, next) {
                 });
             });
 
-            // send success signal
-            res.json({"_id":user.id});
+            Notification.find()
+                .select('_from type createDate')
+                .where('_owner').equals(user.id)
+                .where('type').equals('friend-invited')
+                .where('confirmed').ne(user.id)
+                .where('logicDelete').equals(false)
+                .populate('_from', 'nickName photo')
+                .exec(function(err, friendInvitations) {
+                    if (err) next(err);
+                    else {
+
+                        Message.find()
+                            .select('_from createDate')
+                            .where('_recipient').equals(user.id)
+                            .where('opened').ne(user.id)
+                            .where('logicDelete').ne(user.id)
+                            .exec(function(err, newMessages) {
+                                if (err) next(err);
+                                else {
+
+                                    user = user.toObject();
+                                    user.friendInvitations = friendInvitations
+                                    user.newMessages = newMessages
+
+                                    res.json(user)
+                                }
+                            });
+                    }
+                });
         }
     });
 };
