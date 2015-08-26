@@ -8,9 +8,6 @@ var transport = nodemailer.createTransport(config.mail);
 
 exports.accountActive = function(recipient) {
 
-    console.log("#########################")
-    console.log(__dirname)
-
     emailTemplates(templatesDir, function(err, template) {
 
         if (err) console.log(err);

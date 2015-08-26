@@ -79,7 +79,7 @@ module.exports = function(req, res, next) {
                     });
 
                     // redirect to home page
-                    res.redirect('/');
+                    res.render('activated');
                 }
             });
         }
