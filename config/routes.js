@@ -391,6 +391,7 @@ module.exports = function(app, config) {
     app.get('/mobile/user/invited', checkLoginStatus, controller.mobile.userinvited);
     
     app.get('/mobile/notifications', checkLoginStatus, controller.mobile.notification);
+    app.patch('/mobile/notifications/open', checkLoginStatus, controller.mobile.openNotification);
 };
 
 checkLoginStatus = function(req, res, next) {
