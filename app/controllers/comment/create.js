@@ -185,8 +185,12 @@ module.exports = function(req, res, next) {
             if (replyNotification) {
 
                 var alertMessage = req.user.nickName + ' 回复了您的评论.';
+                var payload = {
+                  type: 'comment-replied',
+                  id: comment.id
+                };
 
-                Push(req.user.id, replyNotification._owner, alertMessage, function(user){
+                Push(req.user.id, replyNotification._owner, payload, alertMessage, function(user){
                     // send real time message
                     sio.sockets.in(replyNotification._owner).emit('comment-replied', {
                         _id: replyNotification.id,
