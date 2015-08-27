@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
     query.where('_owner').equals(req.user.id);
     query.where('confirmed').ne(req.user.id);
         .setOptions({ multi: true })
-        .update({ $addToSet: {opened: req.user.id} }, callback);
+        .update({ $addToSet: {confirmed: req.user.id} }, callback);
     res.json({});
 
 };
