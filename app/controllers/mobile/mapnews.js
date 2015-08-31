@@ -22,6 +22,8 @@ module.exports = function(req, res, next) {
     query.select('-removedComments -logicDelete')
         .where('logicDelete').equals(false)
         .where('coordinate').exists(true)
+        .where('createDate').lte(moment().subtract(req.query.day))
+        .where('createDate').gte(moment().subtract(req.query.day + 1))
         .populate('_owner', populateField['_owner'])
         .populate('group', populateField['group'])
         .populate('comments._owner', populateField['comments._owner'])
