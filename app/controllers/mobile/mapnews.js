@@ -23,7 +23,7 @@ module.exports = function(req, res, next) {
         .where('logicDelete').equals(false)
         .where('coordinate').exists(true)
         .where('createDate').lte(moment().subtract(req.query.day, 'days'))
-        .where('createDate').gte(moment().subtract(req.query.day + 1, 'days'))
+        .where('createDate').gte(moment().subtract(Number(req.query.day) + 1, 'days'))
         .populate('_owner', populateField['_owner'])
         .populate('group', populateField['group'])
         .populate('comments._owner', populateField['comments._owner'])
